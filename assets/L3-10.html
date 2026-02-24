@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSA/FSA Eligibility Memo — Tax-Advantaged Patient Access</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 48px 56px; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 28px; padding-bottom: 16px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1.2; }
+  .header .subtitle { font-size: 14px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.mech { background: #dbeafe; color: #1e40af; }
+  .badge.impact { background: #d1fae5; color: #065f46; }
+  .badge.impl { background: #ede9fe; color: #5b21b6; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 18px; color: #1a1a2e;
+    margin: 24px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 18px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 7px 10px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 6px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 16px 20px; margin-bottom: 18px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px;
+  }
+  .stat-mini {
+    text-align: center; padding: 14px 10px;
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .stat-mini .num { font-family: 'DM Serif Display', serif; font-size: 26px; color: #1a1a2e; }
+  .stat-mini .lbl { font-size: 10px; color: #5a5a7a; margin-top: 2px; line-height: 1.3; }
+  .stat-mini.highlight { background: #1a1a2e; border-color: #1a1a2e; }
+  .stat-mini.highlight .num { color: #fff; }
+  .stat-mini.highlight .lbl { color: #9090bb; }
+
+  .footer {
+    margin-top: 28px; padding-top: 14px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  /* Flow diagram */
+  .flow {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
+    margin-bottom: 18px; border-radius: 8px; overflow: hidden;
+  }
+  .flow-node {
+    padding: 14px 10px; text-align: center; background: #f8f8fc; font-size: 11px;
+  }
+  .flow-node.active { background: #1a1a2e; color: #fff; }
+  .flow-node .icon { font-size: 20px; margin-bottom: 4px; }
+  .flow-node .title { font-weight: 700; font-size: 11px; }
+  .flow-node .sub { font-size: 9px; color: #8a8aaa; margin-top: 2px; }
+  .flow-node.active .sub { color: #9090bb; }
+
+  /* Price comparison */
+  .price-compare {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center;
+    padding: 20px 24px; background: #f8f8fc; border: 1px solid #e8e8f0;
+    border-radius: 8px; margin-bottom: 18px;
+  }
+  .price-side { text-align: center; }
+  .price-side .amount { font-family: 'DM Serif Display', serif; font-size: 38px; color: #1a1a2e; }
+  .price-side .label { font-size: 12px; color: #5a5a7a; }
+  .price-side.saved .amount { color: #059669; }
+  .price-arrow { font-size: 28px; color: #059669; }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>HSA / FSA Eligibility Memo</h1>
+      <div class="subtitle">Tax-Advantaged Patient Access via Letter of Medical Necessity</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Why This Matters</div>
+    HSA/FSA eligibility turns a $500+ out-of-pocket purchase into a <strong>tax-advantaged health expense</strong> — effectively reducing the patient's cost by 25-37% depending on their marginal tax bracket. Over 70 million Americans have HSA/FSA accounts with $116B+ in combined assets. This is the single largest conversion lever for US patients who want the device but hesitate at the price point. <strong>Umay is pursuing TrueMed partnership to operationalize this at checkout.</strong>
+  </div>
+
+  <!-- HEADLINE NUMBERS -->
+  <div class="stat-strip">
+    <div class="stat-mini highlight">
+      <div class="num">25–37%</div>
+      <div class="lbl">Effective price reduction<br>for HSA/FSA patients</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">70M+</div>
+      <div class="lbl">Americans with<br>HSA/FSA accounts</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">$116B+</div>
+      <div class="lbl">Combined HSA/FSA<br>account balances</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">$0</div>
+      <div class="lbl">Cost to Umay<br>(patient tax benefit)</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <span class="badge mech">Section 1 · Mechanism</span>
+
+  <h2>How HSA/FSA Eligibility Works for Umay</h2>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Health Savings Account (HSA)</h3>
+      <table>
+        <tr><td style="font-weight:600; width:120px;">What it is</td><td>Tax-advantaged savings for medical expenses. Paired with high-deductible health plans.</td></tr>
+        <tr><td style="font-weight:600;">Eligibility</td><td>Expenses must be "primarily for medical care" (IRS §213(d))</td></tr>
+        <tr><td style="font-weight:600;">Tax benefit</td><td>Pre-tax contribution + tax-free withdrawal for qualified expenses</td></tr>
+        <tr><td style="font-weight:600;">Umay pathway</td><td>Letter of Medical Necessity (LMN) from prescribing OD qualifies the purchase</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Flexible Spending Account (FSA)</h3>
+      <table>
+        <tr><td style="font-weight:600; width:120px;">What it is</td><td>Employer-sponsored pre-tax account for medical expenses. Use-it-or-lose-it annual limit.</td></tr>
+        <tr><td style="font-weight:600;">Eligibility</td><td>Same IRS §213(d) "primarily for medical care" standard</td></tr>
+        <tr><td style="font-weight:600;">Tax benefit</td><td>Pre-tax contribution reduces taxable income</td></tr>
+        <tr><td style="font-weight:600;">Umay pathway</td><td>Same LMN pathway. FSA holders especially motivated to spend before year-end deadline.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>The Patient Purchase Flow</h2>
+
+  <div class="flow">
+    <div class="flow-node">
+      <div class="icon">👨‍⚕️</div>
+      <div class="title">OD Prescribes</div>
+      <div class="sub">Recommends Rest for DED / eye comfort</div>
+    </div>
+    <div class="flow-node">
+      <div class="icon">📋</div>
+      <div class="title">LMN Generated</div>
+      <div class="sub">OD signs Letter of Medical Necessity</div>
+    </div>
+    <div class="flow-node active">
+      <div class="icon">💳</div>
+      <div class="title">Patient Pays with HSA/FSA</div>
+      <div class="sub">TrueMed-enabled checkout</div>
+    </div>
+    <div class="flow-node">
+      <div class="icon">📦</div>
+      <div class="title">Umay Ships</div>
+      <div class="sub">Standard fulfillment</div>
+    </div>
+    <div class="flow-node">
+      <div class="icon">💰</div>
+      <div class="title">Tax Benefit Applied</div>
+      <div class="sub">25-37% effective savings</div>
+    </div>
+  </div>
+
+  <!-- PRICE IMPACT -->
+  <span class="badge impact">Section 2 · Price Impact</span>
+
+  <h2>Effective Price to Patient</h2>
+
+  <div class="price-compare">
+    <div class="price-side">
+      <div class="amount">$500</div>
+      <div class="label">Retail price (pre-tax)</div>
+    </div>
+    <div class="price-arrow">→</div>
+    <div class="price-side saved">
+      <div class="amount">$315–375</div>
+      <div class="label">Effective cost after HSA/FSA tax benefit</div>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Patient Tax Bracket</th><th>Tax Savings</th><th>Effective Price ($500 retail)</th><th>Effective Discount</th></tr></thead>
+    <tbody>
+      <tr><td>22% (single $44K-95K)</td><td class="mono">–$110</td><td class="mono" style="font-weight:700;">$390</td><td class="mono">22%</td></tr>
+      <tr><td>24% (single $95K-191K)</td><td class="mono">–$120</td><td class="mono" style="font-weight:700;">$380</td><td class="mono">24%</td></tr>
+      <tr><td>32% (single $191K-243K)</td><td class="mono">–$160</td><td class="mono" style="font-weight:700;">$340</td><td class="mono">32%</td></tr>
+      <tr><td>32% + 7.65% FICA (HSA)</td><td class="mono">–$198</td><td class="mono" style="font-weight:700;">$302</td><td class="mono">~40%</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px; color:#5a5a7a; margin-bottom:14px;">HSA contributions avoid both income tax and FICA (7.65%), creating the deepest effective discount. FSA avoids income tax only. Actual savings depend on individual tax circumstances.</p>
+
+  <!-- TRUEMED PARTNERSHIP -->
+  <span class="badge impl">Section 3 · Implementation: TrueMed Partnership</span>
+
+  <h2>TrueMed: Checkout-Integrated HSA/FSA Processing</h2>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>What TrueMed Does</h3>
+      <p style="font-size:12px; margin-bottom:8px;">TrueMed is a Shopify-integrated platform that enables HSA/FSA payment acceptance for wellness and health products. It handles the Letter of Medical Necessity generation, payment processing, and IRS compliance in a single checkout flow.</p>
+      <table>
+        <tr><td style="font-weight:600; width:130px;">Integration</td><td>Shopify app — drops into existing checkout</td></tr>
+        <tr><td style="font-weight:600;">LMN process</td><td>Telehealth provider reviews purchase, issues LMN</td></tr>
+        <tr><td style="font-weight:600;">Patient experience</td><td>"Pay with HSA/FSA" button at checkout</td></tr>
+        <tr><td style="font-weight:600;">Umay cost</td><td>Per-transaction fee (typically 3-5%)</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Why Umay Qualifies</h3>
+      <p style="font-size:12px; margin-bottom:8px;">The device is prescribed by an OD for a documented ocular condition. This maps cleanly to IRS §213(d) "medical care" when supported by an LMN.</p>
+      <table>
+        <tr><td style="font-weight:600; width:130px;">Prescriber</td><td>Licensed OD (Dr. Sharmin Habib or prescribing clinic OD)</td></tr>
+        <tr><td style="font-weight:600;">Condition</td><td>Dry eye disease / meibomian gland dysfunction / ocular surface disorder</td></tr>
+        <tr><td style="font-weight:600;">Product class</td><td>Thermal therapy device for ocular comfort</td></tr>
+        <tr><td style="font-weight:600;">Precedent</td><td>Heated eye masks (Bruder) already accepted as HSA/FSA eligible by many issuers</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>Conversion Impact Model</h2>
+  <div class="panel green" style="font-size:12px; margin-bottom:16px;">
+    <h3>Expected Impact on US Sales Conversion</h3>
+    <p style="margin-bottom:8px;">HSA/FSA eligibility addresses the #2 patient objection (price/value) by reducing effective cost 25-37% without any price cut from Umay. The patient perceives a lower price; Umay receives the full retail amount.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:12px;">
+      <div style="text-align:center;">
+        <div style="font-family:'DM Serif Display', serif; font-size:22px; color:#1a1a2e;">+15-25%</div>
+        <div style="font-size:10px; color:#5a5a7a;">Expected lift in US conversion<br>(based on TrueMed partner case studies)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'DM Serif Display', serif; font-size:22px; color:#1a1a2e;">Q4 Spike</div>
+        <div style="font-size:10px; color:#5a5a7a;">FSA "use it or lose it"<br>drives year-end purchases</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'DM Serif Display', serif; font-size:22px; color:#1a1a2e;">$0 Cost</div>
+        <div style="font-size:10px; color:#5a5a7a;">No discount to Umay<br>Tax benefit flows to patient</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">The Clinic Sales Script Addition</div>
+    <p>"This is HSA and FSA eligible — so if you have a health spending account, you can use pre-tax dollars. <strong>That effectively brings your cost down to around $315-375 depending on your tax bracket.</strong> Your doctor will provide the Letter of Medical Necessity as part of your prescription."</p>
+  </div>
+
+  <div class="caveat">TrueMed partnership is in exploration; not yet executed. Implementation requires: Shopify Plus migration (in progress), US-entity establishment (Delaware C-Corp, in progress), and TrueMed onboarding (est. 4-6 weeks from application). Conversion lift estimates are based on TrueMed's published partner case studies and should be validated with Umay-specific data post-launch.</div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · HSA/FSA Eligibility Memo</div>
+  </div>
+</div>
+
+</body>
+</html>

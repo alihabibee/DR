@@ -1,0 +1,2946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ledger: A Story About Fatigue You Can't Feel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0a0a0a;
+            --color-surface: #141414;
+            --color-surface-elevated: #1a1a1a;
+            --color-border: #2a2a2a;
+            --color-text: #e8e8e8;
+            --color-text-muted: #888;
+            --color-text-subtle: #555;
+            --color-accent-red: #ef4444;
+            --color-accent-blue: #3b82f6;
+            --color-accent-green: #22c55e;
+            --color-accent-amber: #f59e0b;
+            --color-accent-orange: #f97316;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        .serif {
+            font-family: 'Source Serif 4', Georgia, serif;
+        }
+
+        /* Progress indicator */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--color-surface);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent-red), var(--color-accent-orange), var(--color-accent-green));
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* Navigation dots */
+        .nav-dots {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-border);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+            position: relative;
+        }
+
+        .nav-dot:hover {
+            background: var(--color-text-muted);
+            transform: scale(1.2);
+        }
+
+        .nav-dot.active {
+            background: var(--color-accent-green);
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+        }
+
+        .nav-dot-label {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            font-size: 11px;
+            color: var(--color-text-muted);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-dot:hover .nav-dot-label {
+            opacity: 1;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 80px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-inner {
+            max-width: 1000px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+        }
+
+        section.visible .section-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, var(--color-bg) 70%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero-overline {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--color-accent-red);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 0.2s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: clamp(36px, 7vw, 72px);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 0.4s forwards;
+        }
+
+        .hero-title em {
+            font-style: normal;
+            color: var(--color-accent-red);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 0.6s forwards;
+        }
+
+        .hero-scroll-cue {
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 1s forwards;
+        }
+
+        .scroll-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-text-subtle);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .scroll-arrow {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--color-text-subtle);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+
+        /* Stage Headers */
+        .stage-header {
+            margin-bottom: 48px;
+        }
+
+        .stage-number {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-text-subtle);
+            margin-bottom: 8px;
+        }
+
+        .stage-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-accent-green);
+            margin-bottom: 16px;
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 100px;
+        }
+
+        .stage-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: clamp(28px, 5vw, 44px);
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .stage-subtitle {
+            font-size: 16px;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .card-elevated {
+            background: var(--color-surface-elevated);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ===== SECTION 0: THE ORIGIN ===== */
+        #origin {
+            background: linear-gradient(180deg, var(--color-bg) 0%, #0f0a0a 100%);
+        }
+
+        .origin-chart {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-line {
+            width: 28px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .legend-line.objective { background: var(--color-accent-red); }
+        .legend-line.subjective { background: var(--color-accent-blue); }
+
+        .legend-text {
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+
+        .origin-svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .origin-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 32px;
+        }
+
+        .origin-stat {
+            background: var(--color-surface-elevated);
+            border-radius: 12px;
+            padding: 24px;
+            border-left: 3px solid;
+        }
+
+        .origin-stat.objective { border-color: var(--color-accent-red); }
+        .origin-stat.subjective { border-color: var(--color-accent-blue); }
+
+        .stat-value {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+
+        .origin-quote {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 32px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .quote-text {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 17px;
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .quote-source {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        /* ===== SECTION 1: AGREEMENT ===== */
+        #agreement {
+            background: linear-gradient(180deg, #0f0a0a 0%, var(--color-bg) 50%, #0a0f0a 100%);
+        }
+
+        .agreement-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .big-stat-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-radius: 20px;
+            padding: 48px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+        }
+
+        .big-stat-number {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 80px;
+            font-weight: 500;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .big-stat-unit {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-text-muted);
+            margin-bottom: 16px;
+        }
+
+        .big-stat-desc {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        .tells-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .tell-card {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+            transition: transform 0.3s var(--ease-out-expo), border-color 0.3s ease;
+        }
+
+        .tell-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-text-subtle);
+        }
+
+        .tell-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .tell-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .tell-desc {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .gap-reveal {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .gap-reveal-title {
+            text-align: center;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 20px;
+            margin-bottom: 32px;
+        }
+
+        .gap-comparison {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+        }
+
+        .gap-side {
+            text-align: center;
+        }
+
+        .gap-percent {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 56px;
+            font-weight: 500;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .gap-side.self-report .gap-percent { color: var(--color-accent-blue); }
+        .gap-side.clinical .gap-percent { color: var(--color-accent-red); }
+
+        .gap-label {
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+
+        .gap-divider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-text-subtle);
+        }
+
+        .gap-vs {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 12px;
+            background: var(--color-surface-elevated);
+            border-radius: 4px;
+        }
+
+        /* ===== SECTION 2: REFRAME ===== */
+        #reframe {
+            background: var(--color-bg);
+        }
+
+        .cycle-container {
+            position: relative;
+            margin: 48px auto;
+            max-width: 600px;
+        }
+
+        .cycle-ring {
+            width: 100%;
+            aspect-ratio: 1;
+            border: 2px solid var(--color-border);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .cycle-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            padding: 32px;
+        }
+
+        .cycle-center-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-accent-red);
+            margin-bottom: 8px;
+        }
+
+        .cycle-center-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 18px;
+        }
+
+        .cycle-node {
+            position: absolute;
+            text-align: center;
+            width: 120px;
+        }
+
+        .cycle-node-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+            border: 2px solid;
+        }
+
+        .cycle-node.sleep { top: -60px; left: 50%; transform: translateX(-50%); }
+        .cycle-node.sleep .cycle-node-icon { background: rgba(59, 130, 246, 0.15); border-color: var(--color-accent-blue); }
+
+        .cycle-node.stress { top: 50%; right: -80px; transform: translateY(-50%); }
+        .cycle-node.stress .cycle-node-icon { background: rgba(245, 158, 11, 0.15); border-color: var(--color-accent-amber); }
+
+        .cycle-node.tears { bottom: -60px; left: 50%; transform: translateX(-50%); }
+        .cycle-node.tears .cycle-node-icon { background: rgba(34, 197, 94, 0.15); border-color: var(--color-accent-green); }
+
+        .cycle-node.pain { top: 50%; left: -80px; transform: translateY(-50%); }
+        .cycle-node.pain .cycle-node-icon { background: rgba(239, 68, 68, 0.15); border-color: var(--color-accent-red); }
+
+        .cycle-node-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .cycle-node-desc {
+            font-size: 11px;
+            color: var(--color-text-muted);
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .evidence-card {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 24px;
+            border-left: 3px solid;
+        }
+
+        .evidence-card:nth-child(1) { border-color: var(--color-accent-blue); }
+        .evidence-card:nth-child(2) { border-color: var(--color-accent-amber); }
+        .evidence-card:nth-child(3) { border-color: var(--color-accent-green); }
+
+        .evidence-stat {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .evidence-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== SECTION 3: TIMING ===== */
+        #timing {
+            background: linear-gradient(180deg, var(--color-bg) 0%, #0f0f0a 100%);
+        }
+
+        .timing-chart {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .timing-svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .timing-legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .timing-insight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 32px;
+        }
+
+        .timing-insight {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 24px;
+            border-top: 3px solid;
+        }
+
+        .timing-insight:nth-child(1) { border-color: var(--color-accent-blue); }
+        .timing-insight:nth-child(2) { border-color: var(--color-accent-orange); }
+        .timing-insight:nth-child(3) { border-color: var(--color-accent-green); }
+
+        .timing-insight-time {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-muted);
+            margin-bottom: 8px;
+        }
+
+        .timing-insight-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .timing-insight-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== SECTION 4: OPPORTUNITY ===== */
+        #opportunity {
+            background: linear-gradient(180deg, #0f0f0a 0%, #0a0a0f 100%);
+        }
+
+        .tracker-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 40px 0;
+        }
+
+        .tracker-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tracker-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent-blue), #8b5cf6);
+            opacity: 0.6;
+        }
+
+        .tracker-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .tracker-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .tracker-what {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .measure-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            padding: 32px;
+            background: var(--color-surface);
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .measure-stat {
+            text-align: center;
+        }
+
+        .measure-stat-number {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 36px;
+            font-weight: 500;
+            color: var(--color-accent-blue);
+            margin-bottom: 4px;
+        }
+
+        .measure-stat-number.zero {
+            color: var(--color-accent-red);
+        }
+
+        .measure-stat-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .gap-visual {
+            display: grid;
+            grid-template-columns: 1fr 100px 1fr;
+            gap: 0;
+            background: var(--color-surface);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .gap-side-panel {
+            padding: 32px;
+        }
+
+        .gap-side-panel.measure {
+            background: linear-gradient(135deg, #1e3a5f 0%, var(--color-surface) 100%);
+        }
+
+        .gap-side-panel.manage {
+            background: linear-gradient(135deg, var(--color-surface) 0%, #1a2e1a 100%);
+        }
+
+        .gap-side-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .gap-side-panel.measure .gap-side-label { color: var(--color-accent-blue); }
+        .gap-side-panel.manage .gap-side-label { color: var(--color-accent-green); }
+
+        .gap-side-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .gap-side-list {
+            list-style: none;
+        }
+
+        .gap-side-list li {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gap-side-list li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .gap-side-panel.measure .gap-side-list li::before { background: var(--color-accent-blue); }
+        .gap-side-panel.manage .gap-side-list li::before { background: var(--color-accent-green); }
+
+        .gap-center-panel {
+            background: var(--color-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gap-question {
+            width: 48px;
+            height: 48px;
+            border: 2px dashed var(--color-accent-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--color-accent-orange);
+        }
+
+        /* ===== SECTION 5: PROOF OVERVIEW ===== */
+        #proof-overview {
+            background: linear-gradient(180deg, #0a0a0f 0%, #0a0f0a 100%);
+        }
+
+        .convergence-chart {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .slope-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 24px;
+        }
+
+        .slope-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .slope-column.before {
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .slope-column.after {
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .slope-item {
+            padding: 16px;
+        }
+
+        .slope-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-muted);
+            margin-bottom: 4px;
+        }
+
+        .slope-value {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 28px;
+            font-weight: 500;
+        }
+
+        .slope-item.eyes .slope-value { color: #c44536; }
+        .slope-item.sleep .slope-value { color: #3d5a80; }
+        .slope-item.stress .slope-value { color: #6b705c; }
+
+        .slope-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 0 24px;
+        }
+
+        .slope-improvement {
+            background: var(--color-accent-green);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .slope-arrow {
+            font-size: 24px;
+            color: var(--color-text-subtle);
+        }
+
+        /* ===== SECTION 6: SEVERITY ===== */
+        #severity {
+            background: linear-gradient(180deg, #0a0f0a 0%, var(--color-bg) 100%);
+        }
+
+        .severity-chart {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .severity-row {
+            display: grid;
+            grid-template-columns: 140px 1fr 120px;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .severity-label-box {
+            text-align: right;
+        }
+
+        .severity-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .severity-name.mild { color: #84cc16; }
+        .severity-name.moderate { color: #f59e0b; }
+        .severity-name.severe { color: #ef4444; }
+
+        .severity-score {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .severity-bar-container {
+            height: 8px;
+            background: var(--color-surface-elevated);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .severity-bar {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .severity-bar.mild {
+            width: 55%;
+            background: linear-gradient(90deg, #84cc16, #bef264);
+        }
+
+        .severity-bar.moderate {
+            width: 75%;
+            background: linear-gradient(90deg, #f59e0b, #fcd34d);
+        }
+
+        .severity-bar.severe {
+            width: 100%;
+            background: linear-gradient(90deg, #ef4444, #fca5a5);
+        }
+
+        .severity-badge {
+            background: var(--color-surface-elevated);
+            border-radius: 8px;
+            padding: 12px 16px;
+            text-align: center;
+        }
+
+        .severity-percent {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .severity-badge-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-muted);
+        }
+
+        .severity-insight {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .severity-insight-icon {
+            font-size: 24px;
+        }
+
+        .severity-insight-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-accent-amber);
+            margin-bottom: 6px;
+        }
+
+        .severity-insight-text {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        /* ===== SECTION 7: RESOLUTION ===== */
+        #resolution {
+            background: var(--color-bg);
+        }
+
+        .flow-container {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 48px;
+            margin: 40px 0;
+        }
+
+        .flow-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .flow-time-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-text-muted);
+        }
+
+        .flow-visual {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .flow-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 160px;
+        }
+
+        .flow-box {
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            border: 2px solid;
+        }
+
+        .flow-box.severe {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .flow-box.moderate {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .flow-box.mild {
+            background: rgba(132, 204, 22, 0.1);
+            border-color: rgba(132, 204, 22, 0.3);
+        }
+
+        .flow-box.normal {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .flow-box-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .flow-box.severe .flow-box-label { color: #ef4444; }
+        .flow-box.moderate .flow-box-label { color: #f59e0b; }
+        .flow-box.mild .flow-box-label { color: #84cc16; }
+        .flow-box.normal .flow-box-label { color: #3b82f6; }
+
+        .flow-box-count {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 28px;
+            font-weight: 500;
+        }
+
+        .flow-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--color-bg);
+            border-radius: 16px;
+            padding: 24px 32px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        .flow-center-stat {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 48px;
+            font-weight: 500;
+            color: var(--color-accent-green);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .flow-center-label {
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+
+        .resolution-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 32px;
+        }
+
+        .resolution-card {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 24px;
+            border-top: 3px solid;
+        }
+
+        .resolution-card:nth-child(1) { border-color: var(--color-accent-red); }
+        .resolution-card:nth-child(2) { border-color: var(--color-accent-blue); }
+        .resolution-card:nth-child(3) { border-color: var(--color-accent-green); }
+
+        .resolution-domain {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .resolution-card:nth-child(1) .resolution-domain { color: var(--color-accent-red); }
+        .resolution-card:nth-child(2) .resolution-domain { color: var(--color-accent-blue); }
+        .resolution-card:nth-child(3) .resolution-domain { color: var(--color-accent-green); }
+
+        .resolution-stat {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .resolution-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .resolution-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== SECTION 8: VALUE ===== */
+        #value {
+            background: linear-gradient(180deg, var(--color-bg) 0%, #050f05 100%);
+        }
+
+        .value-hero {
+            background: linear-gradient(135deg, #052e16 0%, #14532d 50%, #052e16 100%);
+            border: 1px solid #166534;
+            border-radius: 24px;
+            padding: 64px 48px;
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(74, 222, 128, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .value-context {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-accent-green);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .value-number {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: clamp(64px, 12vw, 96px);
+            font-weight: 500;
+            line-height: 1;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .value-unit {
+            font-size: 14px;
+            color: #86efac;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .value-explain {
+            font-size: 15px;
+            color: var(--color-text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .value-card {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 32px;
+            border-left: 4px solid;
+        }
+
+        .value-card.cost {
+            border-color: var(--color-accent-red);
+            background: linear-gradient(135deg, rgba(127, 29, 29, 0.2) 0%, var(--color-surface) 100%);
+        }
+
+        .value-card.benefit {
+            border-color: var(--color-accent-green);
+            background: linear-gradient(135deg, rgba(22, 101, 52, 0.2) 0%, var(--color-surface) 100%);
+        }
+
+        .value-card-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .value-card.cost .value-card-label { color: #fca5a5; }
+        .value-card.benefit .value-card-label { color: #86efac; }
+
+        .value-card-stat {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 40px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .value-card-desc {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== SECTION 9: PATH FORWARD ===== */
+        #path-forward {
+            background: linear-gradient(180deg, #050f05 0%, #0a0a14 50%, var(--color-bg) 100%);
+        }
+
+        .path-intro {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .path-intro-text {
+            font-size: 17px;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            position: relative;
+            margin: 48px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--color-accent-green) 0%, var(--color-accent-blue) 50%, var(--color-accent-amber) 100%);
+            transform: translateX(-50%);
+        }
+
+        .timeline-phases {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .timeline-phase {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+        }
+
+        .timeline-phase:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-phase:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-phase-content {
+            flex: 1;
+            padding: 24px;
+        }
+
+        .timeline-phase:nth-child(odd) .timeline-phase-content {
+            padding-right: 48px;
+            text-align: right;
+        }
+
+        .timeline-phase:nth-child(even) .timeline-phase-content {
+            padding-left: 48px;
+            text-align: left;
+        }
+
+        .timeline-phase-spacer {
+            flex: 1;
+        }
+
+        .timeline-node {
+            position: absolute;
+            left: 50%;
+            top: 24px;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--color-bg);
+            border: 3px solid;
+            z-index: 2;
+        }
+
+        .timeline-phase.stabilize .timeline-node { border-color: var(--color-accent-green); }
+        .timeline-phase.scale .timeline-node { border-color: var(--color-accent-blue); }
+        .timeline-phase.expand .timeline-node { border-color: var(--color-accent-amber); }
+        .timeline-phase.strategic .timeline-node { border-color: #8b5cf6; }
+
+        .phase-header {
+            margin-bottom: 16px;
+        }
+
+        .phase-time {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
+
+        .timeline-phase.stabilize .phase-time { color: var(--color-accent-green); }
+        .timeline-phase.scale .phase-time { color: var(--color-accent-blue); }
+        .timeline-phase.expand .phase-time { color: var(--color-accent-amber); }
+        .timeline-phase.strategic .phase-time { color: #8b5cf6; }
+
+        .phase-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .phase-milestones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .timeline-phase:nth-child(odd) .phase-milestones {
+            align-items: flex-end;
+        }
+
+        .timeline-phase:nth-child(even) .phase-milestones {
+            align-items: flex-start;
+        }
+
+        .milestone {
+            background: var(--color-surface);
+            border-radius: 10px;
+            padding: 16px 20px;
+            border-left: 3px solid;
+            max-width: 360px;
+        }
+
+        .timeline-phase.stabilize .milestone { border-color: var(--color-accent-green); }
+        .timeline-phase.scale .milestone { border-color: var(--color-accent-blue); }
+        .timeline-phase.expand .milestone { border-color: var(--color-accent-amber); }
+        .timeline-phase.strategic .milestone { border-color: #8b5cf6; }
+
+        .milestone-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .milestone-desc {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        /* Traction Proof */
+        .traction-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 48px 0;
+        }
+
+        .traction-card {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border-bottom: 3px solid var(--color-accent-green);
+        }
+
+        .traction-number {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--color-accent-green);
+            margin-bottom: 4px;
+        }
+
+        .traction-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Strategic Optionality */
+        .optionality-section {
+            margin: 64px 0 48px;
+        }
+
+        .optionality-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .optionality-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .optionality-subtitle {
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+
+        .verticals-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .vertical-card {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+            transition: transform 0.3s var(--ease-out-expo), border-color 0.3s ease;
+        }
+
+        .vertical-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-text-subtle);
+        }
+
+        .vertical-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .vertical-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .vertical-partners {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        /* The Need */
+        .need-section {
+            margin: 48px 0;
+        }
+
+        .need-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, var(--color-surface) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .need-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .need-icon {
+            font-size: 32px;
+        }
+
+        .need-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 22px;
+        }
+
+        .need-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .need-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .need-item-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--color-accent-amber);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .need-item-text {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        .need-item-text strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        /* The Ask */
+        .ask-section {
+            margin-top: 48px;
+        }
+
+        .ask-hero {
+            background: linear-gradient(135deg, #1e3a5f 0%, var(--color-surface) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ask-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .ask-context {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-accent-blue);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .ask-amount {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: clamp(48px, 10vw, 72px);
+            font-weight: 500;
+            line-height: 1;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .ask-type {
+            font-size: 14px;
+            color: #93c5fd;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .ask-purpose {
+            font-size: 16px;
+            color: var(--color-text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .ask-runway {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-surface-elevated);
+            padding: 12px 24px;
+            border-radius: 100px;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--color-text-muted);
+            position: relative;
+        }
+
+        .ask-runway-value {
+            color: var(--color-accent-green);
+            font-weight: 600;
+        }
+
+        /* ===== FINALE ===== */
+        #finale {
+            background: radial-gradient(ellipse at 50% 100%, #0f1a0f 0%, var(--color-bg) 70%);
+            min-height: 100vh;
+        }
+
+        .finale-content {
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .finale-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: clamp(28px, 5vw, 40px);
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 32px;
+        }
+
+        .finale-title em {
+            font-style: normal;
+            color: var(--color-accent-green);
+        }
+
+        .finale-summary {
+            font-size: 16px;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            margin-bottom: 48px;
+        }
+
+        .finale-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--color-accent-green);
+            color: #000;
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s ease;
+        }
+
+        .finale-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+        }
+
+        .finale-source {
+            margin-top: 64px;
+            font-size: 12px;
+            color: var(--color-text-subtle);
+        }
+
+        .finale-source a {
+            color: var(--color-accent-blue);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            section {
+                padding: 60px 20px;
+            }
+
+            .nav-dots {
+                display: none;
+            }
+
+            .agreement-grid,
+            .evidence-grid,
+            .timing-insight-grid,
+            .tracker-grid,
+            .resolution-cards,
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tells-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gap-comparison {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .gap-visual {
+                grid-template-columns: 1fr;
+            }
+
+            .gap-center-panel {
+                padding: 24px;
+            }
+
+            .flow-visual {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .flow-center {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+            }
+
+            .flow-column {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .flow-box {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .slope-grid {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .slope-column {
+                align-items: center !important;
+                text-align: center !important;
+            }
+
+            .slope-center {
+                flex-direction: row;
+            }
+
+            .cycle-container {
+                max-width: 300px;
+            }
+
+            .cycle-node {
+                width: 100px;
+            }
+
+            .cycle-node.stress { right: -60px; }
+            .cycle-node.pain { left: -60px; }
+
+            .severity-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .severity-label-box {
+                text-align: left;
+            }
+
+            .measure-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .origin-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-line {
+                left: 24px;
+            }
+
+            .timeline-phase,
+            .timeline-phase:nth-child(odd),
+            .timeline-phase:nth-child(even) {
+                flex-direction: column;
+            }
+
+            .timeline-phase-content,
+            .timeline-phase:nth-child(odd) .timeline-phase-content,
+            .timeline-phase:nth-child(even) .timeline-phase-content {
+                padding: 24px 24px 24px 56px;
+                text-align: left;
+            }
+
+            .timeline-phase-spacer {
+                display: none;
+            }
+
+            .timeline-node {
+                left: 24px;
+                top: 24px;
+            }
+
+            .timeline-phase:nth-child(odd) .phase-milestones,
+            .timeline-phase:nth-child(even) .phase-milestones {
+                align-items: flex-start;
+            }
+
+            .milestone {
+                max-width: 100%;
+            }
+
+            .traction-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .verticals-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .need-items {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation Dots -->
+    <nav class="nav-dots">
+        <div class="nav-dot" data-section="hero"><span class="nav-dot-label">Start</span></div>
+        <div class="nav-dot" data-section="origin"><span class="nav-dot-label">The Origin</span></div>
+        <div class="nav-dot" data-section="agreement"><span class="nav-dot-label">Eyes Show</span></div>
+        <div class="nav-dot" data-section="reframe"><span class="nav-dot-label">Connected</span></div>
+        <div class="nav-dot" data-section="timing"><span class="nav-dot-label">Timing</span></div>
+        <div class="nav-dot" data-section="opportunity"><span class="nav-dot-label">The Gap</span></div>
+        <div class="nav-dot" data-section="proof-overview"><span class="nav-dot-label">Proof</span></div>
+        <div class="nav-dot" data-section="severity"><span class="nav-dot-label">Severity</span></div>
+        <div class="nav-dot" data-section="resolution"><span class="nav-dot-label">Resolution</span></div>
+        <div class="nav-dot" data-section="value"><span class="nav-dot-label">Value</span></div>
+        <div class="nav-dot" data-section="path-forward"><span class="nav-dot-label">Path Forward</span></div>
+        <div class="nav-dot" data-section="finale"><span class="nav-dot-label">Finale</span></div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-content">
+            <div class="hero-overline">A Story in Ten Parts</div>
+            <h1 class="hero-title">
+                Your body has a fatigue accounting system.<br>
+                <em>You've lost access to the ledger.</em>
+            </h1>
+            <p class="hero-subtitle">
+                This is the story of how that happened, what it's costing you, 
+                and what it looks like when someone finally gets it back.
+            </p>
+            <div class="hero-scroll-cue">
+                <div class="scroll-indicator">
+                    <span>Scroll to begin</span>
+                    <div class="scroll-arrow">↓</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 0: THE ORIGIN -->
+    <section id="origin">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 0</div>
+                <div class="stage-label">The Origin Story</div>
+                <h2 class="stage-title">Your Brain Stops Feeling Tired.<br>Your Body Doesn't Stop Being Impaired.</h2>
+                <p class="stage-subtitle">
+                    After 3-4 days of sleep restriction, subjective sleepiness plateaus—you stop feeling worse. 
+                    But objective cognitive impairment keeps accumulating. By day 14, you're as impaired as 
+                    someone who hasn't slept in two days, while reporting you feel "only slightly sleepy."
+                </p>
+            </div>
+
+            <div class="origin-chart">
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-line objective"></div>
+                        <span class="legend-text">Objective impairment (PVT lapses)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-line subjective"></div>
+                        <span class="legend-text">Subjective sleepiness (KSS)</span>
+                    </div>
+                </div>
+
+                <svg class="origin-svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
+                    <!-- Grid -->
+                    <g stroke="#2a2a2a" stroke-width="1">
+                        <line x1="60" y1="40" x2="760" y2="40"/>
+                        <line x1="60" y1="100" x2="760" y2="100"/>
+                        <line x1="60" y1="160" x2="760" y2="160"/>
+                        <line x1="60" y1="220" x2="760" y2="220"/>
+                    </g>
+
+                    <!-- Gap zone -->
+                    <path fill="rgba(239, 68, 68, 0.08)" d="
+                        M 260 185 
+                        L 310 170 L 360 155 L 410 138 L 460 118 L 510 95 L 560 75 L 610 55 L 660 40
+                        L 660 178 L 610 180 L 560 182 L 510 183 L 460 184 L 410 185 L 360 184 L 310 182 L 260 185
+                        Z
+                    "/>
+
+                    <!-- Axes -->
+                    <line x1="60" y1="240" x2="760" y2="240" stroke="#444" stroke-width="1"/>
+                    <line x1="60" y1="40" x2="60" y2="240" stroke="#444" stroke-width="1"/>
+
+                    <!-- Y labels -->
+                    <text x="50" y="44" text-anchor="end" fill="#666" font-size="10">Severe</text>
+                    <text x="50" y="164" text-anchor="end" fill="#666" font-size="10">Moderate</text>
+                    <text x="50" y="224" text-anchor="end" fill="#666" font-size="10">Baseline</text>
+
+                    <!-- X labels -->
+                    <text x="110" y="258" text-anchor="middle" fill="#666" font-size="10">0</text>
+                    <text x="210" y="258" text-anchor="middle" fill="#666" font-size="10">2</text>
+                    <text x="310" y="258" text-anchor="middle" fill="#666" font-size="10">4</text>
+                    <text x="410" y="258" text-anchor="middle" fill="#666" font-size="10">6</text>
+                    <text x="510" y="258" text-anchor="middle" fill="#666" font-size="10">8</text>
+                    <text x="610" y="258" text-anchor="middle" fill="#666" font-size="10">10</text>
+                    <text x="710" y="258" text-anchor="middle" fill="#666" font-size="10">14</text>
+                    <text x="410" y="280" text-anchor="middle" fill="#555" font-size="11">Days of Sleep Restriction (4 hours/night)</text>
+
+                    <!-- Subjective line -->
+                    <path fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="
+                        M 110 215
+                        C 140 200, 180 190, 210 185
+                        C 240 182, 280 182, 310 182
+                        C 360 183, 410 184, 460 184
+                        C 510 183, 560 182, 610 180
+                        L 710 178
+                    "/>
+
+                    <!-- Objective line -->
+                    <path fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="
+                        M 110 215
+                        C 140 205, 180 195, 210 190
+                        C 240 182, 280 170, 310 160
+                        C 360 142, 410 122, 460 100
+                        C 510 78, 560 58, 610 45
+                        L 710 30
+                    "/>
+
+                    <!-- Day 3-4 marker -->
+                    <line x1="260" y1="40" x2="260" y2="240" stroke="#555" stroke-width="1" stroke-dasharray="4,4"/>
+                    <text x="260" y="32" text-anchor="middle" fill="#888" font-size="9">Plateau begins</text>
+
+                    <!-- Gap annotation -->
+                    <text x="520" y="125" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="600">THE</text>
+                    <text x="520" y="140" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="600">UNAWARENESS</text>
+                    <text x="520" y="155" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="600">GAP</text>
+                </svg>
+            </div>
+
+            <div class="origin-stats">
+                <div class="origin-stat objective">
+                    <div class="stat-value">~1.0</div>
+                    <div class="stat-label">Coefficient of change for objective impairment—near-linear accumulation with no adaptation</div>
+                </div>
+                <div class="origin-stat subjective">
+                    <div class="stat-value">~0.5</div>
+                    <div class="stat-label">Coefficient of change for subjective sleepiness—half the sensitivity, plateaus after day 3-4</div>
+                </div>
+            </div>
+
+            <div class="origin-quote">
+                <p class="quote-text">
+                    "Sleepiness ratings suggest that subjects were largely unaware of these increasing 
+                    cognitive deficits, which may explain why the impact of chronic sleep restriction 
+                    on waking cognitive functions is often assumed to be benign."
+                </p>
+                <div class="quote-source">Van Dongen, Maislin, Mullington & Dinges (2003), <em>Sleep</em></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 1: AGREEMENT -->
+    <section id="agreement">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 1</div>
+                <div class="stage-label">The Agreement</div>
+                <h2 class="stage-title">Eyes Show and Tell Tired</h2>
+                <p class="stage-subtitle">
+                    Before you feel exhausted, before your sleep score drops, before you hit the wall—your 
+                    eyes are already telling the truth. They're the honest accountants your brain can no longer hear.
+                </p>
+            </div>
+
+            <div class="agreement-grid">
+                <div class="big-stat-card">
+                    <div class="big-stat-number">7+</div>
+                    <div class="big-stat-unit">Hours / Day</div>
+                    <div class="big-stat-desc">Average screen time for office workers. Every hour accumulates as "screen debt" your eyes register but you stop feeling.</div>
+                </div>
+                <div class="tells-grid">
+                    <div class="tell-card">
+                        <div class="tell-icon">😑</div>
+                        <div class="tell-name">Heavy Eyelids</div>
+                        <div class="tell-desc">First visible sign of sleep debt</div>
+                    </div>
+                    <div class="tell-card">
+                        <div class="tell-icon">🔴</div>
+                        <div class="tell-name">Redness</div>
+                        <div class="tell-desc">Dilated vessels signal strain</div>
+                    </div>
+                    <div class="tell-card">
+                        <div class="tell-icon">💧</div>
+                        <div class="tell-name">Dryness</div>
+                        <div class="tell-desc">Tear film instability</div>
+                    </div>
+                    <div class="tell-card">
+                        <div class="tell-icon">😶‍🌫️</div>
+                        <div class="tell-name">Glazed Look</div>
+                        <div class="tell-desc">What others notice first</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gap-reveal">
+                <div class="gap-reveal-title">The gap between feeling and being</div>
+                <div class="gap-comparison">
+                    <div class="gap-side self-report">
+                        <div class="gap-percent">39%</div>
+                        <div class="gap-label">Self-report sleep issues</div>
+                    </div>
+                    <div class="gap-divider">
+                        <div class="gap-vs">vs</div>
+                    </div>
+                    <div class="gap-side clinical">
+                        <div class="gap-percent">48%</div>
+                        <div class="gap-label">Actually have poor sleep (PSQI)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 2: REFRAME -->
+    <section id="reframe">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 2</div>
+                <div class="stage-label">The Reframe</div>
+                <h2 class="stage-title">Science Connects Them.<br>Industry Still Siloed.</h2>
+                <p class="stage-subtitle">
+                    Sleep researchers study sleep. Eye doctors study eyes. Thermal engineers study HVAC. 
+                    But these are all the same system—and nobody's treating it that way.
+                </p>
+            </div>
+
+            <div class="cycle-container">
+                <div class="cycle-ring">
+                    <div class="cycle-center">
+                        <div class="cycle-center-label">The Vicious Cycle</div>
+                        <div class="cycle-center-title">Each makes the other worse</div>
+                    </div>
+                </div>
+                <div class="cycle-node sleep">
+                    <div class="cycle-node-icon">🌙</div>
+                    <div class="cycle-node-title">Poor Sleep</div>
+                    <div class="cycle-node-desc">Fragmented rest</div>
+                </div>
+                <div class="cycle-node stress">
+                    <div class="cycle-node-icon">⚡</div>
+                    <div class="cycle-node-title">Stress Response</div>
+                    <div class="cycle-node-desc">Elevated cortisol</div>
+                </div>
+                <div class="cycle-node tears">
+                    <div class="cycle-node-icon">💧</div>
+                    <div class="cycle-node-title">Tear Instability</div>
+                    <div class="cycle-node-desc">Film breakdown</div>
+                </div>
+                <div class="cycle-node pain">
+                    <div class="cycle-node-icon">👁</div>
+                    <div class="cycle-node-title">Ocular Discomfort</div>
+                    <div class="cycle-node-desc">Pain, irritation</div>
+                </div>
+            </div>
+
+            <div class="evidence-grid">
+                <div class="evidence-card">
+                    <div class="evidence-stat">~50%</div>
+                    <div class="evidence-desc">Higher likelihood of dry eye among those with poor sleep quality</div>
+                </div>
+                <div class="evidence-card">
+                    <div class="evidence-stat">7×</div>
+                    <div class="evidence-desc">Increased risk of severe dry eye + poor sleep in evening chronotypes</div>
+                </div>
+                <div class="evidence-card">
+                    <div class="evidence-stat">14 days</div>
+                    <div class="evidence-desc">For ocular surface damage from sleep loss to reverse with quality rest</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 3: TIMING -->
+    <section id="timing">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 2b</div>
+                <div class="stage-label">The Timing</div>
+                <h2 class="stage-title">The Afternoon Collapse</h2>
+                <p class="stage-subtitle">
+                    Four biological systems—tear production, alertness, thermal comfort, and eye strain—follow 
+                    independent circadian rhythms. But between 2pm and 6pm, they all reach their lowest point together.
+                </p>
+            </div>
+
+            <div class="timing-chart">
+                <svg class="timing-svg" viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet">
+                    <!-- Grid -->
+                    <g stroke="#2a2a2a" stroke-width="1">
+                        <line x1="60" y1="40" x2="760" y2="40"/>
+                        <line x1="60" y1="100" x2="760" y2="100"/>
+                        <line x1="60" y1="160" x2="760" y2="160"/>
+                        <line x1="60" y1="220" x2="760" y2="220"/>
+                    </g>
+
+                    <!-- Convergence zone -->
+                    <rect x="450" y="30" width="140" height="200" rx="4" fill="rgba(249, 115, 22, 0.1)"/>
+                    <rect x="450" y="30" width="140" height="200" rx="4" fill="none" stroke="rgba(249, 115, 22, 0.3)" stroke-dasharray="4,4"/>
+
+                    <!-- Axes -->
+                    <line x1="60" y1="240" x2="760" y2="240" stroke="#444" stroke-width="1"/>
+
+                    <!-- X labels -->
+                    <text x="60" y="258" text-anchor="middle" fill="#666" font-size="10">12am</text>
+                    <text x="160" y="258" text-anchor="middle" fill="#666" font-size="10">4am</text>
+                    <text x="260" y="258" text-anchor="middle" fill="#666" font-size="10">8am</text>
+                    <text x="360" y="258" text-anchor="middle" fill="#666" font-size="10">12pm</text>
+                    <text x="460" y="258" text-anchor="middle" fill="#f97316" font-size="10" font-weight="600">2pm</text>
+                    <text x="560" y="258" text-anchor="middle" fill="#f97316" font-size="10" font-weight="600">6pm</text>
+                    <text x="660" y="258" text-anchor="middle" fill="#666" font-size="10">8pm</text>
+                    <text x="760" y="258" text-anchor="middle" fill="#666" font-size="10">12am</text>
+
+                    <!-- Data lines -->
+                    <!-- Tears (blue) -->
+                    <path fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" d="
+                        M 60 160 C 110 150, 160 100, 210 70 C 260 50, 310 55, 360 80 
+                        C 410 110, 460 160, 520 200 C 560 215, 600 205, 660 180 C 710 165, 740 170, 760 175
+                    "/>
+                    <!-- Alertness (green) -->
+                    <path fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" d="
+                        M 60 200 C 110 180, 160 120, 210 70 C 260 45, 310 50, 360 70 
+                        C 410 100, 460 160, 520 210 C 560 205, 600 170, 660 130 C 710 110, 740 130, 760 170
+                    "/>
+                    <!-- Thermal (orange) -->
+                    <path fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" d="
+                        M 60 130 C 110 125, 160 120, 210 115 C 260 110, 310 115, 360 130 
+                        C 410 150, 460 180, 520 200 C 560 195, 600 175, 660 150 C 710 135, 740 130, 760 135
+                    "/>
+                    <!-- Symptoms inverted (red) -->
+                    <path fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" d="
+                        M 60 110 C 110 95, 160 70, 210 55 C 260 50, 310 65, 360 90 
+                        C 410 130, 460 175, 520 210 C 560 205, 600 180, 660 155 C 710 140, 740 150, 760 165
+                    "/>
+
+                    <!-- Convergence marker -->
+                    <circle cx="520" cy="205" r="6" fill="#f97316"/>
+                    <circle cx="520" cy="205" r="12" fill="none" stroke="#f97316" stroke-width="2" opacity="0.4"/>
+
+                    <!-- Zone label -->
+                    <text x="520" y="55" text-anchor="middle" fill="#f97316" font-size="11" font-weight="600">CONVERGENCE ZONE</text>
+                </svg>
+
+                <div class="timing-legend">
+                    <div class="legend-item">
+                        <div class="legend-line" style="background: #3b82f6;"></div>
+                        <span class="legend-text">Tear Production</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-line" style="background: #22c55e;"></div>
+                        <span class="legend-text">Alertness</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-line" style="background: #f59e0b;"></div>
+                        <span class="legend-text">Thermal Comfort</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-line" style="background: #ef4444;"></div>
+                        <span class="legend-text">Eye Comfort</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timing-insight-grid">
+                <div class="timing-insight">
+                    <div class="timing-insight-time">Morning</div>
+                    <div class="timing-insight-title">Systems at Peak</div>
+                    <div class="timing-insight-desc">Tear volume highest, alertness rising. Your window of resilience.</div>
+                </div>
+                <div class="timing-insight">
+                    <div class="timing-insight-time">2pm – 6pm</div>
+                    <div class="timing-insight-title">The Convergence Zone</div>
+                    <div class="timing-insight-desc">Circadian dip meets screen debt. Error rates spike. Most people push through.</div>
+                </div>
+                <div class="timing-insight">
+                    <div class="timing-insight-time">Evening</div>
+                    <div class="timing-insight-title">Partial Recovery</div>
+                    <div class="timing-insight-desc">Alertness rebounds, but tear production stays low. Deficit carries into sleep.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 4: OPPORTUNITY -->
+    <section id="opportunity">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 3</div>
+                <div class="stage-label">The Opportunity</div>
+                <h2 class="stage-title">Everyone Measures.<br>Nobody Manages.</h2>
+                <p class="stage-subtitle">
+                    We've built an entire industry around tracking health metrics. But data without 
+                    intervention is just surveillance of your own decline.
+                </p>
+            </div>
+
+            <div class="tracker-grid">
+                <div class="tracker-card">
+                    <div class="tracker-icon">⌚</div>
+                    <div class="tracker-name">Sleep Trackers</div>
+                    <div class="tracker-what">Scores your night</div>
+                </div>
+                <div class="tracker-card">
+                    <div class="tracker-icon">📱</div>
+                    <div class="tracker-name">Screen Time</div>
+                    <div class="tracker-what">Counts your hours</div>
+                </div>
+                <div class="tracker-card">
+                    <div class="tracker-icon">💓</div>
+                    <div class="tracker-name">HRV Monitors</div>
+                    <div class="tracker-what">Measures your stress</div>
+                </div>
+                <div class="tracker-card">
+                    <div class="tracker-icon">🏃</div>
+                    <div class="tracker-name">Activity Rings</div>
+                    <div class="tracker-what">Tracks movement</div>
+                </div>
+            </div>
+
+            <div class="measure-stats">
+                <div class="measure-stat">
+                    <div class="measure-stat-number">1 in 3</div>
+                    <div class="measure-stat-label">Adults use a health tracker</div>
+                </div>
+                <div class="measure-stat">
+                    <div class="measure-stat-number">$50B+</div>
+                    <div class="measure-stat-label">Wearables market size</div>
+                </div>
+                <div class="measure-stat">
+                    <div class="measure-stat-number zero">0</div>
+                    <div class="measure-stat-label">That actively intervene</div>
+                </div>
+            </div>
+
+            <div class="gap-visual">
+                <div class="gap-side-panel measure">
+                    <div class="gap-side-label">What Exists</div>
+                    <div class="gap-side-title">Passive Monitoring</div>
+                    <ul class="gap-side-list">
+                        <li>Tells you your sleep score was 67</li>
+                        <li>Says you had 8 hours of screen time</li>
+                        <li>Reports your HRV dropped</li>
+                        <li>Shows your eyes are strained</li>
+                    </ul>
+                </div>
+                <div class="gap-center-panel">
+                    <div class="gap-question">?</div>
+                </div>
+                <div class="gap-side-panel manage">
+                    <div class="gap-side-label">What's Needed</div>
+                    <div class="gap-side-title">Active Intervention</div>
+                    <ul class="gap-side-list">
+                        <li>Actually improves your sleep onset</li>
+                        <li>Interrupts the fatigue accumulation</li>
+                        <li>Triggers physiological recovery</li>
+                        <li>Breaks the vicious cycle</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 5: PROOF OVERVIEW -->
+    <section id="proof-overview">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 4</div>
+                <div class="stage-label">The Proof</div>
+                <h2 class="stage-title">One Intervention.<br>Three Systems Restored.</h2>
+                <p class="stage-subtitle">
+                    6-week study of 500 Canadian government employees using thermal periocular therapy. 
+                    Not three separate treatments. One intervention addressing the connected system.
+                </p>
+            </div>
+
+            <div class="convergence-chart">
+                <div class="slope-grid">
+                    <div class="slope-column before">
+                        <div class="slope-item eyes">
+                            <div class="slope-label">Eye Discomfort (OSDI)</div>
+                            <div class="slope-value">27.0</div>
+                        </div>
+                        <div class="slope-item sleep">
+                            <div class="slope-label">Sleep Quality (PSQI)</div>
+                            <div class="slope-value">8.3</div>
+                        </div>
+                        <div class="slope-item stress">
+                            <div class="slope-label">Stress (STAI)</div>
+                            <div class="slope-value">41.4</div>
+                        </div>
+                    </div>
+                    <div class="slope-center">
+                        <div class="slope-improvement">37% ↓</div>
+                        <div class="slope-arrow">→</div>
+                        <div class="slope-improvement">17% ↓</div>
+                        <div class="slope-arrow">→</div>
+                        <div class="slope-improvement">6% ↓</div>
+                    </div>
+                    <div class="slope-column after">
+                        <div class="slope-item eyes">
+                            <div class="slope-label">After 6 Weeks</div>
+                            <div class="slope-value">17.0</div>
+                        </div>
+                        <div class="slope-item sleep">
+                            <div class="slope-label">After 6 Weeks</div>
+                            <div class="slope-value">6.9</div>
+                        </div>
+                        <div class="slope-item stress">
+                            <div class="slope-label">After 6 Weeks</div>
+                            <div class="slope-value">38.9</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 6: SEVERITY -->
+    <section id="severity">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 4a</div>
+                <div class="stage-label">The Depth</div>
+                <h2 class="stage-title">The Deeper the Debt,<br>The Greater the Recovery</h2>
+                <p class="stage-subtitle">
+                    People with the worst symptoms—those who had normalized the most dysfunction—showed 
+                    the largest improvements. The body was waiting to heal.
+                </p>
+            </div>
+
+            <div class="severity-chart">
+                <div class="severity-row">
+                    <div class="severity-label-box">
+                        <div class="severity-name mild">Mild</div>
+                        <div class="severity-score">OSDI: 13–22</div>
+                    </div>
+                    <div class="severity-bar-container">
+                        <div class="severity-bar mild"></div>
+                    </div>
+                    <div class="severity-badge">
+                        <div class="severity-percent">32%</div>
+                        <div class="severity-badge-label">d=0.73</div>
+                    </div>
+                </div>
+                <div class="severity-row">
+                    <div class="severity-label-box">
+                        <div class="severity-name moderate">Moderate</div>
+                        <div class="severity-score">OSDI: 23–32</div>
+                    </div>
+                    <div class="severity-bar-container">
+                        <div class="severity-bar moderate"></div>
+                    </div>
+                    <div class="severity-badge">
+                        <div class="severity-percent">35%</div>
+                        <div class="severity-badge-label">d=1.03</div>
+                    </div>
+                </div>
+                <div class="severity-row">
+                    <div class="severity-label-box">
+                        <div class="severity-name severe">Severe</div>
+                        <div class="severity-score">OSDI: 33+</div>
+                    </div>
+                    <div class="severity-bar-container">
+                        <div class="severity-bar severe"></div>
+                    </div>
+                    <div class="severity-badge">
+                        <div class="severity-percent">43%</div>
+                        <div class="severity-badge-label">d=1.17</div>
+                    </div>
+                </div>
+
+                <div class="severity-insight">
+                    <div class="severity-insight-icon">💡</div>
+                    <div>
+                        <div class="severity-insight-title">Why do severe cases improve most?</div>
+                        <div class="severity-insight-text">
+                            Because they had the most accumulated debt. The intervention addressed a biological 
+                            deficit the body had been carrying. The "room for improvement" was "debt waiting to be repaid."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 7: RESOLUTION -->
+    <section id="resolution">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 4b</div>
+                <div class="stage-label">The Resolution</div>
+                <h2 class="stage-title">Not Just Improvement—<br>The Ledger Rebalances</h2>
+                <p class="stage-subtitle">
+                    The goal isn't managing chronic symptoms forever. It's getting people back to a state 
+                    where they don't think about their eyes at all.
+                </p>
+            </div>
+
+            <div class="flow-container">
+                <div class="flow-header">
+                    <div class="flow-time-label">Before Intervention</div>
+                    <div class="flow-time-label">After 6 Weeks</div>
+                </div>
+                <div class="flow-visual">
+                    <div class="flow-column">
+                        <div class="flow-box severe">
+                            <div class="flow-box-label">Severe</div>
+                            <div class="flow-box-count">54</div>
+                        </div>
+                        <div class="flow-box moderate">
+                            <div class="flow-box-label">Moderate</div>
+                            <div class="flow-box-count">30</div>
+                        </div>
+                        <div class="flow-box mild">
+                            <div class="flow-box-label">Mild</div>
+                            <div class="flow-box-count">48</div>
+                        </div>
+                        <div class="flow-box normal">
+                            <div class="flow-box-label">Normal</div>
+                            <div class="flow-box-count">34</div>
+                        </div>
+                    </div>
+                    <div class="flow-center">
+                        <div class="flow-center-stat">69%</div>
+                        <div class="flow-center-label">of severe cases<br>no longer severe</div>
+                    </div>
+                    <div class="flow-column">
+                        <div class="flow-box severe">
+                            <div class="flow-box-label">Severe</div>
+                            <div class="flow-box-count">17</div>
+                        </div>
+                        <div class="flow-box moderate">
+                            <div class="flow-box-label">Moderate</div>
+                            <div class="flow-box-count">28</div>
+                        </div>
+                        <div class="flow-box mild">
+                            <div class="flow-box-label">Mild</div>
+                            <div class="flow-box-count">51</div>
+                        </div>
+                        <div class="flow-box normal">
+                            <div class="flow-box-label">Normal</div>
+                            <div class="flow-box-count">70</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resolution-cards">
+                <div class="resolution-card">
+                    <div class="resolution-domain">Eye Comfort</div>
+                    <div class="resolution-stat">19%</div>
+                    <div class="resolution-title">Severe → Normal</div>
+                    <div class="resolution-desc">Nearly 1 in 5 with severe dry eye scored normal—as if they never had it.</div>
+                </div>
+                <div class="resolution-card">
+                    <div class="resolution-domain">Sleep Quality</div>
+                    <div class="resolution-stat">27%</div>
+                    <div class="resolution-title">Bad → Good Sleeper</div>
+                    <div class="resolution-desc">Of 116 "bad sleepers," more than a quarter became good sleepers.</div>
+                </div>
+                <div class="resolution-card">
+                    <div class="resolution-domain">The Pattern</div>
+                    <div class="resolution-stat">82%</div>
+                    <div class="resolution-title">Improved Somewhere</div>
+                    <div class="resolution-desc">Address the system, improvements cascade across domains.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 8: VALUE -->
+    <section id="value">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 4c</div>
+                <div class="stage-label">The Value</div>
+                <h2 class="stage-title">The Value of Getting<br>the Ledger Back</h2>
+                <p class="stage-subtitle">
+                    When accumulated fatigue debt clears, the recaptured productivity isn't theoretical—it's 
+                    measurable, per person, per year.
+                </p>
+            </div>
+
+            <div class="value-hero">
+                <div class="value-context">Per Employee Annual Benefit</div>
+                <div class="value-number">$5,569</div>
+                <div class="value-unit">CAD / Person / Year</div>
+                <div class="value-explain">
+                    Calculated from OSDI improvement translating to documented productivity gains, based on 
+                    peer-reviewed research linking ocular surface disease to work impairment.
+                </div>
+            </div>
+
+            <div class="value-grid">
+                <div class="value-card cost">
+                    <div class="value-card-label">The Cost of Ignoring the Ledger</div>
+                    <div class="value-card-stat">$151B</div>
+                    <div class="value-card-desc">
+                        Annual cost of unmanaged screen-related health issues across health systems, 
+                        productivity loss, and diminished well-being.
+                    </div>
+                </div>
+                <div class="value-card benefit">
+                    <div class="value-card-label">The Value of Managing It</div>
+                    <div class="value-card-stat">11× ROI</div>
+                    <div class="value-card-desc">
+                        For every dollar invested in intervention, organizations recapture eleven in 
+                        productivity and reduced health burden.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAGE 9: THE PATH FORWARD -->
+    <section id="path-forward">
+        <div class="section-inner">
+            <div class="stage-header">
+                <div class="stage-number">Stage 5</div>
+                <div class="stage-label">The Path Forward</div>
+                <h2 class="stage-title">From Proven Product<br>to Scaled Platform</h2>
+                <p class="stage-subtitle">
+                    The science works. The product works. The channels are validated. 
+                    Here's what the next 12 months look like—and where we need help.
+                </p>
+            </div>
+
+            <div class="path-intro">
+                <p class="path-intro-text">
+                    We've built more than a device. We've created a diagnostic and recovery platform 
+                    that sits at the intersection of three massive markets: premium aesthetics, sleep recovery, 
+                    and routine eye care. No other tool merges these distribution channels. 
+                    No other dataset connects ocular health, sleep quality, and recovery patterns 
+                    in a single longitudinal view.
+                </p>
+            </div>
+
+            <!-- Traction Proof -->
+            <div class="traction-grid">
+                <div class="traction-card">
+                    <div class="traction-number">107+</div>
+                    <div class="traction-label">Clinic Partners</div>
+                </div>
+                <div class="traction-card">
+                    <div class="traction-number">2,900+</div>
+                    <div class="traction-label">Units Shipped</div>
+                </div>
+                <div class="traction-card">
+                    <div class="traction-number">84%</div>
+                    <div class="traction-label">Adherence Rate</div>
+                </div>
+                <div class="traction-card">
+                    <div class="traction-number">$1.5M+</div>
+                    <div class="traction-label">Revenue</div>
+                </div>
+            </div>
+
+            <!-- 12-Month Timeline -->
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-phases">
+                    
+                    <!-- Phase 1: Stabilize -->
+                    <div class="timeline-phase stabilize">
+                        <div class="timeline-node"></div>
+                        <div class="timeline-phase-content">
+                            <div class="phase-header">
+                                <div class="phase-time">Feb – Mar 2025</div>
+                                <div class="phase-title">Stabilize & Optimize</div>
+                            </div>
+                            <div class="phase-milestones">
+                                <div class="milestone">
+                                    <div class="milestone-title">Bridge Close</div>
+                                    <div class="milestone-desc">Extend runway, stabilize cash flow for operational efficiency</div>
+                                </div>
+                                <div class="milestone">
+                                    <div class="milestone-title">Sales Infrastructure</div>
+                                    <div class="milestone-desc">CRM deployment, sales playbooks, +1 team member, marketing budget</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-phase-spacer"></div>
+                    </div>
+
+                    <!-- Phase 2: Scale -->
+                    <div class="timeline-phase scale">
+                        <div class="timeline-node"></div>
+                        <div class="timeline-phase-content">
+                            <div class="phase-header">
+                                <div class="phase-time">Apr – Jun 2025</div>
+                                <div class="phase-title">Channel Activation</div>
+                            </div>
+                            <div class="phase-milestones">
+                                <div class="milestone">
+                                    <div class="milestone-title">Optometry Conferences (2)</div>
+                                    <div class="milestone-desc">Event presence, demo units, clinic partner acquisition</div>
+                                </div>
+                                <div class="milestone">
+                                    <div class="milestone-title">PO2 + CE Mark</div>
+                                    <div class="milestone-desc">EU entry prep, Sothy pilot readiness for premium aesthetics channel</div>
+                                </div>
+                                <div class="milestone">
+                                    <div class="milestone-title">Revivo Launch</div>
+                                    <div class="milestone-desc">Wellness/sleep channel activation—first B2B2C revenue stream</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-phase-spacer"></div>
+                    </div>
+
+                    <!-- Phase 3: Expand -->
+                    <div class="timeline-phase expand">
+                        <div class="timeline-node"></div>
+                        <div class="timeline-phase-content">
+                            <div class="phase-header">
+                                <div class="phase-time">Jul – Sep 2025</div>
+                                <div class="phase-title">Scale Production</div>
+                            </div>
+                            <div class="phase-milestones">
+                                <div class="milestone">
+                                    <div class="milestone-title">US Distribution (United)</div>
+                                    <div class="milestone-desc">Reduced shipping costs, margin improvement, faster fulfillment</div>
+                                </div>
+                                <div class="milestone">
+                                    <div class="milestone-title">PO3 → PO4</div>
+                                    <div class="milestone-desc">Inventory expansion to meet channel demand—5K+ unit capacity</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-phase-spacer"></div>
+                    </div>
+
+                    <!-- Phase 4: Strategic -->
+                    <div class="timeline-phase strategic">
+                        <div class="timeline-node"></div>
+                        <div class="timeline-phase-content">
+                            <div class="phase-header">
+                                <div class="phase-time">Sep – Dec 2025</div>
+                                <div class="phase-title">Strategic Expansion</div>
+                            </div>
+                            <div class="phase-milestones">
+                                <div class="milestone">
+                                    <div class="milestone-title">Asia Market Entry</div>
+                                    <div class="milestone-desc">ChinaBase JV—IP protection, regulatory, localization</div>
+                                </div>
+                                <div class="milestone">
+                                    <div class="milestone-title">Premium Channel Debut</div>
+                                    <div class="milestone-desc">New Well Conference, Sothy launch—med-spa distribution activated</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-phase-spacer"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Strategic Optionality -->
+            <div class="optionality-section">
+                <div class="optionality-header">
+                    <div class="optionality-title">The Convergence Creates Options</div>
+                    <div class="optionality-subtitle">Multiple exit paths, multiple partnership vectors—validated interest across all four</div>
+                </div>
+                <div class="verticals-grid">
+                    <div class="vertical-card">
+                        <div class="vertical-icon">👁️</div>
+                        <div class="vertical-name">Eye Care</div>
+                        <div class="vertical-partners">Alcon, J&J Vision</div>
+                    </div>
+                    <div class="vertical-card">
+                        <div class="vertical-icon">🌙</div>
+                        <div class="vertical-name">Wellness</div>
+                        <div class="vertical-partners">Sleep platforms, recovery tech</div>
+                    </div>
+                    <div class="vertical-card">
+                        <div class="vertical-icon">💼</div>
+                        <div class="vertical-name">Enterprise</div>
+                        <div class="vertical-partners">Productivity, ergonomics</div>
+                    </div>
+                    <div class="vertical-card">
+                        <div class="vertical-icon">🎮</div>
+                        <div class="vertical-name">Gaming</div>
+                        <div class="vertical-partners">Esports performance</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What We Need -->
+            <div class="need-section">
+                <div class="need-card">
+                    <div class="need-header">
+                        <div class="need-icon">🎯</div>
+                        <div class="need-title">Where We Need Help</div>
+                    </div>
+                    <div class="need-items">
+                        <div class="need-item">
+                            <div class="need-item-icon">→</div>
+                            <div class="need-item-text"><strong>Strategic intros</strong> to wellness/sleep platforms exploring hardware integration</div>
+                        </div>
+                        <div class="need-item">
+                            <div class="need-item-icon">→</div>
+                            <div class="need-item-text"><strong>Enterprise wellness</strong> decision-makers evaluating productivity interventions</div>
+                        </div>
+                        <div class="need-item">
+                            <div class="need-item-icon">→</div>
+                            <div class="need-item-text"><strong>Med-spa/aesthetics</strong> networks interested in recovery modalities</div>
+                        </div>
+                        <div class="need-item">
+                            <div class="need-item-icon">→</div>
+                            <div class="need-item-text"><strong>Operators</strong> who've scaled hardware + subscription models</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Ask -->
+            <div class="ask-section">
+                <div class="ask-hero">
+                    <div class="ask-context">The Ask</div>
+                    <div class="ask-amount">$2M</div>
+                    <div class="ask-type">Seed Round</div>
+                    <div class="ask-purpose">
+                        Cross the chasm from proven product to scaled platform. 
+                        Infrastructure is built. Channels are validated. 
+                        Clinical evidence is in hand. We need capital to execute.
+                    </div>
+                    <div class="ask-runway">
+                        <span>Target runway:</span>
+                        <span class="ask-runway-value">18 months</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FINALE -->
+    <section id="finale">
+        <div class="section-inner">
+            <div class="finale-content">
+                <h2 class="finale-title">
+                    The ledger keeps recording.<br>
+                    The question is whether you'll<br>
+                    <em>keep paying the debt</em>—or <em>help clear it</em>.
+                </h2>
+                <p class="finale-summary">
+                    Your body has a fatigue accounting system you've lost access to. Your eyes still show the 
+                    entries. The accounts are all connected. Everyone's built tools to read it—nobody's built 
+                    tools to balance it. Until now. The science is validated. The product works. The channels 
+                    are ready. The team has done this before. We need partners to cross the chasm.
+                </p>
+                <a href="#" class="finale-cta">
+                    Let's talk
+                    <span>→</span>
+                </a>
+                <div class="finale-source">
+                    <p>Data sources: Van Dongen et al. (2003) <em>Sleep</em> · ISC Market Study (n=500) · 
+                    Greco et al. (2021) <em>Ophthalmology</em> · Chronotype and circadian biology literature · 
+                    Umay Care clinical validation (n=166)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Progress bar
+        const progressBar = document.getElementById('progressBar');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        // Section visibility
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -20% 0px',
+            threshold: 0
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Update nav dots
+                    const sectionId = entry.target.id;
+                    navDots.forEach(dot => {
+                        dot.classList.remove('active');
+                        if (dot.dataset.section === sectionId) {
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Nav dot click
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const sectionId = dot.dataset.section;
+                const section = document.getElementById(sectionId);
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Initial visibility for hero
+        document.getElementById('hero').classList.add('visible');
+    </script>
+</body>
+</html>

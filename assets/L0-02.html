@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umay &mdash; 18-Month Financial Model</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e; background: #fff;
+    max-width: 720px; margin: 0 auto; padding: 48px 40px 80px;
+    font-size: 14px; line-height: 1.7;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif; font-size: 26px;
+    margin-bottom: 8px; color: #1a1a2e;
+  }
+  .subtitle { font-size: 13px; color: #5a5a7a; margin-bottom: 32px; }
+  .download-box {
+    background: #f0fdf4; border: 2px solid #059669; border-radius: 10px;
+    padding: 24px 28px; margin: 0 0 36px; text-align: center;
+  }
+  .download-box a {
+    display: inline-block; background: #059669; color: #fff;
+    padding: 12px 32px; border-radius: 6px; text-decoration: none;
+    font-weight: 600; font-size: 14px; margin-top: 10px;
+    transition: background 0.15s;
+  }
+  .download-box a:hover { background: #047857; }
+  .download-note { font-size: 11px; color: #6b7280; margin-top: 8px; }
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 18px;
+    margin: 28px 0 10px; color: #1a1a2e;
+  }
+  .tab-grid {
+    display: grid; grid-template-columns: 120px 1fr;
+    gap: 0; font-size: 12.5px; margin: 12px 0 24px;
+    border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;
+  }
+  .tab-name {
+    padding: 8px 12px; background: #f8f8fc; font-weight: 600;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    border-bottom: 1px solid #e5e7eb; color: #1a1a2e;
+  }
+  .tab-desc {
+    padding: 8px 12px; border-bottom: 1px solid #e5e7eb; color: #374151;
+  }
+  .tab-grid > div:nth-last-child(-n+2) { border-bottom: none; }
+  .metric-row {
+    display: flex; gap: 16px; margin: 6px 0;
+  }
+  .metric {
+    flex: 1; background: #f8f8fc; border: 1px solid #e5e7eb;
+    border-radius: 6px; padding: 12px 14px; text-align: center;
+  }
+  .metric-value {
+    font-family: 'JetBrains Mono', monospace; font-size: 20px;
+    font-weight: 700; color: #059669;
+  }
+  .metric-label { font-size: 10px; color: #6b7280; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .note {
+    background: #fffbeb; border: 1px solid #f59e0b; border-radius: 6px;
+    padding: 12px 16px; font-size: 12px; color: #92400e; margin: 20px 0;
+  }
+  .note strong { color: #78350f; }
+  p { margin: 0 0 12px; }
+  .footer {
+    margin-top: 40px; padding-top: 16px; border-top: 1px solid #e5e7eb;
+    font-size: 10px; color: #9ca3af; text-align: center;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+
+<h1>18-Month Financial Model</h1>
+<div class="subtitle">Umay Care Holdings Inc. &middot; v8 &middot; Excel (.xlsx) &middot; 16 tabs &middot; 3,376 formulas</div>
+
+<div class="download-box">
+  <div style="font-size:13px; color:#374151; margin-bottom:4px;">Download the complete Excel model</div>
+  <a href="Umay_Model_v8.xlsx" download>Download .xlsx</a>
+  <div class="download-note">105 KB &middot; Requires Excel or Google Sheets</div>
+</div>
+
+<div class="metric-row">
+  <div class="metric">
+    <div class="metric-value">16</div>
+    <div class="metric-label">Tabs</div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">3,376</div>
+    <div class="metric-label">Formulas</div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">101</div>
+    <div class="metric-label">Named Ranges</div>
+  </div>
+  <div class="metric">
+    <div class="metric-value">18</div>
+    <div class="metric-label">Validation Gates</div>
+  </div>
+</div>
+
+<h2>Model Structure</h2>
+<div class="tab-grid">
+  <div class="tab-name">README</div>
+  <div class="tab-desc">Version history, architecture overview, input guide, and key assumptions</div>
+  <div class="tab-name">0_Dashboard</div>
+  <div class="tab-desc">Executive summary with KPIs, cash position, runway, and scenario selector</div>
+  <div class="tab-name">1_Inputs</div>
+  <div class="tab-desc">All assumptions in one place &mdash; yellow-highlighted cells for investor-adjustable inputs</div>
+  <div class="tab-name">2_Revenue</div>
+  <div class="tab-desc">Cohort-based clinic activation engine: new clinics, reorders, backlog fulfillment, DTC toggle</div>
+  <div class="tab-name">3_IS</div>
+  <div class="tab-desc">Monthly income statement (18 months) with actuals-vs-forecast rows</div>
+  <div class="tab-name">4_WC</div>
+  <div class="tab-desc">Working capital: AR, inventory, deferred revenue, PO deposit lifecycle</div>
+  <div class="tab-name">5_CF</div>
+  <div class="tab-desc">Monthly cash flow waterfall with rolling close tranches and runway calculation</div>
+  <div class="tab-name">6_BS</div>
+  <div class="tab-desc">Monthly balance sheet &mdash; auto-balances with IS and CF (validated each month)</div>
+  <div class="tab-name">7_Debt</div>
+  <div class="tab-desc">BDC, PrairiesCan, CEBA schedules with retirement toggle and monthly service calculation</div>
+  <div class="tab-name">8_CapTable</div>
+  <div class="tab-desc">18 shareholders, pre/post-money at three valuations, ESOP reserve, dilution waterfall</div>
+  <div class="tab-name">9_Scenarios</div>
+  <div class="tab-desc">Bear / Base / Bull presets with single-cell toggle across all assumptions</div>
+  <div class="tab-name">10_Sensitivity</div>
+  <div class="tab-desc">Tornado analysis structure on key variables (activation rate, reorder rate, COGS, FX)</div>
+  <div class="tab-name">11_DCF</div>
+  <div class="tab-desc">Floor and funded-baseline DCF valuations with terminal value and discount rate assumptions</div>
+  <div class="tab-name">12_ClinicAnalytics</div>
+  <div class="tab-desc">Per-clinic economics: LTV, CAC, payback, reorder curves, Super-Clinic identification</div>
+  <div class="tab-name">13_Channel_Value</div>
+  <div class="tab-desc">Strategic acquirer channel value analysis &mdash; implied acquisition price through distribution modeling</div>
+  <div class="tab-name">14_IP_Registry</div>
+  <div class="tab-desc">Patent, trademark, and provisional IP portfolio with estimated replacement cost</div>
+</div>
+
+<h2>Key Features</h2>
+<p><strong>3-statement integration:</strong> Income statement flows to cash flow flows to balance sheet. All 18 months balance to the dollar, validated by automated gates.</p>
+<p><strong>Scenario architecture:</strong> Single-cell toggle switches between Bear, Base, and Bull assumptions across all tabs simultaneously. Investor can stress-test any scenario.</p>
+<p><strong>Rolling close support:</strong> Fundraise tranches modeled as variable inputs &mdash; update as checks come in, cash waterfall adjusts automatically.</p>
+<p><strong>Actuals tracking:</strong> Every calculation sheet has actuals-vs-forecast rows ready for monthly population during the raise period.</p>
+<p><strong>Clinic cohort engine:</strong> Revenue builds from individual clinic activation quarters, not top-down estimates. Reorder decay, dormant reactivation, and new activation rates drive the flywheel.</p>
+
+<div class="note">
+  <strong>Yellow-highlighted cells</strong> indicate assumptions that will upgrade when primary data arrives (clinic order history export, Aztech batch pricing, actual payment terms). The model is built to improve incrementally as data flows in.
+</div>
+
+<h2>Linked References</h2>
+<p>The Master Strategy Document (Section 11) references this model for use-of-funds deployment, unit economics, and exit scenario analysis. The Investor Deck (Slides 6, 10, 11) draws from model outputs. The Unit Economics Bridge (L3-03) and Cohort Retention (L3-08) assets provide supporting detail.</p>
+
+<div class="footer">
+  Confidential &middot; Umay Care Holdings Inc. &middot; Financial Model v8 &middot; February 2026
+</div>
+
+</body>
+</html>

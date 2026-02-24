@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Privacy Map — Data Flows, Obligations & Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 46px 54px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.flow { background: #dbeafe; color: #1e40af; }
+  .badge.reg { background: #ede9fe; color: #5b21b6; }
+  .badge.arch { background: #d1fae5; color: #065f46; }
+  .badge.action { background: #fee2e2; color: #991b1b; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+  .panel.red { border-left: 4px solid #dc2626; background: #fef2f2; }
+  .panel.amber { border-left: 4px solid #d97706; background: #fffbeb; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+
+  /* Data flow node */
+  .data-flow {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
+    margin-bottom: 16px; border-radius: 8px; overflow: hidden;
+  }
+  .df-node {
+    padding: 12px 8px; text-align: center; font-size: 10px; background: #f8f8fc;
+  }
+  .df-node.local { background: #d1fae5; }
+  .df-node.cloud { background: #dbeafe; }
+  .df-node.none { background: #f0f0f0; }
+  .df-node .icon { font-size: 18px; margin-bottom: 2px; }
+  .df-node .title { font-weight: 700; font-size: 10px; }
+  .df-node .sub { font-size: 8.5px; color: #5a5a7a; margin-top: 1px; }
+
+  /* Privacy tier */
+  .privacy-tier {
+    border: 1px solid #e0e0e8; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .privacy-tier .tier-head {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
+  }
+  .privacy-tier .tier-name { font-weight: 700; font-size: 14px; }
+  .tier-badge {
+    font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 3px;
+  }
+  .tier-badge.green { background: #d1fae5; color: #065f46; }
+  .tier-badge.blue { background: #dbeafe; color: #1e40af; }
+  .tier-badge.amber { background: #fef3c7; color: #92400e; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: DATA FLOWS + PRIVACY ARCHITECTURE -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Data Privacy Map</h1>
+      <div class="subtitle">Data Flows, Regulatory Obligations & Privacy Architecture</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Privacy Posture Summary</div>
+    Umay's privacy architecture is <strong>privacy-by-default, not privacy-by-retrofit.</strong> RestScan processes 100% locally — no video, no facial data, and no biometric identifiers leave the user's browser. The Rest device transmits only anonymized usage telemetry (session duration, temperature, mode). The most sensitive data the company handles is standard e-commerce PII (name, email, shipping address). <strong>One critical TODO remains: update the privacy policy (umay.rest, last updated Oct 2021) to cover biometric/facial data before RestScan deployment.</strong>
+  </div>
+
+  <!-- DATA INVENTORY -->
+  <span class="badge flow">Section 1 · Data Inventory — What We Collect, Where It Lives</span>
+
+  <h2>Product Data Streams</h2>
+
+  <div class="privacy-tier">
+    <div class="tier-head">
+      <div class="tier-name">Rest Device — IoT Telemetry</div>
+      <div class="tier-badge green">Low Sensitivity</div>
+    </div>
+    <table>
+      <thead><tr><th>Data Type</th><th>Specifics</th><th>Storage</th><th>PII?</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;">Session metadata</td><td>Duration, mode (warm/cool/pulsed), temperature setting</td><td>Cloud (anonymized)</td><td>No</td></tr>
+        <tr><td style="font-weight:600;">Usage frequency</td><td>Sessions per day, time of day, streak length</td><td>Cloud (anonymized)</td><td>No</td></tr>
+        <tr><td style="font-weight:600;">Device state</td><td>Battery, firmware version, BLE connection status</td><td>Cloud (anonymized)</td><td>No</td></tr>
+        <tr><td style="font-weight:600;">App account</td><td>Email, device serial pairing</td><td>Cloud (encrypted)</td><td>Yes — email</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px; color:#5a5a7a;">Device telemetry is anonymized and aggregated. No health data, biometric data, or personally identifiable usage patterns are transmitted. BLE pairing enforces device-to-account binding (technical lock-in).</p>
+  </div>
+
+  <div class="privacy-tier">
+    <div class="tier-head">
+      <div class="tier-name">RestScan — Webcam Biometric Analysis</div>
+      <div class="tier-badge green">Local-Only Processing</div>
+    </div>
+    <table>
+      <thead><tr><th>Data Type</th><th>Specifics</th><th>Storage</th><th>Transmitted?</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;">Video feed</td><td>Webcam/phone camera during 120-second scan</td><td style="color:#059669; font-weight:700;">Never stored</td><td style="color:#059669; font-weight:700;">Never</td></tr>
+        <tr><td style="font-weight:600;">Face landmarks</td><td>MediaPipe 478-point mesh (in-browser)</td><td style="color:#059669; font-weight:700;">RAM only, discarded</td><td style="color:#059669; font-weight:700;">Never</td></tr>
+        <tr><td style="font-weight:600;">Derived metrics</td><td>Blink rate, PERCLOS, EAR, MBI, rPPG (HR/HRV)</td><td>Browser session only</td><td>Derived scores only (opt-in)</td></tr>
+        <tr><td style="font-weight:600;">Scan results</td><td>Domain scores (ocular, vigilance, autonomic)</td><td>Browser / optional export</td><td>Only if user exports</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px; color:#059669; font-weight:600;">No video, no facial images, and no biometric identifiers ever leave the user's device. All CV processing happens in-browser via MediaPipe JavaScript. The server never sees the user's face.</p>
+  </div>
+
+  <div class="privacy-tier">
+    <div class="tier-head">
+      <div class="tier-name">E-Commerce — Customer PII</div>
+      <div class="tier-badge blue">Standard E-Commerce</div>
+    </div>
+    <table>
+      <thead><tr><th>Data Type</th><th>Specifics</th><th>Storage</th><th>Processor</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;">Customer identity</td><td>Name, email, phone</td><td>Shopify (encrypted)</td><td>Shopify</td></tr>
+        <tr><td style="font-weight:600;">Shipping address</td><td>Clinic or patient delivery address</td><td>Shopify + 3PL</td><td>Shopify, 3PL partner</td></tr>
+        <tr><td style="font-weight:600;">Payment</td><td>Credit card / HSA-FSA</td><td>Shopify Payments (PCI-DSS)</td><td>Shopify / TrueMed (future)</td></tr>
+        <tr><td style="font-weight:600;">Order history</td><td>Purchase dates, products, amounts</td><td>Shopify</td><td>Shopify</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px; color:#5a5a7a;">Standard e-commerce data handled by Shopify's PCI-DSS compliant infrastructure. Umay does not store raw payment card data.</p>
+  </div>
+
+  <div class="privacy-tier">
+    <div class="tier-head">
+      <div class="tier-name">Clinic Partner Data</div>
+      <div class="tier-badge blue">Business Data</div>
+    </div>
+    <table>
+      <thead><tr><th>Data Type</th><th>Specifics</th><th>Storage</th><th>Sensitivity</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;">Clinic contact info</td><td>Business name, OD name, email, phone, address</td><td>CRM / Shopify</td><td>Low (business contacts)</td></tr>
+        <tr><td style="font-weight:600;">Order history</td><td>Units ordered, dates, wholesale pricing</td><td>Shopify</td><td>Moderate (pricing terms)</td></tr>
+        <tr><td style="font-weight:600;">Territory/UTM data</td><td>Per-clinic QR codes, attribution tracking</td><td>Shopify analytics</td><td>Low</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PAGE 2: REGULATORY + ACTION ITEMS -->
+<div class="page">
+
+  <span class="badge reg">Section 2 · Regulatory Obligations</span>
+
+  <h2>Applicable Privacy Frameworks</h2>
+
+  <table>
+    <thead><tr><th>Framework</th><th>Jurisdiction</th><th>Triggers</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:600;">PIPEDA</td>
+        <td>Canada (federal)</td>
+        <td>Canadian customer data collection</td>
+        <td style="color:#059669; font-weight:700;">Applicable — baseline compliance</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Alberta PIPA</td>
+        <td>Alberta</td>
+        <td>Alberta-based business operations</td>
+        <td style="color:#059669; font-weight:700;">Applicable — substantially similar to PIPEDA</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">CCPA / CPRA</td>
+        <td>California</td>
+        <td>Selling to California residents (US expansion)</td>
+        <td style="color:#d97706; font-weight:700;">Applicable post-US launch (threshold: $25M rev or 100K consumers)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Illinois BIPA</td>
+        <td>Illinois</td>
+        <td>Collection of biometric identifiers (face geometry)</td>
+        <td style="color:#059669; font-weight:700;">Not triggered — RestScan processes locally, no biometric data collected by Umay</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Texas CUBI</td>
+        <td>Texas</td>
+        <td>Capture/use of biometric identifiers</td>
+        <td style="color:#059669; font-weight:700;">Not triggered — same local-only architecture</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">HIPAA</td>
+        <td>US (federal)</td>
+        <td>Handling PHI as a covered entity or business associate</td>
+        <td style="color:#059669; font-weight:700;">Not triggered — Umay is not a covered entity. No PHI processed.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">GDPR</td>
+        <td>EU/EEA</td>
+        <td>Selling to or monitoring EU residents</td>
+        <td style="color:#5a5a7a;">Not yet applicable — no EU sales or marketing. Monitor for Aldina-led EU expansion.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="panel green" style="font-size:12px; margin-bottom:16px;">
+    <h3>Why RestScan's Local-Only Architecture Is a Strategic Advantage</h3>
+    <p style="margin-bottom:6px;">By processing all facial analysis in the browser (MediaPipe JavaScript), RestScan avoids triggering biometric privacy laws (Illinois BIPA, Texas CUBI, Washington state biometric law) that would require explicit consent frameworks, data retention policies, and audit obligations.</p>
+    <p style="margin-bottom:6px;"><strong>No video leaves the device. No face landmarks leave the device. No biometric identifiers are collected, stored, or transmitted by Umay.</strong></p>
+    <p>This isn't just a privacy decision — it's a regulatory moat. Competitors who build server-side facial analysis inherit biometric compliance obligations in every US state where BIPA-equivalent laws exist. Umay sidesteps all of them by architectural choice.</p>
+  </div>
+
+  <!-- ACTION ITEMS -->
+  <span class="badge action">Section 3 · Privacy Action Items</span>
+
+  <h2>Critical TODO: Privacy Policy Update</h2>
+
+  <div class="panel red" style="font-size:12px; margin-bottom:12px;">
+    <h3>⚠ Action Required Before RestScan Deployment</h3>
+    <p style="margin-bottom:8px;"><strong>Current policy:</strong> umay.rest privacy policy, last updated October 2021. Covers standard e-commerce data collection. Does NOT address:</p>
+    <table style="margin-top:6px;">
+      <tr><td style="font-weight:600; width:200px;">Biometric/facial data processing</td><td>Even though local-only, the policy should disclose that the app accesses the camera and describe the local-processing architecture</td></tr>
+      <tr><td style="font-weight:600;">IoT telemetry</td><td>Device usage data collection and anonymization practices</td></tr>
+      <tr><td style="font-weight:600;">Derived health metrics</td><td>Blink rate, fatigue scores, HR/HRV — even if never transmitted, users should understand what's computed</td></tr>
+      <tr><td style="font-weight:600;">Third-party processors</td><td>3PL partner, TrueMed (future), analytics providers</td></tr>
+    </table>
+    <p style="margin-top:8px;"><strong>Timeline:</strong> Must be updated before RestScan goes beyond internal POC/demo. Recommended: engage privacy counsel within 30 days of close.</p>
+  </div>
+
+  <h2>Full Privacy Roadmap</h2>
+  <table>
+    <thead><tr><th style="width:40px;">#</th><th>Action</th><th>Priority</th><th>Timeline</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="mono">1</td>
+        <td style="font-weight:600;">Update privacy policy to cover RestScan + IoT data</td>
+        <td style="color:#dc2626; font-weight:700;">Critical</td>
+        <td>30 days post-close</td>
+        <td style="color:#dc2626;">TODO</td>
+      </tr>
+      <tr>
+        <td class="mono">2</td>
+        <td style="font-weight:600;">Implement cookie consent banner (if not already present)</td>
+        <td>Medium</td>
+        <td>60 days post-close</td>
+        <td style="color:#d97706;">Review needed</td>
+      </tr>
+      <tr>
+        <td class="mono">3</td>
+        <td style="font-weight:600;">Document data processor agreements (Shopify, 3PL, TrueMed)</td>
+        <td>Medium</td>
+        <td>90 days post-close</td>
+        <td style="color:#d97706;">Pending 3PL selection</td>
+      </tr>
+      <tr>
+        <td class="mono">4</td>
+        <td style="font-weight:600;">Add RestScan camera-access consent flow (in-app)</td>
+        <td>Medium</td>
+        <td>Pre-RestScan launch</td>
+        <td style="color:#d97706;">Designed, not built</td>
+      </tr>
+      <tr>
+        <td class="mono">5</td>
+        <td style="font-weight:600;">CCPA/CPRA compliance review (if CA revenue triggers)</td>
+        <td>Low (now)</td>
+        <td>When US revenue approaches thresholds</td>
+        <td style="color:#5a5a7a;">Monitor</td>
+      </tr>
+      <tr>
+        <td class="mono">6</td>
+        <td style="font-weight:600;">GDPR readiness assessment (if EU expansion proceeds)</td>
+        <td>Low (now)</td>
+        <td>Pre-EU market entry</td>
+        <td style="color:#5a5a7a;">Not triggered</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Data Flow Summary Diagram</h2>
+  <div class="panel dark" style="font-size:12px;">
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; text-align:center;">
+      <div>
+        <div style="font-size:24px; margin-bottom:4px;">🔒</div>
+        <strong>RestScan</strong>
+        <p style="color:#9090bb; font-size:11px; margin-top:4px;">100% local. Camera → MediaPipe → scores → browser. Nothing transmitted. Nothing stored.</p>
+      </div>
+      <div>
+        <div style="font-size:24px; margin-bottom:4px;">📡</div>
+        <strong>Rest Device</strong>
+        <p style="color:#9090bb; font-size:11px; margin-top:4px;">Anonymized telemetry only. Session duration + mode. No biometric data. No health data.</p>
+      </div>
+      <div>
+        <div style="font-size:24px; margin-bottom:4px;">🛒</div>
+        <strong>E-Commerce</strong>
+        <p style="color:#9090bb; font-size:11px; margin-top:4px;">Standard PII. Shopify PCI-DSS. Name, email, address. Payment handled by Shopify Payments.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px;">
+    <div class="label">The Investor Framing</div>
+    Umay is in an <strong>unusually clean privacy position</strong> for a company working with facial analysis and biometric signals. The local-only RestScan architecture means Umay never touches the most sensitive data — it never leaves the user's browser. The primary compliance obligation is standard e-commerce privacy (PIPEDA/CCPA), which is table stakes. The one outstanding action — privacy policy update — is a drafting exercise, not an architectural change.
+  </div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Data Privacy Map</div>
+  </div>
+</div>
+
+</body>
+</html>

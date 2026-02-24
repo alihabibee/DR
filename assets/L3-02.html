@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bi-Directional Pilot Results — Executive Summary</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: #1a1a2e;
+    background: #fff;
+    line-height: 1.55;
+    font-size: 13px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .page { padding: 48px 56px; }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #1a1a2e;
+  }
+  .header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    line-height: 1.2;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+  .header-left .subtitle {
+    font-size: 14px;
+    color: #5a5a7a;
+    font-weight: 400;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 11px;
+    color: #5a5a7a;
+    line-height: 1.6;
+  }
+  .header-right .company {
+    font-weight: 700;
+    color: #1a1a2e;
+    font-size: 13px;
+  }
+
+  /* Classification badge */
+  .classification {
+    display: inline-block;
+    background: #f0f0f8;
+    color: #5a5a7a;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+
+  /* Headline stat row */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: #f8f8fc;
+    border: 1px solid #e8e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-card .number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: #1a1a2e;
+    line-height: 1.1;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: #5a5a7a;
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+  .stat-card .instrument {
+    font-size: 9px;
+    color: #8a8aaa;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .stat-card.highlight {
+    background: #1a1a2e;
+    border-color: #1a1a2e;
+  }
+  .stat-card.highlight .number { color: #fff; }
+  .stat-card.highlight .label { color: #b0b0cc; }
+  .stat-card.highlight .instrument { color: #8080aa; }
+
+  /* Two-column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  /* Section headers */
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: #1a1a2e;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e0e0e8;
+  }
+  h3 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #5a5a7a;
+    margin-bottom: 8px;
+  }
+
+  /* Panel */
+  .panel {
+    background: #fafafa;
+    border: 1px solid #e8e8f0;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .panel.dark {
+    background: #f0f0f8;
+  }
+
+  /* Data table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #5a5a7a;
+    padding: 8px 10px;
+    border-bottom: 2px solid #1a1a2e;
+  }
+  table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+  }
+  table tr:last-child td { border-bottom: none; }
+  .sig { color: #0a7; font-weight: 600; }
+  .effect-large { background: #e8f5e9; border-radius: 3px; padding: 1px 5px; font-weight: 600; color: #2e7d32; }
+  .effect-med { background: #e3f2fd; border-radius: 3px; padding: 1px 5px; font-weight: 600; color: #1565c0; }
+  .effect-small { background: #fce4ec; border-radius: 3px; padding: 1px 5px; font-weight: 600; color: #c62828; }
+
+  /* Evidence strip */
+  .evidence-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .evidence-item {
+    border-left: 3px solid #1a1a2e;
+    padding: 10px 12px;
+    background: #f8f8fc;
+  }
+  .evidence-item .stat {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #1a1a2e;
+  }
+  .evidence-item .desc {
+    font-size: 11px;
+    color: #5a5a7a;
+    margin-top: 2px;
+  }
+  .evidence-item .source {
+    font-size: 9px;
+    color: #aaa;
+    margin-top: 4px;
+  }
+
+  /* Mechanism row */
+  .mechanism-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: #f8f8fc;
+    border-radius: 8px;
+    border: 1px solid #e8e8f0;
+  }
+  .mechanism-arrow {
+    font-size: 24px;
+    color: #1a1a2e;
+    flex-shrink: 0;
+  }
+  .mechanism-box {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+  }
+  .mechanism-box .title {
+    font-weight: 700;
+    font-size: 13px;
+    color: #1a1a2e;
+  }
+  .mechanism-box .detail {
+    font-size: 11px;
+    color: #5a5a7a;
+    margin-top: 2px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e8;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #8a8aaa;
+  }
+
+  /* Callout */
+  .callout {
+    background: #1a1a2e;
+    color: #fff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+  }
+  .callout strong { color: #fff; }
+  .callout .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9090bb;
+    margin-bottom: 6px;
+  }
+
+  /* Caveat */
+  .caveat {
+    font-size: 10px;
+    color: #8a8aaa;
+    font-style: italic;
+    padding: 8px 12px;
+    background: #fafafa;
+    border-left: 2px solid #ddd;
+    margin-top: 16px;
+  }
+
+  /* Bar visualization */
+  .bar-group { margin-bottom: 10px; }
+  .bar-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .bar-track {
+    height: 22px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .bar-fill.dryeye { background: linear-gradient(90deg, #1a1a2e, #3a3a5e); }
+  .bar-fill.sleep { background: linear-gradient(90deg, #2d4a7a, #4a7ab5); }
+  .bar-fill.cl { background: linear-gradient(90deg, #4a6a5a, #6a9a7a); }
+  .bar-fill.anxiety { background: linear-gradient(90deg, #6a4a5a, #9a6a7a); }
+  .bar-fill.usage { background: linear-gradient(90deg, #7a5a1a, #b58a2a); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>The Eye-Sleep Connection</h1>
+      <div class="subtitle">Bi-Directional Pilot Results — Executive Summary</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1A<br>
+      Confidential
+    </div>
+  </div>
+
+  <span class="classification">Government-Backed Pilot Data · Manuscript In Draft</span>
+
+  <!-- HEADLINE STATS -->
+  <div class="stat-row">
+    <div class="stat-card highlight">
+      <div class="number">500</div>
+      <div class="label">Government Employees</div>
+      <div class="instrument">Shared Services Canada</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">87%</div>
+      <div class="label">Eye Comfort Improvement</div>
+      <div class="instrument">OSDI · p<0.0001 · d=0.69</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">67%</div>
+      <div class="label">Sleep Quality Improvement</div>
+      <div class="instrument">PSQI · p<0.0001 · d=0.54</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">84%</div>
+      <div class="label">Daily Usage Rate</div>
+      <div class="instrument">User-reported · 6-week study</div>
+    </div>
+  </div>
+
+  <!-- CALLOUT: WHY THIS MATTERS -->
+  <div class="callout">
+    <div class="label">Investment Thesis</div>
+    A single thermal wearable improved both dry eye symptoms <em>and</em> sleep quality in a government workforce, using validated clinical instruments — demonstrating the bi-directional mechanism that positions Umay at the intersection of a $6B ophthalmic market and a $411B sleep economy.
+  </div>
+
+  <!-- TWO COLUMNS: STUDY DESIGN + RESULTS -->
+  <div class="two-col">
+
+    <!-- LEFT: STUDY DESIGN -->
+    <div>
+      <h2>Study Design</h2>
+      <div class="panel">
+        <table>
+          <tr><td style="width:120px; font-weight:600;">Sponsor</td><td>Innovative Solutions Canada (ISC) / Shared Services Canada</td></tr>
+          <tr><td style="font-weight:600;">PI</td><td>Dr. Sharmin Habib, OD</td></tr>
+          <tr><td style="font-weight:600;">Design</td><td>Prospective, single-arm, pre-post interventional (6 weeks)</td></tr>
+          <tr><td style="font-weight:600;">Population</td><td>500 Government of Canada employees (remote, screen-intensive)</td></tr>
+          <tr><td style="font-weight:600;">Intervention</td><td>Daily use of the Rest thermal wearable device</td></tr>
+          <tr><td style="font-weight:600;">Analysis</td><td>Paired t-tests (parametric) + Wilcoxon signed-rank (non-parametric); 95% CIs</td></tr>
+          <tr><td style="font-weight:600;">Control</td><td>Within-subjects (participants as own controls); no external control group (pandemic limitation)</td></tr>
+          <tr><td style="font-weight:600;">Instruments</td><td>OSDI, CVSS-17, CLDEQ-8, PSQI, STAI</td></tr>
+          <tr><td style="font-weight:600;">Status</td><td><em>Manuscript in draft; targeting peer-reviewed publication</em></td></tr>
+        </table>
+      </div>
+      
+      <div class="caveat">
+        Study limitation: Single-arm design without external control group. Pandemic constraints required within-subjects methodology. Effect sizes and validated instruments provide robust evidence within this design framework.
+      </div>
+    </div>
+
+    <!-- RIGHT: RESULTS BY DOMAIN -->
+    <div>
+      <h2>Results by Domain</h2>
+      
+      <div style="margin-bottom: 16px;">
+        <div class="bar-group">
+          <div class="bar-label"><span>Severe Dry Eye Remission</span><span>87%</span></div>
+          <div class="bar-track"><div class="bar-fill dryeye" style="width:87%">d = 1.17</div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label"><span>Overall Dry Eye Relief</span><span>74%</span></div>
+          <div class="bar-track"><div class="bar-fill dryeye" style="width:74%">d = 0.69</div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label"><span>Contact Lens Comfort</span><span>71%</span></div>
+          <div class="bar-track"><div class="bar-fill cl" style="width:71%">d = 0.81</div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label"><span>Sleep Quality</span><span>67%</span></div>
+          <div class="bar-track"><div class="bar-fill sleep" style="width:67%">d = 0.54</div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label"><span>Stress/Anxiety Reduction</span><span>65%</span></div>
+          <div class="bar-track"><div class="bar-fill anxiety" style="width:65%">d = 0.22</div></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-label"><span>Daily Usage Compliance</span><span>84%</span></div>
+          <div class="bar-track"><div class="bar-fill usage" style="width:84%"></div></div>
+        </div>
+      </div>
+
+      <div class="panel dark" style="font-size:11px;">
+        <strong>Severity matters:</strong> 19% of participants with severe dry eye (OSDI>33) were reclassified as "normal" post-intervention. Among contact lens wearers: 34% reduction in lens removal frequency, 41% reduction in blurred vision episodes.
+      </div>
+    </div>
+  </div>
+
+  <!-- STATISTICAL RIGOR TABLE -->
+  <h2>Statistical Detail</h2>
+  <table style="margin-bottom: 24px;">
+    <thead>
+      <tr>
+        <th>Instrument</th>
+        <th>Domain</th>
+        <th>p-value</th>
+        <th>Cohen's d</th>
+        <th>Effect Size</th>
+        <th>Key Finding</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>OSDI</strong></td>
+        <td>Dry Eye Severity</td>
+        <td class="sig"><0.0001</td>
+        <td>0.69</td>
+        <td><span class="effect-med">Medium-Large</span></td>
+        <td>74% overall improvement; 87% of severe cases</td>
+      </tr>
+      <tr>
+        <td><strong>OSDI (Severe)</strong></td>
+        <td>Severe DED (OSDI>33)</td>
+        <td class="sig"><0.0001</td>
+        <td>1.17</td>
+        <td><span class="effect-large">Very Large</span></td>
+        <td>19% reclassified to "normal" post-intervention</td>
+      </tr>
+      <tr>
+        <td><strong>CVSS-17</strong></td>
+        <td>Computer Vision</td>
+        <td class="sig"><0.0001</td>
+        <td>0.72</td>
+        <td><span class="effect-med">Medium-Large</span></td>
+        <td>Screen-related discomfort significantly reduced</td>
+      </tr>
+      <tr>
+        <td><strong>CLDEQ-8</strong></td>
+        <td>Contact Lens</td>
+        <td class="sig">0.014</td>
+        <td>0.81</td>
+        <td><span class="effect-large">Large</span></td>
+        <td>34% fewer lens removals; 41% less blurred vision</td>
+      </tr>
+      <tr>
+        <td><strong>PSQI</strong></td>
+        <td>Sleep Quality</td>
+        <td class="sig"><0.0001</td>
+        <td>0.54</td>
+        <td><span class="effect-med">Medium</span></td>
+        <td>67% improved; 58% faster onset; +66 min/night</td>
+      </tr>
+      <tr>
+        <td><strong>STAI</strong></td>
+        <td>Anxiety / Stress</td>
+        <td class="sig"><0.0001</td>
+        <td>0.22</td>
+        <td><span class="effect-small">Small-Medium</span></td>
+        <td>65% felt less stressed; d=0.54 in high-anxiety group</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- WHY BI-DIRECTIONAL: THE PUBLISHED EVIDENCE -->
+  <h2>Why Bi-Directional? The Published Evidence Base</h2>
+  <div class="evidence-strip">
+    <div class="evidence-item">
+      <div class="stat">3.76×</div>
+      <div class="desc">Risk of insufficient sleep in dry eye patients</div>
+      <div class="source">Meta-analysis, 21 studies, 419,218 participants</div>
+    </div>
+    <div class="evidence-item">
+      <div class="stat">+1.78</div>
+      <div class="desc">PSQI points worse in DED vs. controls</div>
+      <div class="source">95% CI: 1.06–2.50, p<0.001</div>
+    </div>
+    <div class="evidence-item">
+      <div class="stat">45% vs 34%</div>
+      <div class="desc">Poor sleep: DED patients vs. controls</div>
+      <div class="source">Osaka study, 672 office workers</div>
+    </div>
+  </div>
+
+  <!-- MECHANISM -->
+  <div class="mechanism-row">
+    <div class="mechanism-box">
+      <div class="title">Dry Eye</div>
+      <div class="detail">Ocular discomfort, inflammation, tear instability</div>
+    </div>
+    <div class="mechanism-arrow">⇄</div>
+    <div class="mechanism-box">
+      <div class="title">Poor Sleep</div>
+      <div class="detail">Circadian disruption, IL-6/TNF-α elevation, reduced meibum secretion</div>
+    </div>
+    <div class="mechanism-arrow">→</div>
+    <div class="mechanism-box" style="background:#f0f0f8; border-radius:8px; padding:12px;">
+      <div class="title" style="color:#1a1a2e;">Rest Intervention</div>
+      <div class="detail">Periocular thermal therapy improves meibomian function <em>and</em> facilitates sleep onset via distal-proximal gradient</div>
+    </div>
+  </div>
+
+  <!-- ECONOMIC IMPACT -->
+  <h2>Projected Economic Impact</h2>
+  <div class="two-col">
+    <div class="panel">
+      <h3>Employer Value (from Pilot)</h3>
+      <table>
+        <tr><td style="font-weight:600;">Projected annual savings</td><td style="text-align:right;"><strong>$2M+ CAD</strong></td></tr>
+        <tr><td style="font-weight:600;">Per-employee benefit</td><td style="text-align:right;">$5,569/year</td></tr>
+        <tr><td style="font-weight:600;">Basis</td><td style="text-align:right;">OSDI→presenteeism correlation</td></tr>
+        <tr><td style="font-weight:600;">Reference</td><td style="text-align:right;">DREAM study ($215/OSDI point)</td></tr>
+      </table>
+    </div>
+    <div class="panel dark">
+      <h3>Market Signal</h3>
+      <p style="font-size:12px; color:#3a3a5a; margin-bottom:8px;">A single device that addresses both dry eye ($6B market) and sleep quality ($411B market) through the same therapeutic mechanism creates a novel category position no competitor currently occupies.</p>
+      <p style="font-size:12px; color:#3a3a5a;">No other periocular thermal device has demonstrated dual-domain efficacy using validated clinical instruments in a funded government study of this scale.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1A · Habib et al. manuscript in draft</div>
+  </div>
+
+</div>
+</body>
+</html>

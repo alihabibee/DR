@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulatory Firewall Matrix — Claims Governance & Pathway Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 44px 52px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.reg { background: #fee2e2; color: #991b1b; }
+  .badge.claims { background: #dbeafe; color: #1e40af; }
+  .badge.path { background: #d1fae5; color: #065f46; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.red { border-left: 4px solid #dc2626; background: #fef2f2; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+  .panel.amber { border-left: 4px solid #d97706; background: #fffbeb; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .footer {
+    margin-top: 20px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  /* Tier system */
+  .tier-row {
+    display: grid; grid-template-columns: 100px 1fr 1fr 120px; gap: 1px;
+    background: #e0e0e8; margin-bottom: 1px;
+  }
+  .tier-row:first-child { border-radius: 8px 8px 0 0; overflow: hidden; }
+  .tier-row:last-child { border-radius: 0 0 8px 8px; overflow: hidden; }
+  .tier-cell { padding: 10px 12px; background: #fff; font-size: 12px; }
+  .tier-cell.header { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tier-cell.label { font-weight: 700; background: #f8f8fc; }
+  .tier-cell.t1 { border-left: 4px solid #059669; }
+  .tier-cell.t2 { border-left: 4px solid #2563eb; }
+  .tier-cell.t3 { border-left: 4px solid #d97706; }
+  .tier-cell.t4 { border-left: 4px solid #dc2626; }
+
+  /* Gate system */
+  .gate-flow {
+    display: flex; gap: 2px; margin-bottom: 16px; border-radius: 8px; overflow: hidden;
+  }
+  .gate {
+    flex: 1; padding: 14px 10px; text-align: center;
+    background: #f8f8fc; border: 1px solid #e0e0e8;
+  }
+  .gate:first-child { border-radius: 8px 0 0 8px; }
+  .gate:last-child { border-radius: 0 8px 8px 0; background: #059669; color: #fff; border-color: #059669; }
+  .gate .num { font-family: 'DM Serif Display', serif; font-size: 22px; }
+  .gate .title { font-weight: 700; font-size: 11px; margin-top: 2px; }
+  .gate .req { font-size: 9px; color: #8a8aaa; margin-top: 4px; line-height: 1.3; }
+  .gate:last-child .req { color: #c0e8d0; }
+
+  /* Status indicators */
+  .status-safe { color: #059669; font-weight: 700; }
+  .status-caution { color: #d97706; font-weight: 700; }
+  .status-danger { color: #dc2626; font-weight: 700; }
+
+  /* Pathway diagram */
+  .pathway-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;
+  }
+  .pathway-card {
+    border: 1px solid #e0e0e8; border-radius: 8px; padding: 16px; position: relative;
+  }
+  .pathway-card .phase {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; margin-bottom: 6px; padding-bottom: 4px;
+  }
+  .pathway-card.now { border-color: #059669; }
+  .pathway-card.now .phase { color: #059669; border-bottom: 2px solid #059669; }
+  .pathway-card.next { border-color: #2563eb; }
+  .pathway-card.next .phase { color: #2563eb; border-bottom: 2px solid #2563eb; }
+  .pathway-card.future { border-color: #7c3aed; }
+  .pathway-card.future .phase { color: #7c3aed; border-bottom: 2px solid #7c3aed; }
+  .pathway-card.explore { border-color: #d97706; border-style: dashed; }
+  .pathway-card.explore .phase { color: #d97706; border-bottom: 2px dashed #d97706; }
+  .pathway-card .title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .pathway-card p { font-size: 11px; color: #5a5a7a; margin-bottom: 0; }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: CURRENT POSITION + CLAIMS GOVERNANCE -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Regulatory Firewall Matrix</h1>
+      <div class="subtitle">Claims Governance, Compliance Architecture & Pathway Strategy</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Why This Document Exists</div>
+    Investors in health-adjacent hardware face a binary regulatory risk: the company either <strong>understands the line between wellness and medical claims and manages it proactively</strong>, or it doesn't — and one FDA warning letter kills the business. This document proves Umay operates in the first category. Every claim, every script, every partner communication passes through a governed framework.
+  </div>
+
+  <!-- CURRENT REGULATORY STATUS -->
+  <span class="badge reg">Section 1 · Current Regulatory Position</span>
+
+  <h2>Device Classification: Where We Stand</h2>
+  <div class="two-col">
+    <div>
+      <table>
+        <tr><td style="font-weight:600; width:160px;">Product classification</td><td>Consumer wellness device</td></tr>
+        <tr><td style="font-weight:600;">Health Canada</td><td class="status-safe">✓ Approved (consumer safety tested)</td></tr>
+        <tr><td style="font-weight:600;">Safety standards</td><td>IEC 60335-1 (household electrical appliances)</td></tr>
+        <tr><td style="font-weight:600;">EMC / EMF</td><td>Tested, negligible. Airplane mode available.</td></tr>
+        <tr><td style="font-weight:600;">Listing certifications</td><td>SGS International Standards</td></tr>
+        <tr><td style="font-weight:600;">FDA status</td><td class="status-caution">Not pursued (wellness positioning)</td></tr>
+        <tr><td style="font-weight:600;">CE (Europe)</td><td class="status-caution">Not pursued</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Why Wellness, Not Medical</h3>
+      <p style="font-size:12px; margin-bottom:8px;">Rest is <strong>not a medical device</strong> because it is not intended to diagnose, treat, cure, or prevent any disease. Its positioning focuses on <strong>overall wellness and user comfort</strong> through a sensory experience inspired by science-based thermal therapy methods.</p>
+      <p style="font-size:12px; margin-bottom:8px;">This mirrors the Oura approach: wellness positioning with clinical validation building underneath. It preserves iteration speed while accumulating evidence for a future regulatory upgrade.</p>
+      <p style="font-size:11px; color:#5a5a7a;">General Wellness guidance (FDA, 2016/2019): devices intended for general wellness use that make low-risk claims are not subject to device regulation.</p>
+    </div>
+  </div>
+
+  <!-- CLAIMS GOVERNANCE: 4-TIER LADDER -->
+  <span class="badge claims">Section 2 · Claims Governance Framework</span>
+
+  <h2>The 4-Tier Claims Ladder</h2>
+  <p style="margin-bottom:14px;">Every claim Umay makes — in investor materials, clinic scripts, marketing, and partner communications — is classified into one of four tiers. Only Tier 1 and Tier 2 claims are used in external materials. Tier 3 requires explicit gate passage. Tier 4 is never used.</p>
+
+  <div style="margin-bottom: 16px;">
+    <div class="tier-row">
+      <div class="tier-cell header">Tier</div>
+      <div class="tier-cell header">What You Can Say</div>
+      <div class="tier-cell header">Evidence Required</div>
+      <div class="tier-cell header">Status</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-cell label t1">Tier 1<br><span style="font-size:10px; color:#059669;">Say Freely</span></div>
+      <div class="tier-cell">Market size figures. Competitor pricing. Public financial data. "Clinically validated thermal therapy for eye comfort." "Promotes relaxation." General wellness language.</div>
+      <div class="tier-cell">Published market data, public sources, general wellness guidance compliance</div>
+      <div class="tier-cell"><span class="status-safe">✓ Active</span></div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-cell label t2">Tier 2<br><span style="font-size:10px; color:#2563eb;">Evidence-Supported</span></div>
+      <div class="tier-cell">Pilot data: "87% eye comfort improvement, 67% sleep quality improvement in a government-backed study of 500 employees." Device usage: "84% daily usage." Must include caveat: <em>"manuscript in draft."</em></div>
+      <div class="tier-cell">ISC/SSC pilot data (Habib et al., manuscript in draft). 5 validated instruments, p<0.0001. Within-subjects design.</div>
+      <div class="tier-cell"><span class="status-safe">✓ Active</span><br><span style="font-size:9px; color:#5a5a7a;">With caveats</span></div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-cell label t3">Tier 3<br><span style="font-size:10px; color:#d97706;">Gate Required</span></div>
+      <div class="tier-cell">Disease-specific efficacy claims. "Treats dry eye disease." "Improves meibomian gland function." Clinical decision support claims for RestScan. Comparative efficacy vs. Rx.</div>
+      <div class="tier-cell">Published peer-reviewed evidence + regulatory clearance for the specific claim. Gate 3 or Gate 4 passage required.</div>
+      <div class="tier-cell"><span class="status-caution">◆ Not Active</span><br><span style="font-size:9px; color:#5a5a7a;">Future pathway</span></div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-cell label t4">Tier 4<br><span style="font-size:10px; color:#dc2626;">Never</span></div>
+      <div class="tier-cell">"Cures" or "diagnoses" any condition. "FDA approved" (when not). "Peer-reviewed" for unpublished data. "Replaces prescription medication." Disease diagnosis claims for RestScan.</div>
+      <div class="tier-cell">N/A — these claims are never made regardless of evidence level</div>
+      <div class="tier-cell"><span class="status-danger">✗ Prohibited</span></div>
+    </div>
+  </div>
+
+  <div class="panel red" style="font-size:12px; margin-bottom:16px;">
+    <strong>Automatic Rejection Triggers (Investor Materials):</strong> Any Habib citation without "manuscript in draft" · Any claim using "peer-reviewed" or "published" for pilot data · "Clinically proven to treat" for any condition · LTV:CAC ratio of 317× (use sensitivity range: 18-46×) · Any valuation figure other than "TBD (last round: $7.5M CAD, Dec 2022)" · Fabricated effect sizes or hallucinated citations
+  </div>
+
+  <!-- 5-GATE MOONSHOT SYSTEM -->
+  <h2>The 5-Gate System: How Claims Graduate</h2>
+  <p style="margin-bottom:12px;">Claims cannot move from a lower tier to a higher tier without passing through specific evidence gates. This prevents scope creep and ensures regulatory integrity.</p>
+
+  <div class="gate-flow">
+    <div class="gate">
+      <div class="num">1</div>
+      <div class="title">Internal Signal</div>
+      <div class="req">Observational data suggests a relationship. Internal use only.</div>
+    </div>
+    <div class="gate">
+      <div class="num">2</div>
+      <div class="title">Pilot Validation</div>
+      <div class="req">Prospective study with validated instruments. N≥50. Pre/post design minimum.</div>
+    </div>
+    <div class="gate">
+      <div class="num">3</div>
+      <div class="title">Peer Review</div>
+      <div class="req">Published in indexed journal. External review complete.</div>
+    </div>
+    <div class="gate">
+      <div class="num">4</div>
+      <div class="title">Regulatory Filing</div>
+      <div class="req">510(k), De Novo, or equivalent submission with supporting evidence.</div>
+    </div>
+    <div class="gate">
+      <div class="num">5</div>
+      <div class="title">Cleared Claim</div>
+      <div class="req">Regulatory body grants clearance for the specific indication.</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel green" style="font-size:12px;">
+      <strong>Where Umay Currently Sits:</strong> Gate 2 (passed). The ISC/SSC pilot (N=500, 5 validated instruments, statistical significance across all domains) has cleared the pilot validation gate. Manuscript targeting Gate 3 (peer review). Gate 4-5 reserved for future medical device claims.
+    </div>
+    <div class="panel amber" style="font-size:12px;">
+      <strong>RestScan Gate Position:</strong> Gate 1 (internal signal). N=50 validation study underway (85% Oura correlation target + OSDI + TBUT). Must clear Gate 2 before any clinical claims. Current positioning: wellness measurement tool, not clinical diagnostic.
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: REGULATORY PATHWAYS + CLAIM-BY-CAPABILITY MAP -->
+<div class="page">
+
+  <span class="badge path">Section 3 · Regulatory Pathway Strategy</span>
+
+  <h2>Phased Regulatory Architecture</h2>
+  <p style="margin-bottom:14px;">Umay maintains wellness positioning today while building the evidentiary foundation for medical claims tomorrow. Each phase preserves optionality without triggering premature regulatory burden.</p>
+
+  <div class="pathway-grid">
+    <div class="pathway-card now">
+      <div class="phase">Phase 1 · Now (Active)</div>
+      <div class="title">Consumer Wellness — Class I Exempt</div>
+      <p>Rest device: "Promotes relaxation and comfort." No disease claims. Health Canada approved. IEC 60335-1 certified. General Wellness guidance compliant (FDA 2016/2019). Exploring 513(g) assessment to formally confirm Class I / 510(k) exempt status for dry eye comfort indication.</p>
+    </div>
+    <div class="pathway-card next">
+      <div class="phase">Phase 2 · Near-Term (Post-Publication)</div>
+      <div class="title">Evidence-Supported Wellness</div>
+      <p>Habib et al. publication elevates pilot claims from Tier 2 → Tier 1 (published, peer-reviewed). Enables stronger positioning: "Proven in peer-reviewed study to improve eye comfort and sleep quality." Still within wellness framework — no disease-specific treatment claims.</p>
+    </div>
+    <div class="pathway-card future">
+      <div class="phase">Phase 3 · Post-Raise (12-18 months)</div>
+      <div class="title">Class I / 510(k) for DED Comfort</div>
+      <p>513(g) assessment confirms classification. If Class I exempt: continue current path with documented compliance. If 510(k) required: submit with ISC/SSC data + additional US study. Enables "indicated for dry eye symptom relief" positioning.</p>
+    </div>
+    <div class="pathway-card explore">
+      <div class="phase">Phase 4 · Future (18+ months)</div>
+      <div class="title">De Novo for Sleep Indications</div>
+      <p>FDA De Novo classification for "Ocular-mediated Sleep Improvement" — a novel category. Requires: dedicated sleep study (RCT design), predicate analysis confirming no existing classification, demonstrated safety + efficacy for sleep-specific claims. This unlocks medical-grade positioning and potential insurance reimbursement.</p>
+    </div>
+  </div>
+
+  <h2>Capability-to-Pathway Map</h2>
+  <p style="margin-bottom:12px;">Each product capability maps to a specific regulatory pathway. No capability is marketed beyond its cleared level.</p>
+
+  <table>
+    <thead>
+      <tr><th>Capability</th><th>Current Claim Level</th><th>Regulatory Pathway</th><th>Gate Required</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Rest: Periocular thermal delivery</strong></td>
+        <td>Tier 1: "Promotes comfort and relaxation"</td>
+        <td>General Wellness (no filing needed)</td>
+        <td><span class="status-safe">✓ Cleared</span></td>
+      </tr>
+      <tr>
+        <td><strong>Rest: DED symptom comfort</strong></td>
+        <td>Tier 2: "87% improvement in gov't-backed pilot" (+ caveat)</td>
+        <td>513(g) → Class I exempt or 510(k) QME</td>
+        <td><span class="status-caution">Gate 2 passed, exploring 513(g)</span></td>
+      </tr>
+      <tr>
+        <td><strong>Rest: Sleep quality facilitation</strong></td>
+        <td>Tier 2: "67% sleep improvement" (+ caveat)</td>
+        <td>De Novo (novel category)</td>
+        <td><span class="status-caution">Gate 2 passed, De Novo future</span></td>
+      </tr>
+      <tr>
+        <td><strong>RestScan: Ocular fatigue assessment</strong></td>
+        <td>Tier 1: "Wellness check-in" (no clinical claims)</td>
+        <td>General Wellness → potentially 510(k) QME</td>
+        <td><span class="status-caution">Gate 1, validation underway</span></td>
+      </tr>
+      <tr>
+        <td><strong>RestScan: Heart rate / respiratory rate</strong></td>
+        <td>Not currently marketed</td>
+        <td>510(k) QME (predicate: Oxehealth DEN200019)</td>
+        <td>Gate 1</td>
+      </tr>
+      <tr>
+        <td><strong>RestScan: Clinical decision support</strong></td>
+        <td>Not currently marketed</td>
+        <td>CDS exemption review or SaMD pathway</td>
+        <td>Gate 1 — requires SaMD assessment</td>
+      </tr>
+      <tr>
+        <td><strong>Thermal Rhythm: Adaptive protocol</strong></td>
+        <td>Tier 1: "Personalized comfort experience"</td>
+        <td>General Wellness (algorithm-driven, no clinical output)</td>
+        <td><span class="status-safe">✓ Cleared</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>SaMD Decision Framework (RestScan)</h2>
+  <div class="two-col">
+    <div class="panel green" style="font-size:12px;">
+      <h3>Currently NOT SaMD</h3>
+      <p style="margin-bottom:6px;">RestScan in its current form is <strong>not Software as a Medical Device</strong> because:</p>
+      <p>→ It does not provide disease diagnosis or treatment recommendations<br>
+      → It provides general wellness information ("fatigue score")<br>
+      → It does not claim to inform clinical decision-making<br>
+      → Output is informational to the user, not prescriptive</p>
+    </div>
+    <div class="panel amber" style="font-size:12px;">
+      <h3>Would Become SaMD If…</h3>
+      <p style="margin-bottom:6px;">RestScan <strong>would trigger SaMD classification</strong> if:</p>
+      <p>→ It claimed to diagnose DED or any specific condition<br>
+      → It recommended specific treatment protocols based on scan results<br>
+      → ODs used scan output as a primary diagnostic input<br>
+      → It generated reports labeled as "clinical assessments"</p>
+      <p style="margin-top:8px; font-weight:600;">Mitigation: All RestScan outputs are labeled as "wellness insights" not "clinical findings." Clinical claims governance (Tier 3+) requires formal gate passage.</p>
+    </div>
+  </div>
+
+  <h2>Partner Claims Compliance</h2>
+  <div class="panel dark" style="font-size:12px; margin-bottom:16px;">
+    <h3>Clinic Partner Agreement Language</h3>
+    <p style="margin-bottom:8px;">"We do not recommend any off-label medical claims by our clinic partners." All clinic-facing materials include the following guardrails:</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:10px;">
+      <div>
+        <strong style="color:#059669;">Permitted (Tier 1-2)</strong>
+        <p style="color:#b0b0cc; margin-top:4px;">"Supports eye comfort and relaxation"<br>"Validated in a government-backed study"<br>"84% daily usage rate"<br>"100-night risk-free trial"<br>"Thermal Recovery protocol"</p>
+      </div>
+      <div>
+        <strong style="color:#dc2626;">Prohibited (Tier 3-4)</strong>
+        <p style="color:#b0b0cc; margin-top:4px;">"Treats dry eye disease"<br>"Cures insomnia"<br>"FDA approved" or "medically certified"<br>"Better than prescription drops"<br>"Clinically proven to diagnose…"</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">The Investor Signal</div>
+    Umay's claims governance framework is <strong>not reactive compliance — it's proactive competitive strategy.</strong> By maintaining strict wellness positioning now, we preserve the ability to pursue Class II medical device claims later with a clean regulatory history. Companies that overclaim early face enforcement actions, channel distrust, and regulatory debt that compounds over time. Our discipline is our runway.
+  </div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Regulatory Firewall Matrix</div>
+  </div>
+</div>
+
+</body>
+</html>

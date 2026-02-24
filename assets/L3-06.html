@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RestScan Moat Pack — Technology & Defensibility</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: #1a1a2e;
+    background: #fff;
+    line-height: 1.55;
+    font-size: 12.5px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .page { padding: 48px 56px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 28px; padding-bottom: 16px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1.2; color: #1a1a2e;
+  }
+  .header .subtitle { font-size: 14px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 20px;
+  }
+  .badge.tech { background: #e8f0fe; color: #1a56db; }
+  .badge.ip { background: #fef3c7; color: #92400e; }
+  .badge.moat { background: #d1fae5; color: #065f46; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 18px; color: #1a1a2e;
+    margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 8px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 18px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.accent { border-left: 4px solid #1a56db; background: #f0f4ff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 7px 10px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 6px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 6px;
+  }
+  .callout strong { color: #fff; }
+
+  .flow-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    padding: 12px 16px; background: #f8f8fc; border-radius: 8px; border: 1px solid #e8e8f0;
+  }
+  .flow-box {
+    flex: 1; text-align: center; padding: 10px 8px;
+    background: #fff; border-radius: 6px; border: 1px solid #e0e0e8;
+  }
+  .flow-box.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .flow-box .title { font-weight: 700; font-size: 12px; }
+  .flow-box .detail { font-size: 10px; color: #8a8aaa; margin-top: 2px; }
+  .flow-box.active .detail { color: #b0b0cc; }
+  .flow-arrow { font-size: 18px; color: #aaa; flex-shrink: 0; }
+
+  .ip-card {
+    padding: 12px 16px; background: #fffbeb; border: 1px solid #fde68a;
+    border-radius: 8px; margin-bottom: 10px;
+  }
+  .ip-card .type {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #92400e; margin-bottom: 4px;
+  }
+  .ip-card .title-line { font-weight: 600; font-size: 13px; color: #1a1a2e; }
+  .ip-card .number { font-size: 11px; color: #666; margin-top: 2px; }
+
+  .moat-row {
+    display: grid; grid-template-columns: 180px 1fr 1fr; gap: 1px;
+    background: #e0e0e8; border-radius: 8px; overflow: hidden; margin-bottom: 12px;
+  }
+  .moat-cell { padding: 10px 14px; background: #fff; font-size: 12px; }
+  .moat-cell.header { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 11px; }
+  .moat-cell.competitor { background: #f8f8fc; font-weight: 600; }
+  .check { color: #059669; font-weight: 700; }
+  .cross { color: #dc2626; font-weight: 700; }
+
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;
+  }
+  .stat-mini {
+    text-align: center; padding: 14px 10px;
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .stat-mini .num { font-family: 'DM Serif Display', serif; font-size: 26px; color: #1a1a2e; }
+  .stat-mini .lbl { font-size: 10px; color: #5a5a7a; margin-top: 2px; }
+
+  .footer {
+    margin-top: 28px; padding-top: 14px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  .domain-card {
+    padding: 14px; border-radius: 8px; border: 1px solid #e8e8f0;
+  }
+  .domain-card .domain-name {
+    font-weight: 700; font-size: 13px; margin-bottom: 6px;
+    padding-bottom: 4px; border-bottom: 2px solid;
+  }
+  .domain-card.ocular .domain-name { border-color: #1a56db; color: #1a56db; }
+  .domain-card.autonomic .domain-name { border-color: #059669; color: #059669; }
+  .domain-card.behavioral .domain-name { border-color: #d97706; color: #d97706; }
+  .domain-card .signal { font-size: 11px; color: #444; margin-bottom: 3px; }
+  .domain-card .signal strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: TECHNICAL OVERVIEW -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>RestScan Moat Pack</h1>
+      <div class="subtitle">Technology, IP & Defensibility</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <span class="badge tech">Section 1 · Technical Overview</span>
+
+  <div class="callout">
+    <div class="label">The Structural Moat</div>
+    Umay is the only company that combines <strong>webcam-based ocular biometric assessment</strong> with a <strong>patented thermal therapy device</strong> — creating a closed-loop system where measurement informs treatment and treatment generates measurement data. No competitor can replicate this without building or acquiring both halves.
+  </div>
+
+  <h2>RestScan: What It Is</h2>
+  <div class="two-col">
+    <div>
+      <p style="margin-bottom:12px;">RestScan is a browser-first computer vision tool that uses a standard webcam to assess ocular fatigue and autonomic stress. It runs a 120-second segmented protocol — 50 seconds for dry eye assessment, 70 seconds for fatigue gating — with all processing performed locally in the browser. No video data leaves the device.</p>
+      <p>Built on MediaPipe face mesh (open-source), RestScan adds Umay's proprietary signal processing, quality-gating architecture, and multi-domain fusion scoring (FOARA) on top.</p>
+    </div>
+    <div class="panel">
+      <h3>Architecture Highlights</h3>
+      <table>
+        <tr><td style="font-weight:600; width:130px;">Processing</td><td>100% local (browser-based)</td></tr>
+        <tr><td style="font-weight:600;">Duration</td><td>120 seconds (2 segments)</td></tr>
+        <tr><td style="font-weight:600;">Infrastructure</td><td>MediaPipe face mesh + proprietary layers</td></tr>
+        <tr><td style="font-weight:600;">Data handling</td><td>Compute-vs-publish separation</td></tr>
+        <tr><td style="font-weight:600;">TRL</td><td>Proof-of-concept (functional beta)</td></tr>
+        <tr><td style="font-weight:600;">Validation</td><td>N=50 internal study underway</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>FOARA Signal Domains</h2>
+  <p style="margin-bottom:14px;">Facial-Ocular Autonomic Response Assessment (FOARA) extracts signals across three measurement domains, each with independent quality confidence thresholds.</p>
+
+  <div class="three-col">
+    <div class="domain-card ocular">
+      <div class="domain-name">Ocular Surface</div>
+      <div class="signal"><strong>Blink rate & completeness</strong> — DED marker</div>
+      <div class="signal"><strong>Inter-blink interval</strong> — tear film stability proxy</div>
+      <div class="signal"><strong>Partial blink ratio</strong> — meibomian dysfunction signal</div>
+      <div class="signal"><strong>PERCLOS</strong> — eyelid closure percentage (fatigue)</div>
+      <div style="margin-top:8px; font-size:10px; color:#1a56db; font-weight:600;">FDA: Class I exempt (wellness) or 510(k) QME pathway</div>
+    </div>
+    <div class="domain-card autonomic">
+      <div class="domain-name">Autonomic / Cardiovascular</div>
+      <div class="signal"><strong>Heart rate via rPPG</strong> — remote photoplethysmography</div>
+      <div class="signal"><strong>HRV estimation</strong> — autonomic balance indicator</div>
+      <div class="signal"><strong>Respiratory rate</strong> — stress/relaxation marker</div>
+      <div class="signal"><strong>Pupil dynamics</strong> — sympathetic/parasympathetic proxy</div>
+      <div style="margin-top:8px; font-size:10px; color:#059669; font-weight:600;">FDA: 510(k) QME (HR/RR), Class I exempt (pupillometry)</div>
+    </div>
+    <div class="domain-card behavioral">
+      <div class="domain-name">Behavioral / Temporal</div>
+      <div class="signal"><strong>Gaze stability</strong> — attention / fatigue marker</div>
+      <div class="signal"><strong>Fixation drift</strong> — oculomotor fatigue</div>
+      <div class="signal"><strong>Micro-expression patterns</strong> — stress behavioral signal</div>
+      <div class="signal"><strong>Session-over-session delta</strong> — longitudinal trend</div>
+      <div style="margin-top:8px; font-size:10px; color:#d97706; font-weight:600;">No FDA pathway required (behavioral analytics)</div>
+    </div>
+  </div>
+
+  <h2>Compute vs. Publish — The Quality Architecture</h2>
+  <div class="flow-row">
+    <div class="flow-box">
+      <div class="title">Capture All Signals</div>
+      <div class="detail">Every domain computed every session</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">
+      <div class="title">Quality Gate</div>
+      <div class="detail">Per-domain confidence threshold</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box active">
+      <div class="title">Publish Only High-Confidence</div>
+      <div class="detail">User sees only validated metrics</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">
+      <div class="title">Store All for R&D</div>
+      <div class="detail">Low-confidence data trains models</div>
+    </div>
+  </div>
+  <div class="panel accent" style="font-size:12px;">
+    <strong>Why this matters:</strong> This architecture is pre-compliant with FDA special controls for camera-based vital sign monitoring (cf. Oxehealth De Novo DEN200019). It prevents overclaiming at the product level while maximizing data collection for model improvement — the exact posture regulators reward.
+  </div>
+</div>
+
+<!-- PAGE 2: IP PORTFOLIO -->
+<div class="page">
+
+  <span class="badge ip">Section 2 · Intellectual Property Portfolio</span>
+
+  <div class="stat-strip">
+    <div class="stat-mini">
+      <div class="num">3</div>
+      <div class="lbl">Issued US Utility Patents</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">1</div>
+      <div class="lbl">European Patent</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">4+</div>
+      <div class="lbl">Industrial Design Patents</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">5</div>
+      <div class="lbl">Registered Trademarks</div>
+    </div>
+  </div>
+
+  <h2>Issued Patents</h2>
+  <div class="two-col">
+    <div>
+      <div class="ip-card">
+        <div class="type">US Utility Patent — Issued Jul 2023</div>
+        <div class="title-line">Eye Thermal Compress</div>
+        <div class="number">US 11,696,850 B2 · App: US20190125579A1</div>
+      </div>
+      <div class="ip-card">
+        <div class="type">US Utility Patent — Issued Nov 2025</div>
+        <div class="title-line">Methods and Apparatuses for Sensing & Relieving Stress</div>
+        <div class="number">US 12,478,321 B2 · App: US20210128058A1</div>
+      </div>
+      <div class="ip-card">
+        <div class="type">US Utility Patent — Issued</div>
+        <div class="title-line">Eye Thermal Compress (Continuation)</div>
+        <div class="number">US 12,409,062 B2</div>
+      </div>
+    </div>
+    <div>
+      <div class="ip-card">
+        <div class="type">European Patent — Issued</div>
+        <div class="title-line">Eye Thermal Compress</div>
+        <div class="number">EP 3,442,482 B1</div>
+      </div>
+      <div class="ip-card" style="background:#f0f4ff; border-color:#bfdbfe;">
+        <div class="type" style="color:#1a56db;">Provisional Patents — Filed</div>
+        <div class="title-line">Thermal Rhythm Modulation Algorithm</div>
+        <div class="title-line" style="margin-top:4px;">RestScan Biometric Correlation Logic</div>
+        <div class="number">Provisionals protect the core algorithmic IP for 12 months</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Design Patents & Trademarks</h2>
+  <div class="two-col">
+    <div>
+      <table>
+        <thead><tr><th>Type</th><th>Number</th><th>Jurisdiction</th></tr></thead>
+        <tbody>
+          <tr><td>Industrial Design</td><td class="mono">D831,837</td><td>US</td></tr>
+          <tr><td>Industrial Design</td><td class="mono">168279</td><td>Canada</td></tr>
+          <tr><td>Industrial Design</td><td class="mono">003440494-0001</td><td>EU (EUIPO)</td></tr>
+          <tr><td>Industrial Design</td><td class="mono">90034404940001</td><td>International</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>Trademark</th><th>Number</th><th>Jurisdiction</th></tr></thead>
+        <tbody>
+          <tr><td>UMAY</td><td class="mono">1,959,833</td><td>Canada</td></tr>
+          <tr><td>UMAY</td><td class="mono">6,290,413</td><td>US</td></tr>
+          <tr><td>THERMAL MEDITATION</td><td class="mono">1,959,838</td><td>Canada</td></tr>
+          <tr><td>THERMAL MEDITATION</td><td class="mono">6,330,747</td><td>US</td></tr>
+          <tr><td>MEDITATIVE HEAT</td><td class="mono">1,959,840</td><td>Canada</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel green" style="font-size:12px;">
+    <strong>IP Assignment:</strong> All intellectual property — patents, designs, trademarks, software, and trade secrets — is formally assigned to Umay Care Holdings Inc. No contractor or founder-held IP. No open-source license conflicts (MediaPipe is Apache 2.0 licensed, permitting commercial use with proprietary additions).
+  </div>
+
+  <h2>Patent Coverage Map</h2>
+  <div class="panel" style="font-size: 12px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Innovation</th>
+          <th>Protection</th>
+          <th>Status</th>
+          <th>Competitive Implication</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Thermal delivery hardware</strong></td>
+          <td>US 11,696,850 + US 12,409,062 + EP 3,442,482 + 4 design patents</td>
+          <td style="color:#059669; font-weight:600;">Granted</td>
+          <td>Competitors cannot replicate form factor or thermal delivery method</td>
+        </tr>
+        <tr>
+          <td><strong>Stress sensing + relief integration</strong></td>
+          <td>US 12,478,321</td>
+          <td style="color:#059669; font-weight:600;">Granted</td>
+          <td>Covers the closed-loop concept: sense biometric state → deliver intervention</td>
+        </tr>
+        <tr>
+          <td><strong>Thermal Rhythm algorithm</strong></td>
+          <td>Provisional patent</td>
+          <td style="color:#d97706; font-weight:600;">Filed</td>
+          <td>Pulsed modulation protocol — the "bug-to-feature" discovery patients prefer</td>
+        </tr>
+        <tr>
+          <td><strong>RestScan biometric correlation</strong></td>
+          <td>Provisional patent</td>
+          <td style="color:#d97706; font-weight:600;">Filed</td>
+          <td>FOARA scoring — multi-domain fusion from webcam signals</td>
+        </tr>
+        <tr>
+          <td><strong>Brand identity</strong></td>
+          <td>5 registered trademarks (US + CA)</td>
+          <td style="color:#059669; font-weight:600;">Registered</td>
+          <td>Category language protected: "Thermal Meditation," "Meditative Heat"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PAGE 3: COMPETITIVE MOAT + DATA THESIS -->
+<div class="page">
+
+  <span class="badge moat">Section 3 · Competitive Moat & Data Accumulation</span>
+
+  <h2>Why They Can't Copy Us</h2>
+  <p style="margin-bottom:14px;">No single competitor spans both measurement and treatment. The closed loop is the moat.</p>
+
+  <!-- MOAT MATRIX -->
+  <div style="margin-bottom: 20px;">
+    <div class="moat-row">
+      <div class="moat-cell header">Competitor Type</div>
+      <div class="moat-cell header">Has Treatment Device</div>
+      <div class="moat-cell header">Has Biometric Measurement</div>
+    </div>
+    <div class="moat-row">
+      <div class="moat-cell competitor">Umay (Rest + RestScan)</div>
+      <div class="moat-cell"><span class="check">✓</span> Patented thermal wearable</div>
+      <div class="moat-cell"><span class="check">✓</span> FOARA webcam assessment</div>
+    </div>
+    <div class="moat-row">
+      <div class="moat-cell competitor">Bruder / Warm Compress</div>
+      <div class="moat-cell"><span class="check">✓</span> Basic heat (no regulation)</div>
+      <div class="moat-cell"><span class="cross">✗</span> No measurement capability</div>
+    </div>
+    <div class="moat-row">
+      <div class="moat-cell competitor">LipiFlow / TearCare</div>
+      <div class="moat-cell"><span class="check">✓</span> In-office thermal (Class II)</div>
+      <div class="moat-cell"><span class="cross">✗</span> No at-home monitoring</div>
+    </div>
+    <div class="moat-row">
+      <div class="moat-cell competitor">Nuralogix / FaceHeart</div>
+      <div class="moat-cell"><span class="cross">✗</span> No intervention device</div>
+      <div class="moat-cell"><span class="check">✓</span> Facial CV measurement</div>
+    </div>
+    <div class="moat-row">
+      <div class="moat-cell competitor">Smart Eye / Senseye</div>
+      <div class="moat-cell"><span class="cross">✗</span> No health intervention</div>
+      <div class="moat-cell"><span class="check">✓</span> Eye tracking (automotive)</div>
+    </div>
+    <div class="moat-row">
+      <div class="moat-cell competitor">Oura / Whoop</div>
+      <div class="moat-cell"><span class="cross">✗</span> No therapeutic device</div>
+      <div class="moat-cell"><span class="check">✓</span> Wearable biometrics (non-ocular)</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">The Replication Problem</div>
+    To replicate Umay's position, a CV company (Nuralogix, Smart Eye) must <strong>build or acquire a thermal therapy device, navigate Health Canada/FDA clearance, and build a clinic channel from zero</strong>. A DED device company (Johnson & Johnson Vision, Alcon) must <strong>build computer vision capability, hire ML talent, and obtain biometric data consents at scale</strong>. Neither path is fast or cheap.
+  </div>
+
+  <h2>Data Accumulation Thesis</h2>
+  <div class="two-col">
+    <div class="panel">
+      <h3>Current Data Assets</h3>
+      <table>
+        <tr><td style="font-weight:600; width:160px;">Active IoT devices</td><td>2,847</td></tr>
+        <tr><td style="font-weight:600;">Estimated sessions/year</td><td>~1M+ (daily usage × 365)</td></tr>
+        <tr><td style="font-weight:600;">Paired outcome data</td><td>500 participants × 5 instruments</td></tr>
+        <tr><td style="font-weight:600;">Longitudinal usage data</td><td>Dec 2021 – present (4+ years)</td></tr>
+        <tr><td style="font-weight:600;">Clinic channel data</td><td>134 clinics, 308 orders, reorder patterns</td></tr>
+      </table>
+    </div>
+    <div class="panel dark">
+      <h3>Data Flywheel Logic</h3>
+      <p style="font-size:12px; color:#ccc; margin-bottom:10px;">Each device sold generates usage data. Each RestScan session generates biometric data. Combined, they create a paired dataset (thermal therapy input → ocular/sleep output) that no competitor can replicate without:</p>
+      <p style="font-size:12px; color:#eee;">1. Selling a competing thermal device<br>2. Through a comparable clinic channel<br>3. With integrated biometric measurement<br>4. Over comparable timeframes</p>
+      <p style="font-size:11px; color:#8a8aaa; margin-top:10px;">This dataset is the foundation for future ML-driven personalization: "Your blink metrics suggest 8 minutes of pulsed mode at 42°C tonight."</p>
+    </div>
+  </div>
+
+  <h2>Validation Roadmap</h2>
+  <table>
+    <thead>
+      <tr><th>Milestone</th><th>Status</th><th>Target</th><th>Impact</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Internal accuracy study (N=50)</strong></td>
+        <td style="color:#d97706; font-weight:600;">In progress</td>
+        <td>85% correlation with Oura Readiness + OSDI + TBUT</td>
+        <td>Validates signal accuracy for investor demo</td>
+      </tr>
+      <tr>
+        <td><strong>Gen 2 hardware integration</strong></td>
+        <td style="color:#5a5a7a;">Planning (EVT/DVT/PVT)</td>
+        <td>BLE 5.0, capacitive sensors, integrated thermistor</td>
+        <td>Enables real-time device↔scan data pairing</td>
+      </tr>
+      <tr>
+        <td><strong>513(g) regulatory assessment</strong></td>
+        <td style="color:#5a5a7a;">Exploring</td>
+        <td>Confirm Class I / 510(k) exempt for DED wellness</td>
+        <td>De-risks regulatory pathway for investors</td>
+      </tr>
+      <tr>
+        <td><strong>Habib et al. publication</strong></td>
+        <td style="color:#d97706; font-weight:600;">Manuscript in draft</td>
+        <td>Peer-reviewed journal (Contact Lens & Anterior Eye or equivalent)</td>
+        <td>Upgrades all pilot data claims from Tier 2 → Tier 1</td>
+      </tr>
+      <tr>
+        <td><strong>De Novo sleep indication</strong></td>
+        <td style="color:#5a5a7a;">Future (post-raise)</td>
+        <td>FDA De Novo for specific sleep-related claims</td>
+        <td>Unlocks medical-grade positioning and reimbursement</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Dual-Use IP Leverage: OARA Defence Variant</h2>
+  <div class="panel accent" style="font-size: 12px;">
+    <strong>The same core technology that powers RestScan has defence applications.</strong> Umay is exploring an NRC IRAP-funded project (OARA — Ocular Autonomic Response Assessment) for military fatigue monitoring. The R&D investment serves both markets: commercial RestScan for clinics and consumers, OARA for defence and industrial safety. One engineering effort, two revenue channels — with government co-funding reducing the cost base for both.
+  </div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B</div>
+  </div>
+</div>
+
+</body>
+</html>

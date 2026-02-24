@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizational Chart — Current & Post-Raise Structure</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 46px 54px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.now { background: #dbeafe; color: #1e40af; }
+  .badge.post { background: #d1fae5; color: #065f46; }
+  .badge.future { background: #ede9fe; color: #5b21b6; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+
+  /* ORG CHART STYLES */
+  .org-section {
+    margin-bottom: 24px; padding: 24px; background: #f8f8fc;
+    border: 1px solid #e8e8f0; border-radius: 12px;
+  }
+  .org-section.dark-bg {
+    background: #1a1a2e; border-color: #1a1a2e;
+  }
+
+  .org-level { display: flex; justify-content: center; gap: 14px; margin-bottom: 6px; flex-wrap: wrap; }
+  .org-connector { text-align: center; margin: 4px 0; color: #ccc; font-size: 14px; }
+  .org-section.dark-bg .org-connector { color: #444; }
+
+  .org-card {
+    padding: 12px 16px; border-radius: 8px; text-align: center;
+    min-width: 150px; max-width: 180px; border: 2px solid;
+  }
+  .org-card .name { font-weight: 700; font-size: 12px; margin-bottom: 2px; }
+  .org-card .role { font-size: 10px; }
+  .org-card .detail { font-size: 9px; margin-top: 3px; opacity: 0.7; }
+
+  /* Card types */
+  .org-card.ceo {
+    background: #1a1a2e; border-color: #1a1a2e; color: #fff;
+    min-width: 200px;
+  }
+  .org-card.ceo .role { color: #9090bb; }
+  .org-card.ceo .detail { color: #7070aa; }
+
+  .org-card.current {
+    background: #dbeafe; border-color: #93c5fd; color: #1e3a5f;
+  }
+  .org-card.current .role { color: #1e40af; }
+
+  .org-card.new {
+    background: #d1fae5; border-color: #6ee7b7; border-style: dashed; color: #064e3b;
+  }
+  .org-card.new .role { color: #059669; }
+
+  .org-card.contract {
+    background: #fef3c7; border-color: #fcd34d; border-style: dashed; color: #78350f;
+  }
+  .org-card.contract .role { color: #92400e; }
+
+  .org-card.variable {
+    background: #fce7f3; border-color: #f9a8d4; border-style: dashed; color: #831843;
+  }
+  .org-card.variable .role { color: #be185d; }
+
+  .org-card.advisor {
+    background: #ede9fe; border-color: #c4b5fd; border-style: dotted; color: #3b0764;
+  }
+  .org-card.advisor .role { color: #7c3aed; }
+
+  .org-card.future {
+    background: #f0f0f0; border-color: #d0d0d0; border-style: dotted; color: #666;
+  }
+  .org-card.future .role { color: #888; }
+
+  /* Legend */
+  .legend {
+    display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
+    padding: 10px 14px; background: #fff; border: 1px solid #e8e8f0; border-radius: 6px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px; font-size: 10px;
+  }
+  .legend-swatch {
+    width: 20px; height: 12px; border-radius: 3px; border: 1.5px solid;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: CURRENT + POST-RAISE ORG -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Organizational Chart</h1>
+      <div class="subtitle">Current Structure, Post-Raise Org & Headcount Plan</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#1a1a2e; border-color:#1a1a2e;"></div>CEO</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#dbeafe; border-color:#93c5fd;"></div>Current FTE</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#d1fae5; border-color:#6ee7b7; border-style:dashed;"></div>New Hire (Raise-Funded)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#fef3c7; border-color:#fcd34d; border-style:dashed;"></div>Contractor</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#fce7f3; border-color:#f9a8d4; border-style:dashed;"></div>Variable (1099)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#ede9fe; border-color:#c4b5fd; border-style:dotted;"></div>Advisor</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#f0f0f0; border-color:#d0d0d0; border-style:dotted;"></div>Future Phase</div>
+  </div>
+
+  <!-- CURRENT ORG -->
+  <span class="badge now">Current Organization · 3 FTEs + 1 Contractor + 1 Advisor</span>
+
+  <div class="org-section">
+    <div class="org-level">
+      <div class="org-card ceo">
+        <div class="name">Ali Habib</div>
+        <div class="role">CEO & Co-Founder</div>
+        <div class="detail">Strategy · Sales · Ops · Product · Fundraise</div>
+      </div>
+    </div>
+    <div class="org-connector">│</div>
+    <div class="org-level">
+      <div class="org-card current">
+        <div class="name">Dr. Sharmin Habib, OD</div>
+        <div class="role">CMO & Co-Founder</div>
+        <div class="detail">Clinical · PI · Claims Governance</div>
+      </div>
+      <div class="org-card current">
+        <div class="name">FTE #3</div>
+        <div class="role">Operations Support</div>
+        <div class="detail">Fulfillment · Admin · CS</div>
+      </div>
+      <div class="org-card contract">
+        <div class="name">Tangent Engineering</div>
+        <div class="role">Hardware (Contract)</div>
+        <div class="detail">Gen 2 DFM · Firmware</div>
+      </div>
+      <div class="org-card advisor">
+        <div class="name">Aldina Duarte Ramos</div>
+        <div class="role">Strategic Advisor</div>
+        <div class="detail">Wellness / Hospitality</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">The Current Reality</div>
+    <strong>Ali is a single point of failure across 5 functions:</strong> sales/clinic relationships (35% of time), manufacturing/ops (25%), product/engineering (20%), investor relations (15%), and admin (5%). This is unsustainable beyond the current stage. The raise funds three hires that separate founder execution from scalable operations.
+  </div>
+
+  <!-- POST-RAISE ORG -->
+  <span class="badge post">Post-Raise Organization · 6 FTEs + 1 Contractor + 3-5 Reps + 1 Advisor</span>
+
+  <div class="org-section dark-bg">
+    <div class="org-level">
+      <div class="org-card ceo">
+        <div class="name">Ali Habib</div>
+        <div class="role">CEO & Co-Founder</div>
+        <div class="detail">Strategy · Investors · Key Accounts · Partnerships</div>
+      </div>
+    </div>
+    <div class="org-connector" style="color:#555;">│</div>
+    <div class="org-level">
+      <div class="org-card current">
+        <div class="name">Dr. Sharmin Habib</div>
+        <div class="role">CMO</div>
+        <div class="detail">Clinical · PI · Claims</div>
+      </div>
+      <div class="org-card new">
+        <div class="name">Hire #1</div>
+        <div class="role">Head of Growth — US</div>
+        <div class="detail">$150K + equity · Sales / Channel</div>
+      </div>
+      <div class="org-card new">
+        <div class="name">Hire #2</div>
+        <div class="role">Product / Tech Lead</div>
+        <div class="detail">$160K + equity · HW + SW + Data</div>
+      </div>
+      <div class="org-card new">
+        <div class="name">Hire #3</div>
+        <div class="role">Operations Manager</div>
+        <div class="detail">$100K + equity · Supply / 3PL</div>
+      </div>
+    </div>
+    <div class="org-connector" style="color:#555;">│</div>
+    <div class="org-level">
+      <div class="org-card contract">
+        <div class="name">Tangent Eng.</div>
+        <div class="role">Hardware (Contract)</div>
+        <div class="detail">Reports to Product Lead</div>
+      </div>
+      <div class="org-card variable">
+        <div class="name">1099 Reps (3-5)</div>
+        <div class="role">US Field Sales</div>
+        <div class="detail">$50-60/unit · Report to Head of Growth</div>
+      </div>
+      <div class="org-card current">
+        <div class="name">Ops Support FTE</div>
+        <div class="role">Operations</div>
+        <div class="detail">Reports to Ops Manager</div>
+      </div>
+      <div class="org-card advisor">
+        <div class="name">Aldina D.R.</div>
+        <div class="role">Advisor</div>
+        <div class="detail">Wellness / EU Strategy</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: REPORTING LINES + PHASED PLAN -->
+<div class="page">
+
+  <h2>Reporting Lines & Responsibilities (Post-Raise)</h2>
+
+  <table>
+    <thead><tr><th>Person / Role</th><th>Reports To</th><th>Owns</th><th>KPIs</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;">Ali Habib (CEO)</td>
+        <td>Board</td>
+        <td>Strategy, investor relations, top 10 clinic accounts, board/governance</td>
+        <td>Fundraise milestones, revenue targets, strategic partnerships</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Dr. Sharmin Habib (CMO)</td>
+        <td>Ali</td>
+        <td>Clinical evidence, study PI, claims governance, OD credibility</td>
+        <td>Publication pipeline, claims compliance, study enrollment</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Head of Growth — US</td>
+        <td>Ali</td>
+        <td>US clinic acquisition, rep management, sales playbook, conversion optimization</td>
+        <td>New clinic activations, US revenue, rep productivity, reorder rate</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Product / Tech Lead</td>
+        <td>Ali</td>
+        <td>Gen 2 hardware, RestScan development, app roadmap, Tangent relationship</td>
+        <td>Gen 2 milestones, RestScan validation, product reliability</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Operations Manager</td>
+        <td>Ali</td>
+        <td>Supply chain, 3PL management, inventory, fulfillment, customer support</td>
+        <td>Delivery time, fulfillment cost/unit, stockout days, CSAT</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">1099 Reps (3-5)</td>
+        <td>Head of Growth</td>
+        <td>Territory clinic relationships, activation visits, reorder follow-up</td>
+        <td>Units/quarter, clinic activations, reorder rate in territory</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Tangent Engineering</td>
+        <td>Product/Tech Lead</td>
+        <td>Hardware engineering deliverables per SOW</td>
+        <td>SOW milestones, EVT/DVT/PVT gate passage</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Phased Headcount Plan</h2>
+
+  <table>
+    <thead><tr><th>Phase</th><th>Timeline</th><th>Headcount</th><th>Key Additions</th><th>Total Burn Impact</th></tr></thead>
+    <tbody>
+      <tr style="background:#dbeafe;">
+        <td style="font-weight:700;">Current</td>
+        <td>Now</td>
+        <td class="mono">3 FTE + 1 contractor</td>
+        <td>—</td>
+        <td class="mono">$28K/mo</td>
+      </tr>
+      <tr style="background:#d1fae5;">
+        <td style="font-weight:700;">Post-Raise (Q2 2026)</td>
+        <td>Months 1-3</td>
+        <td class="mono">6 FTE + 1 contractor + 3-5 reps</td>
+        <td>Head of Growth, Product Lead, Ops Manager</td>
+        <td class="mono">~$65-75K/mo</td>
+      </tr>
+      <tr style="background:#ede9fe;">
+        <td style="font-weight:700;">Growth Phase</td>
+        <td>Months 6-12</td>
+        <td class="mono">7-8 FTE + contractor + 5-8 reps</td>
+        <td>CV Engineer (RestScan), additional ops support</td>
+        <td class="mono">~$80-95K/mo</td>
+      </tr>
+      <tr style="background:#f0f0f0;">
+        <td style="font-weight:600;">Series A Target</td>
+        <td>Months 12-18</td>
+        <td class="mono">10-12 FTE + contractors + 8-12 reps</td>
+        <td>Marketing, additional engineers, regional managers</td>
+        <td>Series A funded</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="two-col">
+    <div class="panel" style="font-size:12px;">
+      <h3>Cost Structure Philosophy</h3>
+      <p style="margin-bottom:6px;"><strong>Fixed costs stay minimal.</strong> Only 3 new FTEs are added with this raise. All field sales are variable cost (1099 reps at $50-60/unit). Engineering remains project-based (Tangent contract). This keeps the burn manageable and preserves optionality.</p>
+      <p><strong>Post-raise burn of ~$65-75K/month</strong> is covered by the $2M raise for 18-24 months even before accounting for revenue from the 1,600-unit backlog ($456K+ at wholesale).</p>
+    </div>
+    <div class="panel" style="font-size:12px;">
+      <h3>Hiring Sequence Rationale</h3>
+      <table>
+        <tr><td style="font-weight:600; width:50px;">#1</td><td><strong>Head of Growth (US):</strong> Unblocks the US channel. Can't deploy reps without someone to manage them.</td></tr>
+        <tr><td style="font-weight:600;">#2</td><td><strong>Product/Tech Lead:</strong> Takes Gen 2 + RestScan off Ali. 2-3 month lag is fine — projects are defined.</td></tr>
+        <tr><td style="font-weight:600;">#3</td><td><strong>Ops Manager:</strong> Needed when 3PL is live and order volume scales. Can be last because existing ops support holds.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- FUTURE PHASE -->
+  <span class="badge future">Future Phase Org (Series A Target — 12-18 Months)</span>
+
+  <div class="org-section" style="background:#fafafa; padding:16px;">
+    <div class="org-level">
+      <div class="org-card ceo" style="min-width:160px;">
+        <div class="name">Ali Habib</div>
+        <div class="role">CEO</div>
+      </div>
+    </div>
+    <div class="org-connector">│</div>
+    <div class="org-level">
+      <div class="org-card current" style="min-width:120px;"><div class="name">CMO</div><div class="role">Sharmin</div></div>
+      <div class="org-card new" style="min-width:120px;"><div class="name">VP Growth</div><div class="role">Head of Growth → promoted</div></div>
+      <div class="org-card new" style="min-width:120px;"><div class="name">VP Product</div><div class="role">Tech Lead → promoted</div></div>
+      <div class="org-card new" style="min-width:120px;"><div class="name">VP Ops</div><div class="role">Ops Mgr → promoted</div></div>
+      <div class="org-card future" style="min-width:120px;"><div class="name">VP Marketing</div><div class="role">Series A hire</div></div>
+    </div>
+    <div class="org-connector">│</div>
+    <div class="org-level">
+      <div class="org-card future" style="min-width:100px;"><div class="name">2 Regional Mgrs</div><div class="role">US East / West</div></div>
+      <div class="org-card variable" style="min-width:100px;"><div class="name">8-12 Reps</div><div class="role">1099 Field Sales</div></div>
+      <div class="org-card future" style="min-width:100px;"><div class="name">2 Engineers</div><div class="role">CV + Firmware</div></div>
+      <div class="org-card future" style="min-width:100px;"><div class="name">Ops Team (2-3)</div><div class="role">Supply + CS</div></div>
+    </div>
+  </div>
+
+  <div class="caveat">Org chart reflects planned structure and is subject to change based on raise timing, candidate availability, and business priorities. Compensation figures are estimates in CAD and include base salary only (equity grants from 10% ESOP, not yet established). Future phase headcount is aspirational and will be funded by Series A or revenue, not the current raise.</div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Organizational Chart</div>
+  </div>
+</div>
+
+</body>
+</html>

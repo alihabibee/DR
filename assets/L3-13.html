@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Logistics Strategy — Fulfillment Architecture & 3PL Transition</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 46px 54px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.cur { background: #fee2e2; color: #991b1b; }
+  .badge.tar { background: #d1fae5; color: #065f46; }
+  .badge.eco { background: #dbeafe; color: #1e40af; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+  .panel.red { border-left: 4px solid #dc2626; background: #fef2f2; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;
+  }
+  .stat-mini {
+    text-align: center; padding: 12px 8px;
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .stat-mini .num { font-family: 'DM Serif Display', serif; font-size: 24px; color: #1a1a2e; }
+  .stat-mini .lbl { font-size: 9.5px; color: #5a5a7a; margin-top: 2px; line-height: 1.3; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  /* Flow diagram */
+  .supply-flow {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px;
+    margin-bottom: 16px; border-radius: 8px; overflow: hidden;
+  }
+  .sf-node {
+    padding: 12px 8px; text-align: center; font-size: 10px; background: #f8f8fc;
+  }
+  .sf-node.active { background: #1a1a2e; color: #fff; }
+  .sf-node .icon { font-size: 18px; margin-bottom: 2px; }
+  .sf-node .title { font-weight: 700; font-size: 10px; }
+  .sf-node .sub { font-size: 8.5px; color: #8a8aaa; margin-top: 1px; }
+  .sf-node.active .sub { color: #9090bb; }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: CURRENT STATE + TARGET -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>US Logistics Strategy</h1>
+      <div class="subtitle">Fulfillment Architecture, 3PL Transition & Freight Economics</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Why This Is Critical</div>
+    Cross-border fulfillment from Canada to the US creates duty friction, delivery delays, and unacceptable CAC for US market entry. <strong>Establishing a US-based 3PL is a prerequisite for the 1099 rep program, HSA/FSA checkout, and 2-day delivery to US patients.</strong> This document maps the transition from the current mixed model to a US drop-ship architecture.
+  </div>
+
+  <!-- CURRENT STATE -->
+  <span class="badge cur">Section 1 · Current State — Cross-Border Pain</span>
+
+  <h2>Today's Fulfillment Architecture</h2>
+
+  <div class="supply-flow">
+    <div class="sf-node">
+      <div class="icon">🏭</div>
+      <div class="title">Aztech (Shenzhen)</div>
+      <div class="sub">Contract manufacturer</div>
+    </div>
+    <div class="sf-node">
+      <div class="icon">🚢</div>
+      <div class="title">Sea/Air Freight</div>
+      <div class="sub">To Edmonton</div>
+    </div>
+    <div class="sf-node active">
+      <div class="icon">📦</div>
+      <div class="title">Edmonton HQ</div>
+      <div class="sub">QC + storage</div>
+    </div>
+    <div class="sf-node">
+      <div class="icon">🛃</div>
+      <div class="title">Cross-Border</div>
+      <div class="sub">Duties + delays</div>
+    </div>
+    <div class="sf-node">
+      <div class="icon">🚚</div>
+      <div class="title">US Delivery</div>
+      <div class="sub">5-7 days</div>
+    </div>
+    <div class="sf-node">
+      <div class="icon">🏥</div>
+      <div class="title">Clinic / Patient</div>
+      <div class="sub">End customer</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel red" style="font-size:12px;">
+      <h3>Current Pain Points</h3>
+      <p style="margin-bottom:6px;"><strong>Delivery speed:</strong> 5-7 days to US clinics/patients (vs. 2-day Amazon expectation)</p>
+      <p style="margin-bottom:6px;"><strong>Duty friction:</strong> Cross-border customs adds cost and unpredictability</p>
+      <p style="margin-bottom:6px;"><strong>Freight cost:</strong> Air freight at $11.60/unit (current); sea freight would drop to $3.10/unit but requires 45-day cash float</p>
+      <p style="margin-bottom:6px;"><strong>Working capital:</strong> Inventory sits in Edmonton; can't pre-position in US without 3PL</p>
+      <p><strong>Series A optics:</strong> US investors expect US-based logistics infrastructure</p>
+    </div>
+    <div class="panel" style="font-size:12px;">
+      <h3>Current Freight Cost per Unit</h3>
+      <table>
+        <thead><tr><th>Mode</th><th>Cost/Unit</th><th>Transit</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">Air freight (current)</td><td class="mono">$11.60</td><td>7-10 days</td><td style="color:#dc2626;">Active</td></tr>
+          <tr><td style="font-weight:600;">Sea freight (target)</td><td class="mono">$3.10</td><td>35-45 days</td><td style="color:#d97706;">Requires cash float</td></tr>
+          <tr><td style="font-weight:600;">Savings per unit</td><td class="mono" style="color:#059669; font-weight:700;">$8.50</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px; color:#5a5a7a; margin-top:6px;">At 5,000 units/year, sea freight pivot saves $42,500 annually. Requires sufficient working capital for 45-day inventory float — funded by this raise.</p>
+    </div>
+  </div>
+
+  <!-- TARGET STATE -->
+  <span class="badge tar">Section 2 · Target State — US 3PL Drop-Ship</span>
+
+  <h2>Post-Raise Fulfillment Architecture</h2>
+
+  <div class="supply-flow">
+    <div class="sf-node">
+      <div class="icon">🏭</div>
+      <div class="title">Aztech (Shenzhen)</div>
+      <div class="sub">Contract manufacturer</div>
+    </div>
+    <div class="sf-node">
+      <div class="icon">🚢</div>
+      <div class="title">Sea Freight</div>
+      <div class="sub">$3.10/unit · 45 days</div>
+    </div>
+    <div class="sf-node active">
+      <div class="icon">🇺🇸</div>
+      <div class="title">US 3PL</div>
+      <div class="sub">Nevada or Kentucky</div>
+    </div>
+    <div class="sf-node">
+      <div class="icon">⚡</div>
+      <div class="title">2-Day Delivery</div>
+      <div class="sub">Ground to CONUS</div>
+    </div>
+    <div class="sf-node">
+      <div class="icon">🏥</div>
+      <div class="title">Clinic / Patient</div>
+      <div class="sub">End customer</div>
+    </div>
+    <div class="sf-node">
+      <div class="icon">🍁</div>
+      <div class="title">Edmonton HQ</div>
+      <div class="sub">Canada orders only</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel green" style="font-size:12px;">
+      <h3>What Changes</h3>
+      <table>
+        <thead><tr><th></th><th>Today</th><th>Post-3PL</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">US delivery</td><td>5-7 days</td><td style="color:#059669; font-weight:700;">2 days</td></tr>
+          <tr><td style="font-weight:600;">Freight/unit</td><td>$11.60 (air)</td><td style="color:#059669; font-weight:700;">$3.10 (sea)</td></tr>
+          <tr><td style="font-weight:600;">Customs</td><td>Per-shipment</td><td style="color:#059669; font-weight:700;">Bulk import, bonded</td></tr>
+          <tr><td style="font-weight:600;">Drop-ship</td><td>Not available</td><td style="color:#059669; font-weight:700;">QR Rx → direct ship</td></tr>
+          <tr><td style="font-weight:600;">Returns</td><td>Cross-border</td><td style="color:#059669; font-weight:700;">US-based RMA</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel" style="font-size:12px;">
+      <h3>3PL Selection Criteria</h3>
+      <table>
+        <tr><td style="font-weight:600; width:140px;">Location</td><td>Central US (Nevada or Kentucky) for 2-day ground coverage to 95%+ of CONUS</td></tr>
+        <tr><td style="font-weight:600;">Integration</td><td>Shopify Plus native integration (API or app)</td></tr>
+        <tr><td style="font-weight:600;">Volume tier</td><td>Startup-friendly: 100-1,000 units/month initially</td></tr>
+        <tr><td style="font-weight:600;">Services</td><td>Pick/pack, kitting (device + collateral), branded packaging</td></tr>
+        <tr><td style="font-weight:600;">Returns</td><td>US-based RMA processing</td></tr>
+        <tr><td style="font-weight:600;">Cost target</td><td><$8/order (pick + pack + ship label)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>Dual-Stream Architecture</h2>
+  <div class="panel dark" style="font-size:12px; margin-bottom:16px;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <h3>US Stream (90% of target volume)</h3>
+        <p style="color:#ccc; margin-bottom:6px;">Aztech → Sea freight → US 3PL → 2-day ground</p>
+        <p style="color:#b0b0cc;">Serves: US clinics (QR Rx drop-ship), US direct patients, 1099 rep orders. Managed by: Ops Manager + 3PL API.</p>
+      </div>
+      <div>
+        <h3>Canada Stream (10% of volume)</h3>
+        <p style="color:#ccc; margin-bottom:6px;">Aztech → Sea/air → Edmonton HQ → Canada Post/courier</p>
+        <p style="color:#b0b0cc;">Serves: Canadian clinic partners, Canadian direct orders. Managed by: Edmonton team (existing workflow).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: ECONOMICS + IMPLEMENTATION -->
+<div class="page">
+
+  <span class="badge eco">Section 3 · Fulfillment Economics & Implementation</span>
+
+  <h2>Per-Unit Fulfillment Cost Comparison</h2>
+
+  <table>
+    <thead><tr><th>Cost Component</th><th>Current (Air + Cross-Border)</th><th>Target (Sea + US 3PL)</th><th>Savings/Unit</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;">Factory-to-warehouse freight</td><td class="mono">$11.60</td><td class="mono">$3.10</td><td class="mono" style="color:#059669;">–$8.50</td></tr>
+      <tr><td style="font-weight:600;">Customs/duty</td><td class="mono">~$3-5 (variable)</td><td class="mono">~$2 (bulk import)</td><td class="mono" style="color:#059669;">–$1-3</td></tr>
+      <tr><td style="font-weight:600;">3PL pick/pack</td><td class="mono">$0 (self-fulfilled)</td><td class="mono">~$3-5</td><td class="mono" style="color:#dc2626;">+$3-5</td></tr>
+      <tr><td style="font-weight:600;">Last-mile shipping (US)</td><td class="mono">~$12-18 (cross-border)</td><td class="mono">~$8-12 (domestic ground)</td><td class="mono" style="color:#059669;">–$4-6</td></tr>
+      <tr style="border-top:2px solid #1a1a2e;">
+        <td style="font-weight:700;">Total fulfillment/unit (US)</td>
+        <td class="mono" style="font-weight:700;">~$27-35</td>
+        <td class="mono" style="font-weight:700; color:#059669;">~$16-22</td>
+        <td class="mono" style="font-weight:700; color:#059669;">–$11-13</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="panel green" style="font-size:12px; margin-bottom:16px;">
+    <strong>Scale impact:</strong> At 5,000 US units/year, the fulfillment transition saves $55,000-65,000 annually. At 10,000 units, it saves $110,000-130,000 — equivalent to the salary of the Ops Manager who manages the 3PL relationship. The logistics investment pays for itself.
+  </div>
+
+  <h2>Implementation Timeline</h2>
+
+  <table>
+    <thead><tr><th style="width:80px;">Week</th><th>Milestone</th><th>Owner</th><th>Dependencies</th></tr></thead>
+    <tbody>
+      <tr><td class="mono" style="font-weight:600;">1-2</td><td>Delaware C-Corp incorporation + EIN</td><td>Ali + Legal</td><td>None (in progress)</td></tr>
+      <tr><td class="mono" style="font-weight:600;">2-4</td><td>3PL vendor evaluation (3 candidates)</td><td>Ops Manager / Ali</td><td>US entity active</td></tr>
+      <tr><td class="mono" style="font-weight:600;">4-6</td><td>3PL contract execution + onboarding</td><td>Ops Manager</td><td>Vendor selected</td></tr>
+      <tr><td class="mono" style="font-weight:600;">6-8</td><td>Shopify Plus integration + test orders</td><td>Ops Manager + 3PL</td><td>API access provisioned</td></tr>
+      <tr><td class="mono" style="font-weight:600;">8-10</td><td>First sea freight PO to US 3PL (1,600 units backlog)</td><td>Ops Manager</td><td>Raise closed, PO funded</td></tr>
+      <tr><td class="mono" style="font-weight:600;">10-12</td><td>Live US drop-ship fulfillment</td><td>Ops Manager</td><td>Inventory received at 3PL</td></tr>
+    </tbody>
+  </table>
+  <div class="caveat">12-week timeline assumes raise closes and Ops Manager is hired by week 1. If Ops Manager hire is delayed, Ali manages 3PL setup directly (slower but not blocked).</div>
+
+  <h2>Working Capital: The Sea Freight Float</h2>
+  <div class="two-col">
+    <div class="panel" style="font-size:12px;">
+      <h3>Why Sea Freight Requires Capital</h3>
+      <p style="margin-bottom:6px;">Sea freight takes 35-45 days door-to-door vs. 7-10 days for air. This means Umay needs to fund ~45 days of inventory in transit before it reaches the US 3PL.</p>
+      <table style="margin-top:8px;">
+        <tr><td style="font-weight:600; width:160px;">Backlog PO (1,600 units)</td><td class="mono">$243,088 COGS</td></tr>
+        <tr><td style="font-weight:600;">Float period</td><td>~45 days</td></tr>
+        <tr><td style="font-weight:600;">Working capital needed</td><td class="mono">~$250K (covered in $500K inventory allocation)</td></tr>
+      </table>
+    </div>
+    <div class="panel" style="font-size:12px;">
+      <h3>Inventory Planning (Post-3PL)</h3>
+      <table>
+        <tr><td style="font-weight:600; width:160px;">Safety stock target</td><td>8 weeks of projected demand at US 3PL</td></tr>
+        <tr><td style="font-weight:600;">Reorder trigger</td><td>4 weeks remaining stock</td></tr>
+        <tr><td style="font-weight:600;">PO cadence</td><td>Quarterly production runs (2,500-5,000 units)</td></tr>
+        <tr><td style="font-weight:600;">Split shipment</td><td>Initial air (500 units for immediate demand) + sea (remainder)</td></tr>
+      </table>
+      <p style="font-size:10px; color:#5a5a7a; margin-top:6px;">Split shipment strategy ensures 2-day delivery capability while the bulk sea order is in transit.</p>
+    </div>
+  </div>
+
+  <h2>Manufacturing Partner: Aztech Global</h2>
+  <div class="panel" style="font-size:12px; margin-bottom:16px;">
+    <table>
+      <tr><td style="font-weight:600; width:160px;">Manufacturer</td><td>Aztech Global (Shenzhen, China)</td></tr>
+      <tr><td style="font-weight:600;">Relationship</td><td>Established — multiple production runs completed</td></tr>
+      <tr><td style="font-weight:600;">Other clients</td><td>Eight Sleep (shared factory — validation of quality standards)</td></tr>
+      <tr><td style="font-weight:600;">Capacity</td><td>Scalable to 10K+ units/quarter without factory change</td></tr>
+      <tr><td style="font-weight:600;">Lead time</td><td>~8-12 weeks from PO to ship (production + QC)</td></tr>
+      <tr><td style="font-weight:600;">Quality</td><td>IEC 60335-1 tested, SGS certified. 0.67% field return rate.</td></tr>
+      <tr><td style="font-weight:600;">Gen 2 DFM</td><td>Aztech engaged for Gen 2 design-for-manufacturing (funded by raise)</td></tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="label">The Investor Signal</div>
+    US 3PL establishment is not a nice-to-have — it's the <strong>infrastructure that unlocks every other US growth lever.</strong> The QR prescription drop-ship model (Asset 5), the 1099 rep program (Asset 9), and the HSA/FSA checkout (Asset 10) all require US-based fulfillment to function. This is the operational foundation for the $2M raise's growth thesis.
+  </div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · US Logistics Strategy</div>
+  </div>
+</div>
+
+</body>
+</html>

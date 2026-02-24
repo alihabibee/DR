@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Material Agreements Summary — Key Contracts & Commercial Relationships</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 46px 54px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.mfg { background: #dbeafe; color: #1e40af; }
+  .badge.channel { background: #d1fae5; color: #065f46; }
+  .badge.ip { background: #ede9fe; color: #5b21b6; }
+  .badge.ops { background: #fef3c7; color: #92400e; }
+  .badge.plan { background: #fee2e2; color: #991b1b; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  /* Agreement card */
+  .agree-card {
+    border: 1px solid #e0e0e8; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .agree-card .top-row {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
+  }
+  .agree-card .party { font-weight: 700; font-size: 14px; color: #1a1a2e; }
+  .agree-status {
+    font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 3px;
+  }
+  .agree-status.active { background: #d1fae5; color: #065f46; }
+  .agree-status.planned { background: #fef3c7; color: #92400e; }
+  .agree-status.todo { background: #fee2e2; color: #991b1b; }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+
+  /* Summary grid */
+  .summary-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;
+  }
+  .summary-cell {
+    text-align: center; padding: 12px 8px; border-radius: 8px;
+  }
+  .summary-cell .num { font-family: 'DM Serif Display', serif; font-size: 28px; }
+  .summary-cell .lbl { font-size: 10px; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Material Agreements Summary</h1>
+      <div class="subtitle">Key Contracts, Partnerships & Commercial Relationships</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Summary for Investors</div>
+    This document catalogs every material commercial relationship. Umay operates with a lean agreement footprint — <strong>5 active agreements, 2 in progress, and 3 planned post-raise.</strong> No single agreement creates existential dependency, though the Aztech manufacturing relationship is the most critical. All IP is assigned to the company. No outstanding litigation.
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-cell" style="background:#d1fae5;">
+      <div class="num" style="color:#065f46;">5</div>
+      <div class="lbl" style="color:#065f46;">Active agreements</div>
+    </div>
+    <div class="summary-cell" style="background:#fef3c7;">
+      <div class="num" style="color:#92400e;">2</div>
+      <div class="lbl" style="color:#92400e;">In progress</div>
+    </div>
+    <div class="summary-cell" style="background:#fee2e2;">
+      <div class="num" style="color:#991b1b;">3</div>
+      <div class="lbl" style="color:#991b1b;">Planned (post-raise)</div>
+    </div>
+    <div class="summary-cell" style="background:#f0f0f8;">
+      <div class="num" style="color:#1a1a2e;">0</div>
+      <div class="lbl" style="color:#5a5a7a;">Outstanding litigation</div>
+    </div>
+  </div>
+
+  <!-- MANUFACTURING -->
+  <span class="badge mfg">Manufacturing & Engineering</span>
+
+  <div class="agree-card">
+    <div class="top-row">
+      <div class="party">Aztech Global — Contract Manufacturing</div>
+      <div class="agree-status active">✓ Active</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Contract manufacturing agreement (OEM)</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>Full device assembly, testing, packaging — Gen 1 Rest device. Engaged for Gen 2 DFM.</td></tr>
+      <tr><td style="font-weight:600;">Exclusivity</td><td>Non-exclusive. Aztech manufactures for multiple clients (incl. Eight Sleep — shared factory).</td></tr>
+      <tr><td style="font-weight:600;">MOQ</td><td>Negotiated per PO. Historical runs: 500-2,500 units.</td></tr>
+      <tr><td style="font-weight:600;">IP ownership</td><td>All designs, tooling, and firmware remain Umay property. Aztech has no license to produce independently.</td></tr>
+      <tr><td style="font-weight:600;">Term</td><td>PO-based (no long-term commitment required)</td></tr>
+      <tr><td style="font-weight:600;">Risk note</td><td>Single-source manufacturer. Tooling is Umay-owned and transferable to alternate factory if needed.</td></tr>
+    </table>
+  </div>
+
+  <div class="agree-card">
+    <div class="top-row">
+      <div class="party">Tangent Engineering — Hardware Engineering</div>
+      <div class="agree-status active">✓ Active</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Engineering services contract (independent contractor)</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>Hardware engineering, firmware development, Gen 2 DFM, EVT/DVT/PVT program management</td></tr>
+      <tr><td style="font-weight:600;">IP assignment</td><td>All work product assigned to Umay Care Holdings Inc.</td></tr>
+      <tr><td style="font-weight:600;">Structure</td><td>Project-based SOWs with defined deliverables and milestones</td></tr>
+      <tr><td style="font-weight:600;">Term</td><td>Per-SOW. Ongoing relationship through multiple project phases.</td></tr>
+    </table>
+  </div>
+
+  <!-- CHANNEL AGREEMENTS -->
+  <span class="badge channel">Channel & Distribution</span>
+
+  <div class="agree-card">
+    <div class="top-row">
+      <div class="party">Clinic Partner Agreements (Template) — 134 Partners</div>
+      <div class="agree-status active">✓ Active (134)</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Wholesale distribution / authorized retailer agreement</td></tr>
+      <tr><td style="font-weight:600;">Partners</td><td>134 total (123 with ≥1 order, 51 at retail level)</td></tr>
+      <tr><td style="font-weight:600;">Pricing</td><td>$285 wholesale (MAP: $499-599 retail)</td></tr>
+      <tr><td style="font-weight:600;">Terms</td><td>Net 30 (standard). Pre-order terms: 50% deposit, balance on ship.</td></tr>
+      <tr><td style="font-weight:600;">Claims clause</td><td>Partner agrees to use only Umay-approved marketing materials and claims language</td></tr>
+      <tr><td style="font-weight:600;">Territory</td><td>Non-exclusive. No geographic restrictions on authorized partners.</td></tr>
+      <tr><td style="font-weight:600;">Termination</td><td>Either party with written notice. No minimum volume requirements.</td></tr>
+    </table>
+  </div>
+
+  <div class="agree-card">
+    <div class="top-row">
+      <div class="party">ISC / SSC — Pilot Study Agreement</div>
+      <div class="agree-status active">✓ Active (Study Complete)</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Research collaboration / device supply agreement</td></tr>
+      <tr><td style="font-weight:600;">Partner</td><td>Innovation and Science Canada (ISC) / Social Sciences Council (SSC) — Government of Canada</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>N=500 employee pilot study — eye comfort, sleep quality, workplace productivity outcomes</td></tr>
+      <tr><td style="font-weight:600;">PI</td><td>Dr. Sharmin Habib, OD (Umay Co-Founder & CMO)</td></tr>
+      <tr><td style="font-weight:600;">Data rights</td><td>Umay retains rights to aggregate anonymized results for publication and marketing</td></tr>
+      <tr><td style="font-weight:600;">Status</td><td>Study complete. Manuscript in draft. Publication targeting peer-reviewed journal.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+
+  <!-- OPERATIONAL AGREEMENTS -->
+  <span class="badge ops">Operational & Platform</span>
+
+  <div class="agree-card">
+    <div class="top-row">
+      <div class="party">Shopify — E-Commerce Platform</div>
+      <div class="agree-status active">✓ Active</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>SaaS subscription (e-commerce platform)</td></tr>
+      <tr><td style="font-weight:600;">Current tier</td><td>Shopify (standard). Migration to Shopify Plus planned.</td></tr>
+      <tr><td style="font-weight:600;">Function</td><td>Storefront, checkout, order management, clinic QR flows</td></tr>
+      <tr><td style="font-weight:600;">Integration</td><td>3PL API integration planned post-migration</td></tr>
+    </table>
+  </div>
+
+  <div class="agree-card">
+    <div class="top-row">
+      <div class="party">SGS International — Safety Certification</div>
+      <div class="agree-status active">✓ Active</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Product safety testing and certification</td></tr>
+      <tr><td style="font-weight:600;">Standard</td><td>IEC 60335-1 (household appliances safety)</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>Electrical safety, thermal safety, EMC/EMF testing</td></tr>
+      <tr><td style="font-weight:600;">Status</td><td>Certified. Listing active. Re-certification required for Gen 2 design changes.</td></tr>
+    </table>
+  </div>
+
+  <!-- IN PROGRESS -->
+  <span class="badge plan">In Progress & Planned Agreements</span>
+
+  <div class="agree-card" style="border-style:dashed; border-color:#d97706;">
+    <div class="top-row">
+      <div class="party">NRC IRAP — OARA Co-Funding</div>
+      <div class="agree-status planned">◆ In Progress</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Non-dilutive co-funding agreement (National Research Council Industrial Research Assistance Program)</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>OARA (Ocular Autonomic Recovery Assessment) research project co-funding</td></tr>
+      <tr><td style="font-weight:600;">Value</td><td>Project-dependent — NRC IRAP typically funds 50-80% of qualifying R&D costs</td></tr>
+      <tr><td style="font-weight:600;">Status</td><td>Active relationship. Engagement for RestScan-related R&D.</td></tr>
+    </table>
+  </div>
+
+  <div class="agree-card" style="border-style:dashed; border-color:#d97706;">
+    <div class="top-row">
+      <div class="party">Aldina Duarte Ramos — Advisor Agreement</div>
+      <div class="agree-status planned">◆ In Progress</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Strategic advisor agreement</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>Wellness/hospitality channel strategy, European market positioning</td></tr>
+      <tr><td style="font-weight:600;">Compensation</td><td>Equity-based (advisor grant from planned ESOP)</td></tr>
+    </table>
+  </div>
+
+  <h2>Post-Raise Agreements (Planned)</h2>
+
+  <div class="agree-card" style="border-style:dashed; border-color:#dc2626;">
+    <div class="top-row">
+      <div class="party">US 3PL Partner — Fulfillment Services</div>
+      <div class="agree-status todo">○ Post-Raise</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Third-party logistics agreement</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>US warehousing, pick/pack, last-mile fulfillment, returns processing</td></tr>
+      <tr><td style="font-weight:600;">Target</td><td>Central US location (Nevada/Kentucky). Shopify Plus native integration.</td></tr>
+      <tr><td style="font-weight:600;">Timeline</td><td>Weeks 2-6 post-raise (see Asset 13: US Logistics Strategy)</td></tr>
+    </table>
+  </div>
+
+  <div class="agree-card" style="border-style:dashed; border-color:#dc2626;">
+    <div class="top-row">
+      <div class="party">TrueMed — HSA/FSA Payment Processing</div>
+      <div class="agree-status todo">○ Post-Raise</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Payment processing / checkout integration</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>HSA/FSA payment acceptance, LMN generation, Shopify checkout integration</td></tr>
+      <tr><td style="font-weight:600;">Timeline</td><td>4-6 weeks from application (post-Shopify Plus migration)</td></tr>
+    </table>
+  </div>
+
+  <div class="agree-card" style="border-style:dashed; border-color:#dc2626;">
+    <div class="top-row">
+      <div class="party">1099 Independent Rep Agreements (3-5 reps)</div>
+      <div class="agree-status todo">○ Post-Raise</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Type</td><td>Independent contractor agreements</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>US clinic channel sales, territory-based (see Asset 9: 1099 Rep Template)</td></tr>
+      <tr><td style="font-weight:600;">Timeline</td><td>Post-Head of Growth US hire. Delaware C-Corp prerequisite.</td></tr>
+    </table>
+  </div>
+
+  <!-- RISK SUMMARY -->
+  <h2>Dependency & Risk Assessment</h2>
+  <div class="two-col">
+    <div class="panel" style="border-left:4px solid #dc2626; background:#fef2f2; font-size:12px;">
+      <h3>Key Dependency Risks</h3>
+      <p style="margin-bottom:6px;"><strong>Single-source manufacturing:</strong> Aztech is the sole manufacturer. Tooling is Umay-owned and transferable, but switching would cause 3-6 month disruption.</p>
+      <p><strong>Founder-dependent relationships:</strong> Most clinic partnerships were established by Ali personally. Head of Growth hire de-risks this.</p>
+    </div>
+    <div class="panel green" style="font-size:12px;">
+      <h3>Structural Protections</h3>
+      <p style="margin-bottom:6px;"><strong>All IP assigned:</strong> Every engineering and design contract includes full IP assignment to Umay Care Holdings Inc.</p>
+      <p style="margin-bottom:6px;"><strong>No exclusivity traps:</strong> No agreement gives any partner exclusive rights that would constrain Umay's optionality.</p>
+      <p><strong>No outstanding litigation:</strong> Zero claims, disputes, or threatened actions.</p>
+    </div>
+  </div>
+
+  <div class="caveat">This summary is intended for investor due diligence reference. Underlying agreements are available in the full data room upon request. Specific terms may be subject to confidentiality provisions with individual counterparties.</div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Material Agreements Summary</div>
+  </div>
+</div>
+
+</body>
+</html>

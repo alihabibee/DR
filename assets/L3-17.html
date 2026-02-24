@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cap Table & Funding History — Ownership, Debt & Raise Structure</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 46px 54px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.equity { background: #dbeafe; color: #1e40af; }
+  .badge.debt { background: #fee2e2; color: #991b1b; }
+  .badge.raise { background: #d1fae5; color: #065f46; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+  .panel.red { border-left: 4px solid #dc2626; background: #fef2f2; }
+  .panel.amber { border-left: 4px solid #d97706; background: #fffbeb; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;
+  }
+  .stat-mini {
+    text-align: center; padding: 12px 8px;
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .stat-mini .num { font-family: 'DM Serif Display', serif; font-size: 22px; color: #1a1a2e; }
+  .stat-mini .lbl { font-size: 9.5px; color: #5a5a7a; margin-top: 2px; line-height: 1.3; }
+  .stat-mini.highlight { background: #1a1a2e; border-color: #1a1a2e; }
+  .stat-mini.highlight .num { color: #fff; }
+  .stat-mini.highlight .lbl { color: #9090bb; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+
+  /* Pie chart CSS */
+  .pie-container {
+    display: flex; align-items: center; gap: 24px; margin-bottom: 18px;
+    padding: 20px; background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .pie-chart {
+    width: 160px; height: 160px; border-radius: 50%; flex-shrink: 0;
+    background: conic-gradient(
+      #1a1a2e 0% 64.4%,
+      #3b82f6 64.4% 75.8%,
+      #94a3b8 75.8% 100%
+    );
+    position: relative;
+  }
+  .pie-chart::after {
+    content: ''; position: absolute; inset: 30px;
+    border-radius: 50%; background: #f8f8fc;
+  }
+  .pie-legend { flex: 1; }
+  .pie-legend-item {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px;
+  }
+  .pie-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: EQUITY + FUNDING HISTORY -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Cap Table & Funding History</h1>
+      <div class="subtitle">Current Ownership, Debt Structure & Raise Mechanics</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Summary</div>
+    Umay is a <strong>founder-controlled company</strong> with 75.8% held by the co-founding team (Ali 64.4% + Sharmin 11.4%). Last priced round was December 2022 at $7.5M CAD pre-money. The current raise is $2M CAD with valuation TBD. A 10% ESOP is planned but not yet created — to be established as part of this round.
+  </div>
+
+  <!-- HEADLINE STATS -->
+  <div class="stat-strip">
+    <div class="stat-mini highlight">
+      <div class="num">75.8%</div>
+      <div class="lbl">Founder ownership<br>(Ali + Sharmin)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">$7.5M</div>
+      <div class="lbl">Last pre-money<br>(Dec 2022, CAD)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">$2M</div>
+      <div class="lbl">Current raise<br>(CAD)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">7.76M</div>
+      <div class="lbl">Shares<br>outstanding</div>
+    </div>
+  </div>
+
+  <!-- CURRENT OWNERSHIP -->
+  <span class="badge equity">Section 1 · Current Ownership</span>
+
+  <h2>Equity Distribution (Pre-Raise)</h2>
+
+  <div class="pie-container">
+    <div class="pie-chart"></div>
+    <div class="pie-legend">
+      <div class="pie-legend-item">
+        <div class="pie-swatch" style="background:#1a1a2e;"></div>
+        <div><strong>Ali Habib (CEO & Co-Founder)</strong> — 64.4%</div>
+      </div>
+      <div class="pie-legend-item">
+        <div class="pie-swatch" style="background:#3b82f6;"></div>
+        <div><strong>Dr. Sharmin Habib (CMO & Co-Founder)</strong> — 11.4%</div>
+      </div>
+      <div class="pie-legend-item">
+        <div class="pie-swatch" style="background:#94a3b8;"></div>
+        <div><strong>Angels & Early Investors</strong> — 24.2%</div>
+      </div>
+      <div style="font-size:11px; color:#5a5a7a; margin-top:8px;">Total shares outstanding: 7,760,000 · No preferred classes · Common shares only</div>
+    </div>
+  </div>
+
+  <div class="panel" style="font-size:12px; margin-bottom:16px;">
+    <h3>Investor Signal: Founder Control</h3>
+    <p>At 64.4%, Ali maintains majority control of all shareholder decisions. Combined with Sharmin's 11.4%, the founding team holds 75.8% — well above the threshold needed for board and corporate control. This is appropriate at the pre-Series A stage and ensures alignment between management and equity holders through the growth phase.</p>
+  </div>
+
+  <!-- FUNDING HISTORY -->
+  <h2>Funding History</h2>
+
+  <table>
+    <thead><tr><th>Round</th><th>Date</th><th>Amount</th><th>Pre-Money</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:600;">Founding / Friends & Family</td>
+        <td>2019-2021</td>
+        <td class="mono">—</td>
+        <td class="mono">—</td>
+        <td>Bootstrap + angels</td>
+        <td>Initial product development, first production run</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Angel / Seed</td>
+        <td>Dec 2022</td>
+        <td class="mono">Undisclosed</td>
+        <td class="mono" style="font-weight:700;">$7.5M CAD</td>
+        <td>Priced round</td>
+        <td>Last priced round. Established current share structure.</td>
+      </tr>
+      <tr style="background:#ecfdf5;">
+        <td style="font-weight:700;">Current Raise</td>
+        <td style="font-weight:700;">Q1 2026</td>
+        <td class="mono" style="font-weight:700;">$2M CAD</td>
+        <td class="mono" style="font-weight:700;">TBD</td>
+        <td style="font-weight:700;">Bridge + Seed</td>
+        <td style="font-weight:700;">Bridge ASAP; full round to follow</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- NON-DILUTIVE FUNDING -->
+  <h2>Non-Dilutive Funding Captured</h2>
+  <table>
+    <thead><tr><th>Source</th><th>Type</th><th>Amount</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;">SR&ED Tax Credits</td><td>Refundable R&D tax credit</td><td class="mono">$150,000</td><td style="color:#059669;">Captured (2023-24)</td></tr>
+      <tr><td style="font-weight:600;">NRC IRAP</td><td>Non-dilutive co-funding</td><td class="mono">Project-based</td><td style="color:#059669;">Active relationship</td></tr>
+      <tr><td style="font-weight:600;">PrairiesCan</td><td>Government loan (0% interest)</td><td class="mono">$281,700 + TBD</td><td style="color:#059669;">Active (see debt below)</td></tr>
+      <tr><td style="font-weight:600;">RBC CEBA</td><td>Government COVID loan</td><td class="mono">$56,663</td><td style="color:#059669;">Active</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PAGE 2: DEBT + RAISE MECHANICS + ESOP -->
+<div class="page">
+
+  <!-- DEBT STRUCTURE -->
+  <span class="badge debt">Section 2 · Debt Structure</span>
+
+  <h2>Outstanding Obligations</h2>
+
+  <table>
+    <thead><tr><th>Lender</th><th>Balance</th><th>Rate</th><th>Monthly Payment</th><th>Security</th><th>Risk</th></tr></thead>
+    <tbody>
+      <tr style="background:#fef2f2;">
+        <td style="font-weight:700;">BDC (#111674-03)</td>
+        <td class="mono" style="font-weight:700;">$266,308</td>
+        <td class="mono">10.55% var</td>
+        <td class="mono">$7,344</td>
+        <td style="color:#dc2626; font-weight:700;">GSA on all assets</td>
+        <td style="color:#dc2626; font-weight:700;">HIGH</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">PrairiesCan (#15540)</td>
+        <td class="mono">$281,700</td>
+        <td class="mono">0%</td>
+        <td class="mono">$5,024</td>
+        <td>Unsecured</td>
+        <td style="color:#d97706;">Medium</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">PrairiesCan (#19946)</td>
+        <td class="mono">TBD</td>
+        <td class="mono">0%</td>
+        <td class="mono">$6,453</td>
+        <td>Unsecured</td>
+        <td style="color:#d97706;">Medium</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">RBC CEBA</td>
+        <td class="mono">$56,663</td>
+        <td class="mono">5%</td>
+        <td class="mono">$236</td>
+        <td>Unsecured</td>
+        <td>Low</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Credit cards</td>
+        <td class="mono">~$35,000</td>
+        <td class="mono">Variable</td>
+        <td class="mono">Variable</td>
+        <td>Unsecured</td>
+        <td style="color:#d97706;">Medium</td>
+      </tr>
+      <tr style="border-top:2px solid #1a1a2e;">
+        <td style="font-weight:700;">Total Debt</td>
+        <td class="mono" style="font-weight:700;">~$640K</td>
+        <td></td>
+        <td class="mono" style="font-weight:700;">$19,762/mo</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="panel red" style="font-size:12px; margin-bottom:16px;">
+    <h3>⚠ April 2026 Debt Cliff</h3>
+    <p style="margin-bottom:6px;"><strong>Total monthly debt service resumes at $19,762/month in April 2026</strong> (payment deferrals ending). Combined with $28K monthly burn, post-April cash requirement is ~$48K/month.</p>
+    <p style="margin-bottom:6px;"><strong>BDC GSA is the existential risk:</strong> The General Security Agreement on all company assets means BDC can seize inventory, IP, and equipment if payments are missed. $350K of the raise is allocated to debt service and runway buffer specifically to address this.</p>
+    <p><strong>Mitigation:</strong> Bridge funding closes before April. $350K allocation covers 7+ months of debt service, providing runway to revenue-from-backlog (1,600 units × $285 = $456K revenue once shipped).</p>
+  </div>
+
+  <!-- THE RAISE -->
+  <span class="badge raise">Section 3 · The Current Raise</span>
+
+  <h2>$2M CAD — Bridge + Seed Round</h2>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Round Terms</h3>
+      <table>
+        <tr><td style="font-weight:600; width:140px;">Amount</td><td class="mono" style="font-weight:700;">$2,000,000 CAD</td></tr>
+        <tr><td style="font-weight:600;">Structure</td><td>Bridge ASAP + full round close</td></tr>
+        <tr><td style="font-weight:600;">Valuation</td><td>TBD (last priced: $7.5M CAD pre-money, Dec 2022)</td></tr>
+        <tr><td style="font-weight:600;">Instrument</td><td>TBD (SAFE / priced equity / convertible note)</td></tr>
+        <tr><td style="font-weight:600;">ESOP</td><td>10% pool to be created (not yet established)</td></tr>
+        <tr><td style="font-weight:600;">Board</td><td>Current: founder-controlled. Post-raise: TBD with lead investor.</td></tr>
+      </table>
+    </div>
+    <div class="panel dark" style="font-size:12px;">
+      <h3>Use of Funds ($2M Allocation)</h3>
+      <table style="color:#d0d0e8;">
+        <tr><td style="color:#fff; font-weight:600; width:180px;">Inventory</td><td class="mono" style="color:#fff;">$500K</td><td>Fulfill 1,600-unit backlog + initial growth orders</td></tr>
+        <tr><td style="color:#fff; font-weight:600;">US Channel Expansion</td><td class="mono" style="color:#fff;">$600K</td><td>Head of Growth hire, 1099 reps, 3PL, Shopify Plus</td></tr>
+        <tr><td style="color:#fff; font-weight:600;">Gen 2 Development</td><td class="mono" style="color:#fff;">$500K</td><td>DFM, tooling, EVT/DVT/PVT with Tangent/Aztech</td></tr>
+        <tr><td style="color:#fff; font-weight:600;">RestScan R&D</td><td class="mono" style="color:#fff;">$200K</td><td>1 CV engineer + data validation contract</td></tr>
+        <tr><td style="color:#fff; font-weight:600;">Working Capital</td><td class="mono" style="color:#fff;">$200K</td><td>Operations, contingency, debt service buffer</td></tr>
+        <tr style="border-top:1px solid #444;"><td style="color:#fff; font-weight:700;">Total</td><td class="mono" style="color:#fff; font-weight:700;">$2,000K</td><td></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ESOP -->
+  <h2>ESOP Plan</h2>
+  <div class="panel" style="font-size:12px; margin-bottom:16px;">
+    <table>
+      <tr><td style="font-weight:600; width:160px;">Planned option pool</td><td>10% of fully diluted shares</td></tr>
+      <tr><td style="font-weight:600;">Current status</td><td>Not yet created — to be established as part of this raise</td></tr>
+      <tr><td style="font-weight:600;">Vesting schedule</td><td>Standard 4-year vest, 1-year cliff (planned)</td></tr>
+      <tr><td style="font-weight:600;">Allocation priority</td><td>First 3 hires (Head of Growth, Product/Tech Lead, Ops Manager) + advisor grants</td></tr>
+      <tr><td style="font-weight:600;">Creation timing</td><td>Pre-money (ESOP dilutes existing shareholders, not new investors)</td></tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="label">Cap Table Hygiene Note</div>
+    The cap table is <strong>clean and simple</strong> — common shares only, no preferred classes, no complex liquidation preferences, no anti-dilution provisions from prior rounds. The 10% ESOP to be created pre-money is standard for this stage and demonstrates readiness to recruit experienced hires with competitive equity packages. Full cap table detail (shareholder register, share certificates) available upon request under NDA.
+  </div>
+
+  <div class="caveat">Valuation for this round is subject to negotiation with lead investor. Use-of-funds allocation is preliminary and may be adjusted based on final round size and timing. ESOP terms (pool size, vesting, exercise price) to be finalized with legal counsel as part of round documentation. Delaware C-Corp subsidiary structure (for US operations) may introduce holding company considerations — to be addressed with corporate counsel.</div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Cap Table & Funding History</div>
+  </div>
+</div>
+
+</body>
+</html>

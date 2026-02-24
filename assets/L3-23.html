@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insurance Summary — Coverage, Gaps & Post-Raise Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 46px 54px; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.active { background: #d1fae5; color: #065f46; }
+  .badge.gap { background: #fee2e2; color: #991b1b; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .summary-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
+  }
+  .summary-cell {
+    text-align: center; padding: 14px 8px; border-radius: 8px;
+  }
+  .summary-cell .num { font-family: 'DM Serif Display', serif; font-size: 26px; }
+  .summary-cell .lbl { font-size: 10px; margin-top: 2px; line-height: 1.3; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+
+  .ins-card {
+    border: 1px solid #e0e0e8; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .ins-card .top-row {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
+  }
+  .ins-card .policy-name { font-weight: 700; font-size: 14px; color: #1a1a2e; }
+  .ins-status {
+    font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 3px;
+  }
+  .ins-status.active { background: #d1fae5; color: #065f46; }
+  .ins-status.needed { background: #fee2e2; color: #991b1b; }
+  .ins-status.recommended { background: #fef3c7; color: #92400e; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Insurance Summary</h1>
+      <div class="subtitle">Current Coverage, Risk Gaps & Post-Raise Roadmap</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Summary for Investors</div>
+    Umay maintains a <strong>$2M Commercial General Liability (CGL) policy</strong> covering product liability — the primary requirement for a consumer hardware company. Policy is current and renewed. With 2,996 units shipped and <strong>zero safety incidents or claims</strong>, the record is clean. Post-raise, D&O (board requirement), E&O, and cyber coverage should be layered in — totaling ~$7-20K/year.
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-cell" style="background:#d1fae5;">
+      <div class="num" style="color:#065f46;">$2M</div>
+      <div class="lbl" style="color:#065f46;">CGL coverage<br>(current, renewed)</div>
+    </div>
+    <div class="summary-cell" style="background:#f0f0f8;">
+      <div class="num" style="color:#1a1a2e;">0</div>
+      <div class="lbl" style="color:#5a5a7a;">Claims filed<br>(lifetime)</div>
+    </div>
+    <div class="summary-cell" style="background:#f0f0f8;">
+      <div class="num" style="color:#1a1a2e;">0</div>
+      <div class="lbl" style="color:#5a5a7a;">Safety incidents<br>(2,996 units shipped)</div>
+    </div>
+  </div>
+
+  <!-- CURRENT COVERAGE -->
+  <span class="badge active">Current Coverage</span>
+
+  <div class="ins-card">
+    <div class="top-row">
+      <div class="policy-name">Commercial General Liability (CGL)</div>
+      <div class="ins-status active">✓ Active & Renewed</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:150px;">Coverage limit</td><td class="mono" style="font-weight:700;">$2,000,000</td></tr>
+      <tr><td style="font-weight:600;">Policy status</td><td style="color:#059669; font-weight:700;">Current — recently renewed</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>Product liability, bodily injury, property damage, completed operations, personal/advertising injury</td></tr>
+      <tr><td style="font-weight:600;">Product covered</td><td>Rest device — periocular thermal therapy (IEC 60335-1 certified, SGS International)</td></tr>
+      <tr><td style="font-weight:600;">Territory</td><td>Canada + US (products sold in both jurisdictions)</td></tr>
+      <tr><td style="font-weight:600;">Claims history</td><td style="color:#059669; font-weight:700;">Zero claims. Zero safety incidents. 0.67% return rate (preference, not safety).</td></tr>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="panel green" style="font-size:12px;">
+      <h3>Why Risk Is Low</h3>
+      <p style="margin-bottom:4px;"><strong>Non-invasive device:</strong> Warm/cool periocular therapy, 10-minute consumer sessions</p>
+      <p style="margin-bottom:4px;"><strong>Safety certified:</strong> IEC 60335-1 (SGS) — electrical, thermal, EMC tested</p>
+      <p style="margin-bottom:4px;"><strong>Firmware-enforced limits:</strong> Temperature ceilings prevent overheating, auto-shutoff</p>
+      <p><strong>4+ years post-market:</strong> 2,996 units, zero safety incidents — actuarial evidence of safety</p>
+    </div>
+    <div class="panel" style="font-size:12px;">
+      <h3>1099 Rep Insurance Note</h3>
+      <p>Per the Independent Rep Agreement (Asset 9), each 1099 contractor is required to maintain their own independent contractor insurance. Umay's $2M CGL covers product-related claims; reps indemnify Umay against claims arising from unauthorized representations or unapproved marketing materials.</p>
+    </div>
+  </div>
+
+  <!-- POST-RAISE -->
+  <span class="badge gap">Post-Raise Insurance Additions</span>
+
+  <div class="ins-card" style="border-style:dashed; border-color:#dc2626;">
+    <div class="top-row">
+      <div class="policy-name">Directors & Officers (D&O) Liability</div>
+      <div class="ins-status needed">○ Required at Close</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:150px;">Why</td><td>Protects board members from personal liability. Standard closing condition for priced rounds with board seats.</td></tr>
+      <tr><td style="font-weight:600;">Coverage</td><td class="mono">$1-2M</td></tr>
+      <tr><td style="font-weight:600;">Est. premium</td><td class="mono">$3,000-8,000/yr</td></tr>
+      <tr><td style="font-weight:600;">Timing</td><td style="color:#dc2626; font-weight:700;">At close / board formation</td></tr>
+    </table>
+  </div>
+
+  <div class="ins-card" style="border-style:dashed; border-color:#d97706;">
+    <div class="top-row">
+      <div class="policy-name">Errors & Omissions (E&O) / Professional Liability</div>
+      <div class="ins-status recommended">◆ Recommended</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:150px;">Why</td><td>Covers claims from technology failures or professional advice. Relevant when RestScan deploys — even wellness scores create advisory liability.</td></tr>
+      <tr><td style="font-weight:600;">Coverage</td><td class="mono">$1-2M</td></tr>
+      <tr><td style="font-weight:600;">Est. premium</td><td class="mono">$2,000-6,000/yr</td></tr>
+      <tr><td style="font-weight:600;">Timing</td><td style="color:#d97706;">Pre-RestScan deployment</td></tr>
+    </table>
+  </div>
+
+  <div class="ins-card" style="border-style:dashed; border-color:#d97706;">
+    <div class="top-row">
+      <div class="policy-name">Cyber Liability / Data Breach</div>
+      <div class="ins-status recommended">◆ Recommended</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:150px;">Why</td><td>Covers breach response, regulatory fines, third-party claims. Relevant with e-commerce PII, IoT telemetry, and 3PL data sharing.</td></tr>
+      <tr><td style="font-weight:600;">Coverage</td><td class="mono">$1M</td></tr>
+      <tr><td style="font-weight:600;">Est. premium</td><td class="mono">$1,500-4,000/yr</td></tr>
+      <tr><td style="font-weight:600;">Timing</td><td style="color:#d97706;">Post-raise / US 3PL launch</td></tr>
+    </table>
+  </div>
+
+  <div class="ins-card" style="border-style:dashed; border-color:#aaa;">
+    <div class="top-row">
+      <div class="policy-name">Key Person Insurance</div>
+      <div class="ins-status recommended">◆ Consider</div>
+    </div>
+    <table>
+      <tr><td style="font-weight:600; width:150px;">Why</td><td>Ali is a single point of failure for sales, fundraising, and partnerships. Some investors may require as a condition.</td></tr>
+      <tr><td style="font-weight:600;">Coverage</td><td class="mono">$500K-1M on CEO</td></tr>
+      <tr><td style="font-weight:600;">Est. premium</td><td class="mono">$500-2,000/yr</td></tr>
+      <tr><td style="font-weight:600;">Timing</td><td>Investor-dependent</td></tr>
+    </table>
+  </div>
+
+  <!-- SUMMARY TABLE -->
+  <h2>Total Insurance Budget (Post-Raise)</h2>
+  <table>
+    <thead><tr><th>Policy</th><th>Status</th><th>Coverage</th><th>Annual Cost</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr style="background:#ecfdf5;">
+        <td style="font-weight:700;">CGL (Product Liability)</td>
+        <td style="color:#059669; font-weight:700;">✓ Active</td>
+        <td class="mono">$2M</td>
+        <td class="mono">Current</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">D&O</td>
+        <td style="color:#dc2626;">Needed</td>
+        <td class="mono">$1-2M</td>
+        <td class="mono">$3-8K</td>
+        <td style="color:#dc2626; font-weight:700;">High</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">E&O</td>
+        <td style="color:#d97706;">Recommended</td>
+        <td class="mono">$1-2M</td>
+        <td class="mono">$2-6K</td>
+        <td>Medium</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Cyber</td>
+        <td style="color:#d97706;">Recommended</td>
+        <td class="mono">$1M</td>
+        <td class="mono">$1.5-4K</td>
+        <td>Medium</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Key Person</td>
+        <td style="color:#888;">Consider</td>
+        <td class="mono">$500K-1M</td>
+        <td class="mono">$0.5-2K</td>
+        <td>Low</td>
+      </tr>
+      <tr style="border-top:2px solid #1a1a2e;">
+        <td style="font-weight:700;">Total Incremental</td>
+        <td></td>
+        <td></td>
+        <td class="mono" style="font-weight:700;">~$7-20K/yr</td>
+        <td>Phased over 6-12 months</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="caveat">Premium estimates are industry benchmarks for early-stage consumer health-tech. Exact quotes depend on insurer underwriting. Policy details (insurer, policy number, exact limits, deductibles) available in the full data room under NDA. Post-raise insurance additions total less than 1% of the raise — negligible cost for material risk reduction.</div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Insurance Summary</div>
+  </div>
+</div>
+
+</body>
+</html>

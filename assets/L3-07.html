@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Scale Proof — Current Team & Post-Raise Org</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 48px 56px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 28px; padding-bottom: 16px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1.2; }
+  .header .subtitle { font-size: 14px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 18px;
+  }
+  .badge.now { background: #dbeafe; color: #1e40af; }
+  .badge.post { background: #d1fae5; color: #065f46; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 18px; color: #1a1a2e;
+    margin: 24px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 18px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 7px 10px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 6px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 16px 20px; margin-bottom: 18px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .footer {
+    margin-top: 28px; padding-top: 14px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  /* Bio card */
+  .bio-card {
+    border: 1px solid #e0e0e8; border-radius: 10px; padding: 20px; margin-bottom: 14px;
+  }
+  .bio-card .name-row {
+    display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;
+  }
+  .bio-card .name {
+    font-family: 'DM Serif Display', serif; font-size: 20px; color: #1a1a2e;
+  }
+  .bio-card .role {
+    font-size: 11px; font-weight: 600; color: #1e40af;
+    background: #dbeafe; padding: 3px 10px; border-radius: 4px;
+  }
+  .bio-card .tagline {
+    font-size: 13px; color: #5a5a7a; font-style: italic; margin-bottom: 10px;
+  }
+  .bio-card .strengths {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;
+  }
+  .bio-card .strength {
+    font-size: 10px; font-weight: 600; background: #f0f0f8; border-radius: 4px;
+    padding: 3px 8px; color: #5a5a7a;
+  }
+  .bio-card p { font-size: 12px; color: #444; }
+
+  /* Advisor card */
+  .advisor-card {
+    border: 1px dashed #d0d0e0; border-radius: 10px; padding: 16px; margin-bottom: 14px;
+  }
+  .advisor-card .name {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+  }
+  .advisor-card .role {
+    font-size: 11px; font-weight: 600; color: #7c3aed;
+    background: #ede9fe; padding: 3px 10px; border-radius: 4px;
+    display: inline-block; margin-bottom: 6px;
+  }
+  .advisor-card p { font-size: 12px; color: #444; }
+
+  /* Hire card */
+  .hire-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .hire-card {
+    border: 2px dashed #d0e8d0; border-radius: 8px; padding: 16px;
+    background: #f8fdf8;
+  }
+  .hire-card .title { font-weight: 700; font-size: 13px; color: #065f46; margin-bottom: 4px; }
+  .hire-card .comp { font-size: 11px; color: #5a5a7a; margin-bottom: 6px; }
+  .hire-card .why { font-size: 11px; color: #444; }
+
+  /* Org chart */
+  .org-chart {
+    text-align: center; margin: 18px 0;
+  }
+  .org-row {
+    display: flex; justify-content: center; gap: 12px; margin-bottom: 8px;
+  }
+  .org-node {
+    padding: 10px 14px; border-radius: 6px; font-size: 11px;
+    border: 1px solid #e0e0e8; background: #fff; min-width: 130px;
+  }
+  .org-node.ceo { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .org-node.current { background: #dbeafe; border-color: #93c5fd; }
+  .org-node.new { background: #d1fae5; border-color: #6ee7b7; border-style: dashed; }
+  .org-node.contract { background: #fef3c7; border-color: #fcd34d; border-style: dashed; }
+  .org-node .n { font-weight: 700; }
+  .org-node .t { font-size: 9px; color: #5a5a7a; }
+  .org-node.ceo .t { color: #9090bb; }
+  .org-node.new .t { color: #065f46; }
+  .org-connector {
+    width: 1px; height: 12px; background: #ccc; margin: 0 auto;
+  }
+  .org-hline {
+    display: flex; justify-content: center; position: relative; margin-bottom: 8px;
+  }
+  .org-hline::before {
+    content: ''; position: absolute; top: 0;
+    height: 1px; background: #ccc;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: CURRENT TEAM -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Team Scale Proof</h1>
+      <div class="subtitle">Current Team, Advisors & Post-Raise Organization</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Team Thesis</div>
+    Umay is a founder-led company at an inflection point. Ali and Sharmin have built the product, proven the channel, and generated the clinical evidence with a 3-person team + engineering contractor. The raise funds the first three hires that separate founder execution from scalable operations: <strong>a US growth lead, a product/tech lead, and an ops manager.</strong>
+  </div>
+
+  <span class="badge now">Current Team · 3 FTEs + 1 Engineering Contractor</span>
+
+  <!-- FOUNDER BIOS -->
+  <div class="bio-card">
+    <div class="name-row">
+      <div class="name">Ali Habib</div>
+      <div class="role">Co-Founder & CEO</div>
+    </div>
+    <div class="tagline">Ships hardware. Builds partnerships. Scales pilots.</div>
+    <div class="strengths">
+      <span class="strength">Behavioral Science</span>
+      <span class="strength">Product Design</span>
+      <span class="strength">Metrics & Analytics</span>
+      <span class="strength">Investor Relations</span>
+      <span class="strength">Channel Sales</span>
+    </div>
+    <p>Canadian entrepreneur with a background spanning behavioral science, product design, and data-driven decision making. Built Umay from concept through Health Canada approval, 3,000 units shipped, 134 clinic partnerships, and a government-backed N=500 pilot study. Leads all investor, partner, and strategic relationships. Currently owns the full sales motion (founder-led) while managing manufacturing, regulatory, and fundraise workstreams simultaneously.</p>
+  </div>
+
+  <div class="bio-card">
+    <div class="name-row">
+      <div class="name">Dr. Sharmin Habib, OD</div>
+      <div class="role">Co-Founder & CMO</div>
+    </div>
+    <div class="tagline">The clinical authority behind the claims.</div>
+    <div class="strengths">
+      <span class="strength">15+ Years Clinical</span>
+      <span class="strength">Dry Eye Specialist</span>
+      <span class="strength">Ocular Surface Disease</span>
+      <span class="strength">Claims Governance</span>
+      <span class="strength">Study PI</span>
+    </div>
+    <p>Doctor of Optometry with 15+ years of clinical experience specializing in dry eye disease and ocular surface disorders. Principal Investigator for the ISC/SSC pilot study (N=500). Endorses RestScan/FOARA direction while maintaining strategic caution on scope-of-practice and claims discipline — ensuring the company doesn't overclaim. Her clinical credibility anchors the OD channel: eye care professionals trust a recommendation from a practicing OD in a way they won't from a tech founder.</p>
+  </div>
+
+  <!-- ADVISOR -->
+  <div class="advisor-card">
+    <div class="role">Strategic Advisor</div>
+    <div class="name">Aldina Duarte Ramos</div>
+    <p style="margin-top:6px;">Former Accor global wellness executive. CEO of Spoon Agency (Paris). Brings hospitality, spa, and wellness industry strategy to Umay's consumer positioning and potential B2B channel expansion into wellness and corporate environments. Paris-based — extends Umay's network into European wellness markets.</p>
+  </div>
+
+  <!-- ENGINEERING CONTRACT -->
+  <div class="panel" style="margin-bottom:18px;">
+    <h3>Engineering Contractor</h3>
+    <table>
+      <tr><td style="font-weight:600; width:140px;">Firm</td><td>Tangent Engineering</td></tr>
+      <tr><td style="font-weight:600;">Scope</td><td>Hardware engineering, Gen 2 DFM, firmware, EVT/DVT/PVT management</td></tr>
+      <tr><td style="font-weight:600;">Structure</td><td>Contract (not FTE)</td></tr>
+      <tr><td style="font-weight:600;">Rationale</td><td>Preserves capital efficiency; hardware engineering needs are project-based, not continuous</td></tr>
+    </table>
+  </div>
+
+  <h2>What This Team Has Already Done With 3 People</h2>
+  <div class="panel dark" style="font-size:12px;">
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px; text-align:center;">
+      <div><strong style="font-size:18px;">2,996</strong><br><span style="color:#9090bb;">units shipped</span></div>
+      <div><strong style="font-size:18px;">134</strong><br><span style="color:#9090bb;">clinic partners</span></div>
+      <div><strong style="font-size:18px;">N=500</strong><br><span style="color:#9090bb;">pilot study completed</span></div>
+      <div><strong style="font-size:18px;">3</strong><br><span style="color:#9090bb;">US patents issued</span></div>
+    </div>
+    <p style="margin-top:12px; color:#b0b0cc; text-align:center;">Health Canada approved · IEC 60335-1 certified · $150K SR&ED credits captured · Manufacturing relationship (Aztech/Eight Sleep factory) · 1,600-unit backlog generated</p>
+  </div>
+</div>
+
+<!-- PAGE 2: POST-RAISE ORG -->
+<div class="page">
+
+  <span class="badge post">Post-Raise Organization · First 3 Hires</span>
+
+  <h2>First Three Hires (Funded by This Raise)</h2>
+
+  <div class="hire-grid">
+    <div class="hire-card">
+      <div class="title">Head of Growth — US</div>
+      <div class="comp">$150K base + equity · Hire #1</div>
+      <div class="why"><strong>Why first:</strong> Activates the US clinic channel. Owns rep recruitment, clinic activation, and the conversion from founder-led sales to repeatable playbook. Must have existing ophthalmic/eye care relationships. Located in-market (US).</div>
+    </div>
+    <div class="hire-card">
+      <div class="title">Product / Tech Lead</div>
+      <div class="comp">$160K base + equity · Hire #2</div>
+      <div class="why"><strong>Why second:</strong> Owns Gen 2 hardware program, RestScan development, app roadmap, and Tangent Engineering relationship. Takes technical execution off Ali's plate. Must bridge hardware + software + data.</div>
+    </div>
+    <div class="hire-card">
+      <div class="title">Operations Manager</div>
+      <div class="comp">$100K base + equity · Hire #3</div>
+      <div class="why"><strong>Why third:</strong> Manages supply chain (Aztech → 3PL → clinic), inventory planning, order fulfillment, and customer support. Frees Ali from day-to-day logistics so he can focus on investor relations and strategic partnerships.</div>
+    </div>
+  </div>
+
+  <h2>Organization: Current → Post-Raise</h2>
+
+  <div class="two-col">
+    <div>
+      <h3>Today (3 FTEs + Contractor)</h3>
+      <div class="org-chart">
+        <div class="org-row">
+          <div class="org-node ceo"><div class="n">Ali Habib</div><div class="t">CEO — Everything</div></div>
+        </div>
+        <div class="org-connector"></div>
+        <div class="org-row">
+          <div class="org-node current"><div class="n">Dr. Sharmin Habib</div><div class="t">CMO — Clinical / PI</div></div>
+          <div class="org-node current"><div class="n">FTE #3</div><div class="t">Operations Support</div></div>
+          <div class="org-node contract"><div class="n">Tangent Eng.</div><div class="t">Hardware (Contract)</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Post-Raise (6 FTEs + Contractor)</h3>
+      <div class="org-chart">
+        <div class="org-row">
+          <div class="org-node ceo"><div class="n">Ali Habib</div><div class="t">CEO — Strategy / Investor / Partnerships</div></div>
+        </div>
+        <div class="org-connector"></div>
+        <div class="org-row">
+          <div class="org-node current"><div class="n">Dr. Sharmin Habib</div><div class="t">CMO</div></div>
+          <div class="org-node new"><div class="n">Head of Growth US</div><div class="t">Sales / Channel</div></div>
+          <div class="org-node new"><div class="n">Product/Tech Lead</div><div class="t">HW + SW + Data</div></div>
+          <div class="org-node new"><div class="n">Ops Manager</div><div class="t">Supply / Fulfillment</div></div>
+        </div>
+        <div class="org-connector"></div>
+        <div class="org-row">
+          <div class="org-node contract"><div class="n">Tangent Eng.</div><div class="t">Hardware (Contract)</div></div>
+          <div class="org-node" style="border-style:dashed; background:#fef3c7;"><div class="n">1099 Reps (3-5)</div><div class="t">Variable cost</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>The Founder-to-Scale Transition</h2>
+  <div class="two-col">
+    <div class="panel">
+      <h3>Ali's Time Allocation — Today</h3>
+      <table>
+        <tr><td style="font-weight:600; width:180px;">Sales & Clinic Relationships</td><td>35%</td></tr>
+        <tr><td style="font-weight:600;">Manufacturing & Ops</td><td>25%</td></tr>
+        <tr><td style="font-weight:600;">Product & Engineering</td><td>20%</td></tr>
+        <tr><td style="font-weight:600;">Investor & Strategic</td><td>15%</td></tr>
+        <tr><td style="font-weight:600;">Admin & Legal</td><td>5%</td></tr>
+      </table>
+    </div>
+    <div class="panel" style="background:#ecfdf5; border-color:#a7f3d0;">
+      <h3>Ali's Time Allocation — Post-Raise</h3>
+      <table>
+        <tr><td style="font-weight:600; width:180px;">Investor & Board</td><td>30%</td></tr>
+        <tr><td style="font-weight:600;">Strategic Partnerships</td><td>25%</td></tr>
+        <tr><td style="font-weight:600;">Key Accounts (Top 10)</td><td>20%</td></tr>
+        <tr><td style="font-weight:600;">Product Strategy</td><td>15%</td></tr>
+        <tr><td style="font-weight:600;">Team Leadership</td><td>10%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">The Honest Framing</div>
+    Umay is a founder-dependent company today. That's not a weakness at this stage — it's how 3,000 units got shipped and 134 clinics got activated. The raise enables the transition from <strong>"Ali does everything" to "Ali does the things only Ali can do"</strong> — investor relationships, strategic partnerships, and the top 10 clinic accounts — while repeatable functions (sales playbook, product execution, operations) move to dedicated hires.
+  </div>
+
+  <h2>ESOP Strategy</h2>
+  <div class="panel" style="font-size:12px;">
+    <table>
+      <tr><td style="font-weight:600; width:160px;">Planned option pool</td><td>10% of fully diluted shares</td></tr>
+      <tr><td style="font-weight:600;">Current status</td><td>Not yet created (to be established as part of this raise)</td></tr>
+      <tr><td style="font-weight:600;">Vesting</td><td>Standard 4-year vest, 1-year cliff (planned)</td></tr>
+      <tr><td style="font-weight:600;">Allocation priority</td><td>First 3 hires receive equity as part of compensation package</td></tr>
+    </table>
+  </div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Team Scale Proof</div>
+  </div>
+</div>
+
+</body>
+</html>

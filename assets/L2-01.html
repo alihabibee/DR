@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umay — Investor Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; color: #1a1a2e; background: #fff; }
+
+  .slide {
+    width: 100%; max-width: 960px; margin: 0 auto; padding: 52px 60px;
+    min-height: 540px; position: relative; page-break-after: always;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .slide + .slide { border-top: 2px solid #e8e8f0; }
+  .slide.dark { background: #1a1a2e; color: #e0e0f0; }
+  .slide.dark h1, .slide.dark h2 { color: #fff; }
+  .slide.dark .sub { color: #9090bb; }
+  .slide.dark strong { color: #fff; }
+  .slide.teal { background: #0f766e; color: #fff; }
+  .slide.teal h1, .slide.teal h2 { color: #fff; }
+  .slide.teal .sub { color: #99f6e4; }
+
+  h1 { font-family: 'DM Serif Display', serif; font-size: 36px; line-height: 1.15; margin-bottom: 12px; }
+  h2 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; margin-bottom: 10px; }
+  h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #5a5a7a; margin-bottom: 6px; }
+  .sub { font-size: 16px; color: #5a5a7a; line-height: 1.5; }
+  .slide-num { position: absolute; bottom: 24px; right: 36px; font-size: 10px; color: #bbb; }
+  .slide.dark .slide-num { color: #555; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .four-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .five-col { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+  .stat-hero { text-align: center; padding: 16px; }
+  .stat-hero .num { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1; }
+  .stat-hero .lbl { font-size: 12px; margin-top: 4px; }
+
+  .panel { background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 10px; padding: 18px; }
+  .panel.invert { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); color: #d0d0e8; }
+  .panel.invert strong { color: #fff; }
+  .panel.teal-inv { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); color: #e0fff8; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table th { text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #5a5a7a; padding: 5px 8px; border-bottom: 2px solid #1a1a2e; }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 3px; margin-right: 4px; margin-bottom: 4px; }
+  .tag.green { background: #d1fae5; color: #065f46; }
+  .tag.blue { background: #dbeafe; color: #1e40af; }
+  .tag.purple { background: #ede9fe; color: #5b21b6; }
+  .tag.amber { background: #fef3c7; color: #92400e; }
+
+  .quote { font-family: 'DM Serif Display', serif; font-size: 22px; font-style: italic; line-height: 1.4; padding: 20px 0; border-top: 2px solid; border-bottom: 2px solid; margin: 16px 0; }
+  .slide.dark .quote { border-color: #333; }
+  .conf { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide dark" style="justify-content:center; text-align:center;">
+  <div>
+    <div style="font-family:'DM Serif Display',serif; font-size:14px; letter-spacing:0.15em; color:#9090bb; margin-bottom:24px;">UMAY CARE HOLDINGS INC.</div>
+    <h1 style="font-size:44px; margin-bottom:16px;">The Eye Is the Gateway<br>to Recovery</h1>
+    <div class="sub" style="color:#9090bb; font-size:18px; max-width:600px; margin:0 auto;">
+      Closing the loop between ocular measurement and thermal therapy — the compliance layer dry eye disease has been missing.
+    </div>
+    <div style="margin-top:32px; font-size:12px; color:#666;">
+      <span class="tag green">Health Canada Approved</span>
+      <span class="tag blue">N=500 Gov't-Backed Pilot</span>
+      <span class="tag purple">3 US Patents</span>
+    </div>
+    <div style="margin-top:24px; font-size:11px; color:#555;">Confidential — Investor Presentation · Q1 2026</div>
+  </div>
+  <div class="slide-num">1</div>
+</div>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<div class="slide">
+  <h3>The Problem</h3>
+  <h1>344 Million People Have Dry Eye Disease.<br>Almost None Stick to Treatment.</h1>
+  <div class="four-col" style="margin-top:16px;">
+    <div class="stat-hero"><div class="num" style="color:#dc2626;">5.9%</div><div class="lbl">Rx drop adherence<br>(PDC ≥80%)</div></div>
+    <div class="stat-hero"><div class="num" style="color:#dc2626;">75%</div><div class="lbl">Quit in-office treatment<br>within 90 days</div></div>
+    <div class="stat-hero"><div class="num" style="color:#dc2626;">&lt;50%</div><div class="lbl">Warm compress adherence<br>after 30 days</div></div>
+    <div class="stat-hero"><div class="num" style="color:#1a1a2e;">$59B</div><div class="lbl">US societal burden<br>(per year)</div></div>
+  </div>
+  <div class="panel" style="margin-top:20px; font-size:13px;">
+    <strong>The gap:</strong> Every DED treatment is either a one-time in-office procedure ($750–1,500/session) or an unmonitored at-home product. Clinicians prescribe, patients leave, and nobody knows what happens next. There is no continuous measurement layer connecting treatment to outcomes.
+  </div>
+  <div class="slide-num">2</div>
+</div>
+
+<!-- SLIDE 3: THE SOLUTION -->
+<div class="slide">
+  <h3>The Solution</h3>
+  <h1>Rest + RestScan = The Closed Loop</h1>
+  <div class="sub" style="margin-bottom:18px;">Two products that only work together — creating a moat no competitor can replicate without building both.</div>
+  <div class="two-col">
+    <div class="panel" style="font-size:12.5px;">
+      <h2 style="font-size:18px; margin-bottom:8px;">Rest Device — Treat</h2>
+      <p style="margin-bottom:8px;">Dual-mode periocular thermal therapy (warm + cool + pulsed). Health Canada approved. IEC 60335-1 certified. 10-minute daily sessions at home.</p>
+      <p style="margin-bottom:8px;"><strong>84% daily usage rate</strong> — 9–14× higher than any existing DED modality.</p>
+      <p><span class="tag green">~3,000 units shipped</span> <span class="tag green">0.67% return rate</span></p>
+    </div>
+    <div class="panel" style="font-size:12.5px;">
+      <h2 style="font-size:18px; margin-bottom:8px;">RestScan — Measure</h2>
+      <p style="margin-bottom:8px;">Browser-based webcam biometric analysis. 120-second scan measures blink dynamics, fatigue, and autonomic markers via MediaPipe. 100% local processing — no data leaves the device.</p>
+      <p style="margin-bottom:8px;"><strong>Scan → Score → Treat → Rescan → Delta</strong></p>
+      <p><span class="tag blue">POC stage</span> <span class="tag blue">~12 months to clinic-ready</span></p>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:14px; font-size:12.5px; text-align:center; background:#1a1a2e; color:#e0e0f0; border-color:#1a1a2e;">
+    <strong style="color:#fff;">The moat:</strong> No CV company can replicate without building a treatment device. No DED device company can replicate without building CV infrastructure. RestScan + Rest = the only closed-loop system in ocular care.
+  </div>
+  <div class="slide-num">3</div>
+</div>
+
+<!-- SLIDE 4: TRACTION — UPDATED clinic count, standardized numbers -->
+<div class="slide">
+  <h3>Traction</h3>
+  <h1>Real Revenue, Real Clinics, Real Reorders</h1>
+  <div class="four-col" style="margin-top:12px;">
+    <div class="stat-hero" style="background:#f8f8fc; border-radius:10px; padding:20px;"><div class="num" style="color:#059669;">~3,000</div><div class="lbl">Units shipped</div></div>
+    <div class="stat-hero" style="background:#f8f8fc; border-radius:10px; padding:20px;"><div class="num" style="color:#059669;">107</div><div class="lbl">Clinic partners<br><span style="font-size:10px; color:#5a5a7a;">(42 actively ordering)</span></div></div>
+    <div class="stat-hero" style="background:#f8f8fc; border-radius:10px; padding:20px;"><div class="num" style="color:#059669;">93.9%</div><div class="lbl">2025 volume from<br>existing clinics</div></div>
+    <div class="stat-hero" style="background:#f8f8fc; border-radius:10px; padding:20px;"><div class="num" style="color:#059669;">1,600</div><div class="lbl">Unit backlog<br>(deposits collected)</div></div>
+  </div>
+  <div class="two-col" style="margin-top:16px;">
+    <div class="panel" style="font-size:12.5px;">
+      <h3>Retention Is the Story</h3>
+      <table>
+        <tr><td style="font-weight:600;">2022</td><td>50.6% from existing clinics</td></tr>
+        <tr><td style="font-weight:600;">2023</td><td>78.2% from existing clinics</td></tr>
+        <tr><td style="font-weight:600;">2024</td><td>83.4% from existing clinics</td></tr>
+        <tr><td style="font-weight:700; color:#059669;">2025 YTD</td><td style="font-weight:700; color:#059669;">93.9% from existing clinics</td></tr>
+      </table>
+      <p style="margin-top:8px; font-size:11px; color:#5a5a7a;">Revenue is pull, not push. SaaS retention applied to hardware.</p>
+    </div>
+    <div class="panel" style="font-size:12.5px;">
+      <h3>Patient-Level Signal</h3>
+      <table>
+        <tr><td style="font-weight:600;">Daily usage</td><td style="font-weight:700;">84% (gov't-backed pilot)</td></tr>
+        <tr><td style="font-weight:600;">DAU/MAU</td><td>0.64 (vs. 0.2–0.3 benchmark)</td></tr>
+        <tr><td style="font-weight:600;">Return rate</td><td>0.67%</td></tr>
+        <tr><td style="font-weight:600;">Sleep improvement</td><td>67% (PSQI)</td></tr>
+        <tr><td style="font-weight:600;">Eye comfort</td><td>87%</td></tr>
+      </table>
+    </div>
+  </div>
+  <div style="font-size:10px; color:#8a8aaa; margin-top:8px; font-style:italic;">Habib et al. 2025, N=500, government-backed pilot, manuscript in draft.</div>
+  <div class="slide-num">4</div>
+</div>
+
+<!-- SLIDE 5: MARKET -->
+<div class="slide teal">
+  <h3 style="color:#99f6e4;">Market Opportunity</h3>
+  <h1 style="font-size:38px;">DED Is a $5B Market Growing at 8.4%.<br>Nobody Owns the At-Home Layer.</h1>
+  <div class="three-col" style="margin-top:20px;">
+    <div class="panel teal-inv" style="font-size:13px;"><div style="font-size:36px; font-family:'DM Serif Display',serif; margin-bottom:6px;">$5.06B</div><p>US DED treatment market (8.39% CAGR)</p></div>
+    <div class="panel teal-inv" style="font-size:13px;"><div style="font-size:36px; font-family:'DM Serif Display',serif; margin-bottom:6px;">$124→261M</div><p>DED device segment (2024→2034)</p></div>
+    <div class="panel teal-inv" style="font-size:13px;"><div style="font-size:36px; font-family:'DM Serif Display',serif; margin-bottom:6px;">C$24K</div><p>Per-patient societal burden (79% presenteeism)</p></div>
+  </div>
+  <div style="margin-top:18px; font-size:14px; color:#e0fff8;">
+    <strong style="color:#fff;">Category insight:</strong> In-office procedures own the clinic visit. Nobody owns the 364 other days. Umay is the daily compliance layer — complementary, not competitive.
+  </div>
+  <div class="slide-num" style="color:rgba(255,255,255,0.3);">5</div>
+</div>
+
+<!-- SLIDE 6: BUSINESS MODEL — UPDATED LTV, CAC, added DTC Stage 2, burn trajectory -->
+<div class="slide">
+  <h3>Business Model</h3>
+  <h1>Hardware Through Clinics. 46.7% Gross Margin.</h1>
+  <div class="two-col" style="margin-top:12px;">
+    <div>
+      <table>
+        <thead><tr><th></th><th>Per Unit</th><th>Margin</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">Wholesale</td><td class="mono" style="font-weight:700;">$285</td><td></td></tr>
+          <tr><td style="font-weight:600;">COGS (all-in landed)</td><td class="mono">$152</td><td></td></tr>
+          <tr><td style="font-weight:700;">Gross profit</td><td class="mono" style="font-weight:700; color:#059669;">$133</td><td class="mono" style="font-weight:700; color:#059669;">46.7%</td></tr>
+          <tr><td style="font-weight:600;">Clinic retail</td><td class="mono">$499–599</td><td class="mono">43–52% (clinic keeps)</td></tr>
+        </tbody>
+      </table>
+      <div class="panel" style="margin-top:12px; font-size:12px;">
+        <h3>Channel Economics (per clinic, 2-year horizon)</h3>
+        <table>
+          <tr><td style="font-weight:600;">Marginal clinic CAC</td><td class="mono">~$250</td></tr>
+          <tr><td style="font-weight:600;">Clinic LTV (revenue, 8 reorder cycles)</td><td class="mono" style="font-weight:700;">~$42,000</td></tr>
+          <tr><td style="font-weight:600;">LTV:CAC (marginal)</td><td class="mono" style="color:#059669; font-weight:700;">~46×</td></tr>
+          <tr><td style="font-weight:600;">Clinic reorder rate</td><td class="mono">~60% within 3–6 months</td></tr>
+          <tr><td style="font-weight:600;">Reorder cadence</td><td class="mono">~3 months</td></tr>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="panel" style="font-size:12px; margin-bottom:12px;">
+        <h3>Why Clinics Love It</h3>
+        <p style="margin-bottom:4px;"><strong>Zero chair time:</strong> Staff hands patient the box.</p>
+        <p style="margin-bottom:4px;"><strong>43–52% margin:</strong> Higher than frames or lens solutions.</p>
+        <p style="margin-bottom:4px;"><strong>Reorders:</strong> Patients refer, clinic restocks every ~3 months.</p>
+        <p><strong>Zero capital:</strong> No equipment ($0 vs. $30–150K for in-office systems).</p>
+      </div>
+      <div class="panel" style="font-size:12px; background:#1a1a2e; color:#e0e0f0; border-color:#1a1a2e;">
+        <h3 style="color:#9090bb;">US Expansion Levers</h3>
+        <p style="color:#ccc; margin-bottom:6px;"><strong style="color:#fff;">1099 reps</strong> ($50–60/unit) · <strong style="color:#fff;">HSA/FSA</strong> via TrueMed (25–37% effective price reduction) · <strong style="color:#fff;">US 3PL</strong> (2-day delivery) · <strong style="color:#fff;">QR Rx drop-ship</strong></p>
+        <p style="color:#999; font-size:11px; margin-top:4px;"><strong style="color:#bbb;">Stage 2 — DTC:</strong> Activates post-3PL go-live (H2 2026). $705 MSRP. Clinic channel remains primary growth engine.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">6</div>
+</div>
+
+<!-- SLIDE 7: COMPETITIVE MOAT -->
+<div class="slide dark">
+  <h3 style="color:#9090bb;">Competitive Position</h3>
+  <h1>Three Moats. One Closed Loop.</h1>
+  <div class="three-col" style="margin-top:18px;">
+    <div class="panel invert" style="font-size:12.5px;">
+      <h2 style="font-size:16px; color:#fff; margin-bottom:6px;">IP Moat</h2>
+      <p>3 US utility patents (incl. Nov 2025 stress-sensing), 1 EP, provisionals on RestScan + Thermal Rhythm. All assigned to company. Competitors can't build the closed loop without licensing.</p>
+    </div>
+    <div class="panel invert" style="font-size:12.5px;">
+      <h2 style="font-size:16px; color:#fff; margin-bottom:6px;">Data Moat</h2>
+      <p>N=500 gov't-backed pilot. 2,847 active IoT devices. 4+ years post-market data. New entrants start with zero clinical evidence.</p>
+    </div>
+    <div class="panel invert" style="font-size:12.5px;">
+      <h2 style="font-size:16px; color:#fff; margin-bottom:6px;">Channel Moat</h2>
+      <p>107 clinics, ~60% reorder rate. ~8 Super-Clinics drive ~80% of volume. Clinical trust takes years — ODs who've recommended Umay to 50+ patients won't switch.</p>
+    </div>
+  </div>
+  <table style="margin-top:16px; color:#d0d0e8;">
+    <thead><tr><th style="color:#9090bb; border-color:#333;">Competitor</th><th style="color:#9090bb; border-color:#333;">Category</th><th style="color:#9090bb; border-color:#333;">Gap</th></tr></thead>
+    <tbody>
+      <tr><td style="border-color:#333; font-weight:600;">LipiFlow / TearCare / IPL</td><td style="border-color:#333;">In-office ($500–1,500/session)</td><td style="border-color:#333;">No daily use. No measurement. Complementary.</td></tr>
+      <tr><td style="border-color:#333; font-weight:600;">Bruder / MGP</td><td style="border-color:#333;">Compresses ($22–75)</td><td style="border-color:#333;">No dual-mode. No data. &lt;50% adherence.</td></tr>
+      <tr><td style="border-color:#333; font-weight:600;">Binah.ai / Nuralogix / FaceHeart</td><td style="border-color:#333;">CV measurement</td><td style="border-color:#333; font-weight:700; color:#fff;">No treatment device. Measurement only.</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px; font-size:11px; color:#777;">Closed-loop precedent: Medtronic CGM+pump ($2.76B revenue, 80%+ recurring). Oura ring (88% retention vs. 25% industry). ForeseeHome (62→94% AMD detection adherence). Universal pattern: 1.5–3.5× retention improvement when the measurement loop closes.</div>
+  <div class="slide-num">7</div>
+</div>
+
+<!-- SLIDE 8: TEAM — UPDATED with burn trajectory -->
+<div class="slide">
+  <h3>Team</h3>
+  <h1>What 3 People Built</h1>
+  <div class="four-col" style="margin-top:8px; margin-bottom:16px;">
+    <div class="stat-hero" style="background:#f0f0f8; border-radius:8px; padding:14px;"><div class="num" style="font-size:28px;">~3,000</div><div class="lbl">Units shipped</div></div>
+    <div class="stat-hero" style="background:#f0f0f8; border-radius:8px; padding:14px;"><div class="num" style="font-size:28px;">107</div><div class="lbl">Clinics</div></div>
+    <div class="stat-hero" style="background:#f0f0f8; border-radius:8px; padding:14px;"><div class="num" style="font-size:28px;">3</div><div class="lbl">US patents</div></div>
+    <div class="stat-hero" style="background:#f0f0f8; border-radius:8px; padding:14px;"><div class="num" style="font-size:28px;">N=500</div><div class="lbl">Pilot</div></div>
+  </div>
+  <div class="two-col">
+    <div class="panel" style="font-size:12px;">
+      <h2 style="font-size:16px;">Ali Habib — CEO & Co-Founder</h2>
+      <p>Behavioral science + product design. Built Umay from concept through ~3,000 units, 107 clinics, Health Canada approval. Owns investor relations, channel sales, product.</p>
+    </div>
+    <div class="panel" style="font-size:12px;">
+      <h2 style="font-size:16px;">Dr. Sharmin Habib, OD — CMO</h2>
+      <p>15+ years clinical optometry. DED specialist. PI for gov't-backed pilot. Claims governance authority. Clinical credibility anchors OD channel.</p>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:12px; font-size:12px;">
+    <h3>Post-Raise: 3 Key Hires (ESOP: 10% pool planned)</h3>
+    <div class="three-col" style="gap:14px;">
+      <div><strong>Head of Growth — US</strong><br>$150K + equity · Q2 2026<br><span style="font-size:11px; color:#5a5a7a;">US clinic channel, 1099 reps</span></div>
+      <div><strong>Product / Tech Lead</strong><br>$160K + equity · Q3 2026<br><span style="font-size:11px; color:#5a5a7a;">Gen 2, RestScan, Tangent</span></div>
+      <div><strong>Operations Manager</strong><br>$100K + equity · Q2–Q3 2026<br><span style="font-size:11px; color:#5a5a7a;">Supply chain, 3PL, fulfillment</span></div>
+    </div>
+    <div style="margin-top:10px; padding-top:10px; border-top:1px solid #e0e0e8; font-size:11px; color:#5a5a7a;">
+      <strong style="color:#1a1a2e;">Burn trajectory:</strong> $28K/month (current) → $62K/month (full team by Q3 2026). 12+ months runway at post-hire rate within the $2M raise.
+    </div>
+  </div>
+  <div class="slide-num">8</div>
+</div>
+
+<!-- SLIDE 9: CANADIAN ADVANTAGE -->
+<div class="slide">
+  <h3>Structural Advantage</h3>
+  <h1>Canadian Costs, US Revenue.</h1>
+  <div class="two-col" style="margin-top:12px;">
+    <div>
+      <div class="panel" style="font-size:12.5px; margin-bottom:12px;">
+        <div style="font-size:36px; font-family:'DM Serif Display',serif; color:#059669;">~40%+</div>
+        <p><strong>R&D cost advantage</strong> vs. US competitors. FX arbitrage (CAD at ~1.45×) + SR&ED credits (35% refundable).</p>
+      </div>
+      <div class="panel" style="font-size:12.5px;">
+        <div style="font-size:36px; font-family:'DM Serif Display',serif; color:#059669;">~$150K/yr</div>
+        <p><strong>SR&ED credits</strong> (estimated at 35% of qualifying R&D). Recurring annually. NRC IRAP co-funding for RestScan development.</p>
+      </div>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>Cost</th><th>US</th><th>Umay</th><th>Save</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">Product Lead</td><td class="mono">$160K</td><td class="mono" style="color:#059669;">~$77K</td><td class="mono" style="color:#059669;">52%</td></tr>
+          <tr><td style="font-weight:600;">Ops Manager</td><td class="mono">$100K</td><td class="mono" style="color:#059669;">~$48K</td><td class="mono" style="color:#059669;">52%</td></tr>
+          <tr><td style="font-weight:700;">$2M raise</td><td class="mono" style="font-weight:700;">$2M</td><td class="mono" style="font-weight:700; color:#059669;">$2.8–3.2M</td><td class="mono" style="font-weight:700; color:#059669;">40–60%</td></tr>
+        </tbody>
+      </table>
+      <div class="panel" style="margin-top:12px; font-size:12px;">
+        <strong>Structure:</strong> Canadian HQ (IP, R&D, SR&ED) + US subsidiary (Delaware C-Corp, sales, 3PL, reps). Standard for Canadian startups selling into US.
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">9</div>
+</div>
+
+<!-- SLIDE 10: THE ASK — FULLY RESTRUCTURED to match strategy doc Section 11.1 -->
+<div class="slide dark">
+  <h3 style="color:#9090bb;">The Ask</h3>
+  <h1 style="font-size:42px;">$2M CAD — Rolling Close</h1>
+  <div class="sub" style="margin-bottom:20px; color:#9090bb;">Last round: Dec 2022 at $7.5M CAD pre-money. Current valuation: TBD. ~70% founder-held.</div>
+  <div class="five-col" style="margin-bottom:18px;">
+    <div class="panel invert" style="text-align:center; padding:14px;">
+      <div style="font-size:28px; font-family:'DM Serif Display',serif; color:#fff;">$500K</div>
+      <div style="font-size:10px; color:#9090bb; margin-top:4px;">Inventory &<br>Backlog Fulfillment</div>
+    </div>
+    <div class="panel invert" style="text-align:center; padding:14px;">
+      <div style="font-size:28px; font-family:'DM Serif Display',serif; color:#fff;">$270K</div>
+      <div style="font-size:10px; color:#9090bb; margin-top:4px;">BDC Debt<br>Retirement</div>
+    </div>
+    <div class="panel invert" style="text-align:center; padding:14px;">
+      <div style="font-size:28px; font-family:'DM Serif Display',serif; color:#fff;">$200K</div>
+      <div style="font-size:10px; color:#9090bb; margin-top:4px;">RestScan<br>R&D</div>
+    </div>
+    <div class="panel invert" style="text-align:center; padding:14px;">
+      <div style="font-size:28px; font-family:'DM Serif Display',serif; color:#fff;">$150K</div>
+      <div style="font-size:10px; color:#9090bb; margin-top:4px;">US Sales<br>Activation</div>
+    </div>
+    <div class="panel invert" style="text-align:center; padding:14px;">
+      <div style="font-size:28px; font-family:'DM Serif Display',serif; color:#fff;">$880K</div>
+      <div style="font-size:10px; color:#9090bb; margin-top:4px;">Working Capital<br>& Runway</div>
+    </div>
+  </div>
+  <div class="two-col" style="margin-bottom:14px; gap:16px;">
+    <div class="panel invert" style="font-size:11.5px; padding:14px;">
+      <h3 style="color:#9090bb;">Highest-ROI Allocation</h3>
+      <p style="color:#ccc;"><strong style="color:#fff;">Inventory ($500K)</strong> converts $456K+ in pre-ordered backlog revenue and funds PO2/PO3 to maintain continuous supply. This is the single allocation that directly unlocks stalled revenue.</p>
+    </div>
+    <div class="panel invert" style="font-size:11.5px; padding:14px;">
+      <h3 style="color:#9090bb;">Risk Elimination</h3>
+      <p style="color:#ccc;"><strong style="color:#fff;">BDC Retirement ($270K)</strong> eliminates $6,800/month payment, removes GSA seizure risk, extends runway by ~4 months. Net cost after saved payments: ~$138K.</p>
+    </div>
+  </div>
+  <div style="font-size:13px; color:#ccc; text-align:center;">
+    <strong style="color:#fff;">$2M unlocks:</strong> 1,600-unit backlog ($456K+ revenue) · BDC eliminated · US clinic channel · RestScan to product · 12+ month runway at full burn
+  </div>
+  <div class="slide-num">10</div>
+</div>
+
+<!-- SLIDE 11: MILESTONES — ALIGNED to strategy doc Section 14 -->
+<div class="slide">
+  <h3>Post-Raise Milestones</h3>
+  <h1>12–18 Month Execution Roadmap</h1>
+  <table style="margin-top:14px;">
+    <thead><tr><th style="width:100px;">Timeline</th><th>Milestone</th><th style="width:180px;">Financial Gate</th></tr></thead>
+    <tbody>
+      <tr style="background:#ecfdf5;">
+        <td style="font-weight:700;">Feb–Mar 2026</td>
+        <td>Rolling close begins. BDC retired. Backlog PO funded. Sales infrastructure (CRM, playbooks, claims training). Weekly metrics cadence established.</td>
+        <td class="mono" style="font-size:10.5px;">Bridge T1 closes. Cash stabilizes. BDC eliminated. 1,600 units begin shipping.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Apr–Jun 2026</td>
+        <td>2 optometry conferences. Head of Growth hired. US 1099 rep recruitment begins. Ops Manager hired. Dormant clinic reactivation program.</td>
+        <td class="mono" style="font-size:10.5px;">Backlog revenue ($456K+). 8–13 activations/mo. Burn steps to ~$40K/mo.</td>
+      </tr>
+      <tr style="background:#ecfdf5;">
+        <td style="font-weight:700;">Jul–Sep 2026</td>
+        <td>Sea freight + US 3PL go-live. 2-day CONUS delivery. Reorder automation. Product/Tech Lead hired. Gen 2 EVT begins.</td>
+        <td class="mono" style="font-size:10.5px;">Continuous supply (PO2/PO3). Revenue trajectory →$100K+/mo. Burn at ~$62K/mo.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Oct 2026–<br>Jan 2027</td>
+        <td>DTC growth tests (post-3PL SLA). RestScan validation milestones + limited clinic beta. Claims governance review. Series A preparation.</td>
+        <td class="mono" style="font-size:10.5px;">ARR trajectory visible for Series A. 12+ months runway at full burn.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="panel" style="margin-top:14px; font-size:12px; text-align:center;">
+    <strong>Series A trigger:</strong> Published evidence + US revenue + Gen 2 ready + RestScan validated + 200+ clinics. Target: 12–18 months.
+  </div>
+  <div class="slide-num">11</div>
+</div>
+
+<!-- SLIDE 12: STRATEGIC EXIT — NEW SLIDE -->
+<div class="slide dark">
+  <h3 style="color:#9090bb;">Strategic Value</h3>
+  <h1 style="font-size:36px;">The Only Closed-Loop System in Ocular Care</h1>
+  <div class="sub" style="color:#9090bb; margin-bottom:16px;">DED device companies have treatment OR measurement — never both in one platform with take-home economics.</div>
+  <div class="three-col" style="margin-bottom:16px;">
+    <div class="panel invert" style="font-size:12px; padding:14px;">
+      <h3 style="color:#9090bb;">Acquirer Buys</h3>
+      <p style="margin-bottom:4px;"><strong style="color:#fff;">1. Proven clinic channel</strong> with reorder economics ($200K–$500K CAC to rebuild)</p>
+      <p style="margin-bottom:4px;"><strong style="color:#fff;">2. Closed-loop IP portfolio</strong> (3 US patents + provisionals protecting detect→treat→measure)</p>
+      <p><strong style="color:#fff;">3. Only N=500 dataset</strong> for at-home thermal therapy (gov't-backed)</p>
+    </div>
+    <div class="panel invert" style="font-size:12px; padding:14px;">
+      <h3 style="color:#9090bb;">Primary Acquirer Universe</h3>
+      <p style="margin-bottom:3px;"><strong style="color:#fff;">J&J Vision</strong> — at-home layer for LipiFlow <span class="tag green" style="font-size:8px;">early relationship</span></p>
+      <p style="margin-bottom:3px;"><strong style="color:#fff;">Alcon</strong> — complement to iLux in-office</p>
+      <p style="margin-bottom:3px;"><strong style="color:#fff;">EssilorLuxottica</strong> — maps to existing OD distribution <span class="tag green" style="font-size:8px;">early relationship</span></p>
+      <p style="margin-bottom:3px;"><strong style="color:#fff;">CooperVision</strong> — DED + specialty lens</p>
+      <p><strong style="color:#fff;">Bausch + Lomb</strong> — broad eye care portfolio gap</p>
+    </div>
+    <div class="panel invert" style="font-size:12px; padding:14px;">
+      <h3 style="color:#9090bb;">Why Now</h3>
+      <p style="margin-bottom:6px;">DED device M&A is active: J&J acquired TearScience (LipiFlow) to own in-office treatment. The at-home compliance layer is the missing piece in every DED portfolio.</p>
+      <p>Umay's IP + data + clinic channel create a defensible position that a strategic acquirer cannot build internally without 3–5 years and $5M+ in clinical validation.</p>
+    </div>
+  </div>
+  <div style="text-align:center; font-size:12px; color:#9090bb;">
+    Financial model includes exit scenario table (3×/5×/8×/12× revenue multiples) and channel value analysis (acquirer distribution modeling with strategic premium).
+  </div>
+  <div class="slide-num">12</div>
+</div>
+
+<!-- SLIDE 13: CLOSING -->
+<div class="slide dark" style="text-align:center;">
+  <div>
+    <div style="font-family:'DM Serif Display',serif; font-size:14px; letter-spacing:0.15em; color:#9090bb; margin-bottom:20px;">UMAY CARE HOLDINGS INC.</div>
+    <div class="quote" style="border-color:#333; max-width:650px; margin:0 auto 24px; font-size:24px; color:#e0e0f0;">
+      "Rest is to dry eye disease what CGM was to diabetes — before the pump closed the loop."
+    </div>
+    <div style="font-size:14px; color:#9090bb; margin-bottom:28px;">
+      Health Canada Approved · ~3,000 Units · 107 Clinics · N=500 Pilot · 3 US Patents · 84% Daily Usage
+    </div>
+    <div style="margin-bottom:24px;">
+      <div style="font-size:18px; color:#fff; font-weight:700;">Ali Habib · CEO & Co-Founder</div>
+      <div style="font-size:13px; color:#9090bb; margin-top:4px;">ali@umay.rest · umay.rest</div>
+    </div>
+    <div style="font-size:11px; color:#555;">
+      Supported by a 32-asset data room and 18-month financial model. Full access available under NDA.
+    </div>
+  </div>
+  <div class="slide-num">13</div>
+</div>
+
+<!-- APPENDIX: DATA ROOM INDEX -->
+<div class="slide" style="min-height:auto; padding:40px 60px; justify-content:flex-start;">
+  <h3>Appendix</h3>
+  <h2>Data Room Asset Index</h2>
+  <div class="sub" style="margin-bottom:12px; font-size:13px;">Each slide is backed by detailed supporting documentation. Master Strategy Document serves as the primary read-first reference.</div>
+  <table style="font-size:11px;">
+    <thead><tr><th>#</th><th>Asset</th><th>Layer</th><th>Supports</th></tr></thead>
+    <tbody>
+      <tr style="background:#ecfdf5;"><td class="mono">—</td><td style="font-weight:700;">Master Strategy Document</td><td class="mono">L0</td><td>All slides — read first</td></tr>
+      <tr style="background:#ecfdf5;"><td class="mono">—</td><td style="font-weight:700;">Financial Model (v8, 15 tabs)</td><td class="mono">L0</td><td>Slides 6, 10, 11, 12</td></tr>
+      <tr><td class="mono">1</td><td>Narrative Pivot Memo</td><td class="mono">L3</td><td>Slides 1, 3</td></tr>
+      <tr><td class="mono">2</td><td>Pilot Results Executive Summary</td><td class="mono">L3</td><td>Slide 4</td></tr>
+      <tr><td class="mono">3</td><td>Unit Economics Bridge</td><td class="mono">L3</td><td>Slide 6</td></tr>
+      <tr><td class="mono">4</td><td>Biometric Warranty</td><td class="mono">L3</td><td>Slide 4</td></tr>
+      <tr><td class="mono">5</td><td>Clinic Motion Pack</td><td class="mono">L3</td><td>Slide 6</td></tr>
+      <tr><td class="mono">6</td><td>RestScan Moat Pack</td><td class="mono">L3</td><td>Slides 3, 7</td></tr>
+      <tr><td class="mono">7</td><td>Team Scale Proof</td><td class="mono">L3</td><td>Slide 8</td></tr>
+      <tr><td class="mono">8</td><td>Cohort Retention Dashboard</td><td class="mono">L3</td><td>Slide 4</td></tr>
+      <tr><td class="mono">9</td><td>1099 Rep Template</td><td class="mono">L3</td><td>Slide 6</td></tr>
+      <tr><td class="mono">10</td><td>HSA/FSA Memo</td><td class="mono">L3</td><td>Slide 6</td></tr>
+      <tr><td class="mono">11</td><td>Regulatory Firewall Matrix</td><td class="mono">L3</td><td>Slide 7</td></tr>
+      <tr><td class="mono">12</td><td>Canadian Advantage Memo</td><td class="mono">L3</td><td>Slide 9</td></tr>
+      <tr><td class="mono">13</td><td>US Logistics Strategy</td><td class="mono">L3</td><td>Slide 6</td></tr>
+      <tr><td class="mono">14</td><td>Material Agreements Summary</td><td class="mono">L3</td><td>DD</td></tr>
+      <tr><td class="mono">15</td><td>Data Privacy Map</td><td class="mono">L3</td><td>DD</td></tr>
+      <tr><td class="mono">17</td><td>Cap Table & Funding History</td><td class="mono">L3</td><td>Slide 10</td></tr>
+      <tr><td class="mono">18</td><td>IP Register</td><td class="mono">L3</td><td>Slides 7, 12</td></tr>
+      <tr><td class="mono">20</td><td>Org Chart & Team Narrative</td><td class="mono">L3</td><td>Slide 8</td></tr>
+      <tr><td class="mono">23</td><td>Insurance Summary</td><td class="mono">L3</td><td>DD</td></tr>
+    </tbody>
+  </table>
+  <div class="conf" style="margin-top:12px;">Confidential · Umay Care Holdings Inc. · Data Room v2 · February 2026</div>
+</div>
+
+</body>
+</html>

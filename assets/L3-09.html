@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1099 Independent Rep Agreement — Template & Economic Model</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 46px 54px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.str { background: #dbeafe; color: #1e40af; }
+  .badge.eco { background: #d1fae5; color: #065f46; }
+  .badge.comp { background: #fee2e2; color: #991b1b; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+  .panel.red { border-left: 4px solid #dc2626; background: #fef2f2; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;
+  }
+  .stat-mini {
+    text-align: center; padding: 12px 8px;
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .stat-mini .num { font-family: 'DM Serif Display', serif; font-size: 24px; color: #1a1a2e; }
+  .stat-mini .lbl { font-size: 9.5px; color: #5a5a7a; margin-top: 2px; line-height: 1.3; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  .clause {
+    padding: 12px 16px; border-left: 3px solid #1a1a2e; background: #fafafa;
+    margin-bottom: 10px; font-size: 12px;
+  }
+  .clause .clause-title {
+    font-weight: 700; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.04em; color: #1a1a2e; margin-bottom: 4px;
+  }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: AGREEMENT STRUCTURE + ECONOMICS -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>1099 Independent Rep Agreement</h1>
+      <div class="subtitle">Template Structure, Commission Model & Compliance Requirements</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">Strategic Decision</div>
+    Umay deploys <strong>independent 1099 reps rather than W-2 sales hires</strong> for the initial US channel expansion. At $50/unit commission vs. $200K+ OTE for a single FTE, the 1099 model requires 4,000+ units/year per rep to reach cost equivalence. Variable cost structure preserves cash during the scaling phase while leveraging reps' existing ophthalmic relationships. <strong>Head of Growth (US) manages the rep network; reps do not replace the hire.</strong>
+  </div>
+
+  <span class="badge str">Section 1 · Agreement Term Sheet</span>
+
+  <h2>Key Commercial Terms</h2>
+  <div class="two-col">
+    <div>
+      <table>
+        <tr><td style="font-weight:600; width:150px;">Relationship</td><td>Independent contractor (1099). Not employee.</td></tr>
+        <tr><td style="font-weight:600;">Territory</td><td>Non-exclusive geographic region (state or multi-state)</td></tr>
+        <tr><td style="font-weight:600;">Term</td><td>12 months, auto-renewing with 30-day notice</td></tr>
+        <tr><td style="font-weight:600;">Minimum volume</td><td>50 units/quarter after ramp quarter</td></tr>
+        <tr><td style="font-weight:600;">Ramp period</td><td>First 90 days — no minimum volume</td></tr>
+        <tr><td style="font-weight:600;">Exclusivity</td><td>Non-exclusive to rep; exclusive product category (no competing thermal devices)</td></tr>
+        <tr><td style="font-weight:600;">Termination</td><td>30-day written notice, either party. Immediate for compliance violations.</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><td style="font-weight:600; width:150px;">Commission</td><td class="mono" style="font-weight:700;">$50/unit</td></tr>
+        <tr><td style="font-weight:600;">Payment</td><td>Monthly, net 30 from clinic order ship date</td></tr>
+        <tr><td style="font-weight:600;">Trailing</td><td>Clinic reorders within territory for 12 months post-termination</td></tr>
+        <tr><td style="font-weight:600;">Bonus tier</td><td>$60/unit above 100 units/quarter</td></tr>
+        <tr><td style="font-weight:600;">Clawback</td><td>Commission reversed on returned units</td></tr>
+        <tr><td style="font-weight:600;">Expenses</td><td>Rep-borne (travel, meals). Umay provides demo units + collateral.</td></tr>
+        <tr><td style="font-weight:600;">Demo units</td><td>2 units provided at cost ($152). Returned upon termination.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- REP ECONOMICS -->
+  <span class="badge eco">Section 2 · Rep Economics & Cost Comparison</span>
+
+  <h2>1099 vs. W-2: Cost Structure Comparison</h2>
+
+  <div class="stat-strip">
+    <div class="stat-mini">
+      <div class="num">$50</div>
+      <div class="lbl">Commission per unit<br>(base tier)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">$60</div>
+      <div class="lbl">Commission per unit<br>(100+ units/quarter)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">$0</div>
+      <div class="lbl">Fixed cost per rep<br>(fully variable)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">$200K+</div>
+      <div class="lbl">OTE for W-2 hire<br>(base + benefits + equity)</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Rep Earnings Sensitivity</h3>
+      <table>
+        <thead><tr><th>Quarterly Units</th><th>Annual Units</th><th>Rep Earnings/Year</th><th>Umay Cost/Unit</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">50 (minimum)</td><td class="mono">200</td><td class="mono">$10,000</td><td class="mono">$50.00</td></tr>
+          <tr><td class="mono">75</td><td class="mono">300</td><td class="mono">$16,000</td><td class="mono">$53.33</td></tr>
+          <tr><td class="mono">100</td><td class="mono">400</td><td class="mono">$22,000</td><td class="mono">$55.00</td></tr>
+          <tr><td class="mono" style="font-weight:700;">150</td><td class="mono" style="font-weight:700;">600</td><td class="mono" style="font-weight:700;">$34,000</td><td class="mono" style="font-weight:700;">$56.67</td></tr>
+          <tr><td class="mono">250</td><td class="mono">1,000</td><td class="mono">$58,000</td><td class="mono">$58.00</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:10px; color:#5a5a7a; margin-top:6px;">Bonus tier ($60) kicks in above 100 units/quarter. Annual earnings assume consistent quarterly performance.</p>
+    </div>
+    <div class="panel">
+      <h3>Break-Even vs. W-2 Hire</h3>
+      <table>
+        <thead><tr><th>Model</th><th>Annual Cost</th><th>Break-Even Units</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">W-2 Sales Rep</td><td class="mono">~$200K (OTE + burden)</td><td class="mono">—</td></tr>
+          <tr><td style="font-weight:600;">1099 Rep (at $50/unit)</td><td class="mono">Variable</td><td class="mono">4,000 units</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px; margin-top:8px;">The 1099 model is cheaper until a single rep consistently moves 4,000+ units/year (~330/month). At current volumes, no territory justifies a W-2 hire. The model shifts when individual rep territories exceed this threshold — a signal to promote to regional manager or convert to FTE.</p>
+    </div>
+  </div>
+
+  <h2>ICP & Territory Design</h2>
+  <div class="two-col">
+    <div class="panel">
+      <h3>Ideal Rep Profile</h3>
+      <table>
+        <tr><td style="font-weight:600; width:140px;">Background</td><td>Multi-line ophthalmic device rep with 3+ years in eye care channel</td></tr>
+        <tr><td style="font-weight:600;">Existing book</td><td>50+ active OD relationships in territory</td></tr>
+        <tr><td style="font-weight:600;">Carry</td><td>Non-competing products (frames, CL solutions, supplements — NOT thermal devices)</td></tr>
+        <tr><td style="font-weight:600;">Motivation</td><td>Umay as complementary add-on to existing call schedule, not primary line</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Initial Territory Targets (3-5 reps)</h3>
+      <table>
+        <thead><tr><th>Territory</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;">Southeast (FL/GA/TX)</td><td>High DED prevalence, large OD density</td></tr>
+          <tr><td style="font-weight:600;">Northeast (NY/NJ/PA)</td><td>High-value practices, insurance sophistication</td></tr>
+          <tr><td style="font-weight:600;">West Coast (CA)</td><td>Wellness-oriented patient base, premium pricing tolerance</td></tr>
+          <tr><td style="font-weight:600;">Midwest (IL/OH/MI)</td><td>Owner-OD density, shorter sales cycles</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: COMPLIANCE + CLAIMS TRAINING -->
+<div class="page">
+
+  <span class="badge comp">Section 3 · Compliance & Claims Training Requirements</span>
+
+  <h2>Mandatory Compliance Provisions</h2>
+  <p style="margin-bottom:12px;">Every 1099 rep agreement includes binding compliance clauses that protect Umay's regulatory positioning. Violation of claims governance is grounds for immediate termination.</p>
+
+  <div class="clause">
+    <div class="clause-title">Clause 1 · Approved Claims Only</div>
+    Representative shall use only Umay-approved marketing materials and claims language. Representative shall not make any claims regarding disease diagnosis, treatment, cure, or prevention. All product positioning must adhere to Umay's Claims Governance Framework (Tier 1 and Tier 2 claims only).
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Clause 2 · Claims Training Certification</div>
+    Representative must complete Umay's Claims Training Module (60 minutes) within 14 days of agreement execution and annually thereafter. Certification includes: approved language library, prohibited claims list, regulatory context briefing, and scenario-based testing (pass rate: 80%).
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Clause 3 · Intellectual Property & Confidentiality</div>
+    Representative acknowledges all Umay IP (patents, trademarks, trade secrets, customer lists, pricing) remains property of Umay Care Holdings Inc. Representative shall not disclose confidential information to competing entities during or after the term. Clinic relationship data generated during the engagement belongs to Umay.
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Clause 4 · Non-Compete (Product Category)</div>
+    During the term and for 6 months following termination, Representative shall not promote, sell, or distribute any periocular thermal therapy device or at-home dry eye treatment device that directly competes with Umay Rest. This does not restrict sale of non-competing ophthalmic products (frames, contact lenses, supplements, instruments).
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">Clause 5 · Indemnification & Insurance</div>
+    Representative maintains independent contractor insurance. Umay's product liability coverage ($2M CGL) covers product-related claims. Representative indemnifies Umay against claims arising from unauthorized representations or unapproved marketing activities.
+  </div>
+
+  <h2>Claims Training Content</h2>
+  <div class="two-col">
+    <div class="panel green" style="font-size:12px;">
+      <h3>Approved Positioning (Tier 1-2)</h3>
+      <p style="margin-bottom:6px;"><strong>Product description:</strong> "Clinically validated thermal therapy for eye comfort and relaxation"</p>
+      <p style="margin-bottom:6px;"><strong>Evidence cite:</strong> "In a government-backed study of 500 employees, 87% reported improved eye comfort and 67% reported better sleep quality. Manuscript in draft."</p>
+      <p style="margin-bottom:6px;"><strong>Usage data:</strong> "84% daily usage rate — far exceeding adherence for any existing DED treatment"</p>
+      <p style="margin-bottom:6px;"><strong>Return rate:</strong> "0.67% return rate with a 100-night risk-free trial"</p>
+      <p><strong>Clinic economics:</strong> "43-52% margin, zero chair time, zero capital equipment"</p>
+    </div>
+    <div class="panel red" style="font-size:12px;">
+      <h3>Prohibited Claims (Tier 3-4)</h3>
+      <p style="margin-bottom:6px;"><span style="color:#dc2626; font-weight:700;">✗</span> "Treats / cures dry eye disease"</p>
+      <p style="margin-bottom:6px;"><span style="color:#dc2626; font-weight:700;">✗</span> "FDA approved" or "medically certified"</p>
+      <p style="margin-bottom:6px;"><span style="color:#dc2626; font-weight:700;">✗</span> "Better / more effective than prescription drops"</p>
+      <p style="margin-bottom:6px;"><span style="color:#dc2626; font-weight:700;">✗</span> "Clinically proven to treat insomnia"</p>
+      <p style="margin-bottom:6px;"><span style="color:#dc2626; font-weight:700;">✗</span> "Peer-reviewed" (manuscript is in draft, not published)</p>
+      <p><span style="color:#dc2626; font-weight:700;">✗</span> "RestScan diagnoses dry eye" (wellness tool, not diagnostic)</p>
+    </div>
+  </div>
+
+  <h2>Rep Onboarding Checklist</h2>
+  <div class="panel" style="font-size:12px;">
+    <table>
+      <thead><tr><th style="width:30px;">✓</th><th>Step</th><th>Timing</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>☐</td><td>Execute 1099 Independent Rep Agreement</td><td>Day 0</td><td>Head of Growth + Legal</td></tr>
+        <tr><td>☐</td><td>Complete Claims Training Module (60 min) + certification</td><td>Day 1-14</td><td>Rep</td></tr>
+        <tr><td>☐</td><td>Receive demo units (2) + marketing collateral kit</td><td>Day 7</td><td>Ops Manager</td></tr>
+        <tr><td>☐</td><td>Territory clinic list review + priority targeting session</td><td>Day 14</td><td>Head of Growth</td></tr>
+        <tr><td>☐</td><td>Shadow call with Head of Growth or Ali (2 clinic visits)</td><td>Day 14-21</td><td>Head of Growth</td></tr>
+        <tr><td>☐</td><td>First independent clinic visit with post-call debrief</td><td>Day 21-30</td><td>Rep + Head of Growth</td></tr>
+        <tr><td>☐</td><td>Monthly performance review cadence begins</td><td>Day 30</td><td>Head of Growth</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="label">Why This Matters for Investors</div>
+    The 1099 rep model is the mechanism that converts Umay from <strong>founder-led sales to a repeatable, variable-cost distribution engine.</strong> At $50-60/unit, it costs 17-21% of wholesale revenue — comparable to medtech distribution benchmarks (15-25%). The claims training and compliance clauses protect the company's regulatory positioning as it scales beyond founder control.
+  </div>
+
+  <div class="caveat">This template requires legal review before execution. Specific provisions (non-compete enforceability, trailing commission structure, indemnification scope) vary by US state and should be validated by employment counsel in each rep's jurisdiction. Delaware C-Corp incorporation (in progress) is prerequisite for US-based rep agreements.</div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · 1099 Rep Agreement Template</div>
+  </div>
+</div>
+
+</body>
+</html>

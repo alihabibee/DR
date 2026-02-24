@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umay — Master Strategy Document</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e; background: #fff;
+    max-width: 820px; margin: 0 auto; padding: 48px 40px 80px;
+    font-size: 14px; line-height: 1.7;
+  }
+
+  /* Title block */
+  .title-block {
+    text-align: center; padding: 40px 0 36px;
+    border-bottom: 2px solid #1a1a2e; margin-bottom: 36px;
+  }
+  .title-block .company {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.15em; color: #5a5a7a; margin-bottom: 8px;
+  }
+  .title-block h1 {
+    font-family: 'DM Serif Display', serif; font-size: 28px;
+    line-height: 1.2; margin-bottom: 6px; color: #1a1a2e;
+  }
+  .title-block .subtitle {
+    font-size: 13px; color: #5a5a7a; line-height: 1.5;
+  }
+  .title-block .tags { margin-top: 16px; }
+  .tag {
+    display: inline-block; font-size: 9px; font-weight: 600;
+    padding: 3px 10px; border-radius: 3px; margin: 2px 3px;
+  }
+  .tag.teal { background: #ccfbf1; color: #0f766e; }
+  .tag.blue { background: #dbeafe; color: #1e40af; }
+  .tag.purple { background: #ede9fe; color: #5b21b6; }
+
+  /* Section headings */
+  h1 {
+    font-family: 'DM Serif Display', serif; font-size: 24px;
+    line-height: 1.25; margin: 40px 0 12px; color: #1a1a2e;
+    padding-top: 24px; border-top: 1px solid #e8e8f0;
+  }
+  h1:first-of-type { border-top: none; }
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 18px;
+    line-height: 1.3; margin: 28px 0 8px; color: #1a1a2e;
+  }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin: 20px 0 6px;
+  }
+
+  /* Body text */
+  p { margin: 0 0 12px; }
+  strong { color: #1a1a2e; }
+  em { font-style: italic; }
+
+  /* Lists */
+  ul, ol { margin: 8px 0 12px 24px; }
+  li { margin-bottom: 6px; }
+
+  /* Tables */
+  table {
+    width: 100%; border-collapse: collapse; font-size: 12px;
+    margin: 16px 0 20px;
+  }
+  th {
+    text-align: left; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: #5a5a7a; padding: 8px 10px;
+    border-bottom: 2px solid #1a1a2e; background: #f8f8fc;
+  }
+  td {
+    padding: 8px 10px; border-bottom: 1px solid #e8e8f0;
+    vertical-align: top; line-height: 1.5;
+  }
+  tr:nth-child(even) td { background: #fafafc; }
+
+  /* Callout panels */
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0;
+    border-radius: 8px; padding: 16px 18px; margin: 14px 0;
+    font-size: 13px;
+  }
+
+  /* Read-first banner */
+  .read-first {
+    background: #0f766e; color: #fff; border-radius: 8px;
+    padding: 14px 20px; margin: 0 0 28px; font-size: 12px;
+    text-align: center;
+  }
+  .read-first strong { color: #fff; }
+
+  /* Footer */
+  .doc-footer {
+    margin-top: 48px; padding-top: 20px; border-top: 2px solid #1a1a2e;
+    text-align: center; font-size: 10px; color: #999;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  @media print {
+    body { padding: 24px; font-size: 11px; }
+    h1 { page-break-before: always; }
+    h1:first-of-type { page-break-before: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="title-block">
+  <div class="company">Umay Care Holdings Inc.</div>
+  <h1 style="font-size:28px; border:none; padding:0; margin:0 0 8px;">Master Strategy Document</h1>
+  <div class="subtitle">
+    Clinically-Adjacent Ocular Recovery Platform Powered by Closed-Loop Measurement<br>
+    Draft — February 24, 2026 · Confidential — Data Room
+  </div>
+  <div class="tags">
+    <span class="tag teal">READ FIRST</span>
+    <span class="tag blue">MASTER REFERENCE</span>
+    <span class="tag purple">GOVERNS ALL MATERIALS</span>
+  </div>
+</div>
+
+<div class="read-first">
+  <strong>This document is the master strategy governing all investor materials.</strong> The investor deck, financial model, and supporting data room assets are all consistent with and subordinate to the frameworks, sequencing, and data presented here. Appendix references point to detailed supporting assets in the data room.
+</div>
+
+<p><strong>Umay Care Holdings Inc.</strong></p>
+<p><strong>Umay Care Holdings Inc.</strong></p>
+<p>Draft Master Strategy – February 24, 2026<br />
+Clinically-Adjacent Ocular Recovery Platform Powered by Closed-Loop
+Measurement<br />
+Confidential — Data Room</p>
+<h1 id="executive-summary">1. Executive Summary</h1>
+<p>Umay has built the first at-home ocular recovery platform grounded in
+optometric clinical insight and engineered therapeutic design. It is
+co-founded by Ali Habib (engineering/product innovation) and Dr. Sharmin
+Habib, OD (clinical direction and claims integrity). What makes Umay
+unusual is the combination: a real clinical problem, a purpose-built
+device that clinics already adopt and reorder, and the discipline to
+scale without overclaiming. This document is the board-style strategy
+for how Umay grows—patient by patient, clinic by clinic—while building
+the foundation for a larger category over time.</p>
+<p><strong>Traction to date (as of February 2026):</strong> ~3,000 units
+shipped to 107 clinic partners (42 actively ordering), generating $1.5M+
+in lifetime revenue. A 1,600-unit backlog ($456K+ wholesale value) sits
+pre-ordered with deposits collected, constrained only by inventory
+funding. The TTM revenue of $620K understates demand — it reflects a
+supply constraint, not a market ceiling. When inventory is available,
+the company has demonstrated a $300K single-quarter run rate. Clinic
+reorder rate is ~60% within 3–6 months, and the return rate across all
+units shipped is below 1%.</p>
+<p>Invisible fatigue is the foundational demand driver: patients often
+normalize ocular strain until it shows up downstream as poorer sleep,
+reduced focus, and lower daily performance. Umay’s advantage is that
+clinics can name the problem, prescribe a practical recovery ritual, and
+see repeat purchase behavior as proof of economic and patient value.</p>
+<p>Umay’s product strategy is conservative in claims and disciplined in
+regulation. Rest is positioned as a consumer wellness product (Health
+Canada consumer safety approved; IEC 60335-1 certified) with governed,
+OD-approved language that protects future regulatory optionality (see
+Appendix A for the claims ladder and gating system). In parallel, Umay
+is developing RestScan—a browser-first, webcam-based ocular fatigue and
+autonomic stress assessment tool that runs 100% locally (no video
+stored; no facial identifiers transmitted), which adds measurement and
+personalization without inheriting biometric data liabilities (see
+Appendix F for the privacy architecture). RestScan is expected to be
+clinic-ready approximately ~12 months post-close; it is a future
+conversion and retention accelerant, not a prerequisite for near-term
+scale.</p>
+<p>Strategically, Umay sits in two categories—by design:</p>
+<ul>
+<li>Primary category (today): Ocular Recovery Platform — a clinically
+informed, at-home recovery system for dry eye symptoms, ocular fatigue,
+and digital strain.</li>
+<li>Architectural layer (next): Closed-loop therapeutic measurement
+system — RestScan strengthens the prescription moment by adding an
+objective wellness signal and a repeatable baseline, supporting
+conversion and adherence once it is validated and clinic-ready (~12
+months post-close). See Appendix O for the architecture/roadmap and
+Appendix F for privacy-by-design constraints.</li>
+<li>Strategic horizon (future): Autonomic Recovery / Neuro-Ocular Health
+System — pursued only when evidence and adoption justify it, without
+distracting from the core business.</li>
+</ul>
+<p>Roadmap: scale the clinic-led ocular recovery platform first;
+introduce RestScan only after clinical validation; extend into autonomic
+neuro-ocular health only when adoption and evidence justify category
+expansion.</p>
+<p>This master strategy is written for investors and for the leaders who
+will join Umay post-raise. It is designed to be practical: it explains
+what Umay will do first, what it will not do yet, and the controls that
+keep the company investable as it scales. Where deeper evidence or
+operating detail matters, the narrative points to the relevant appendix
+and summarizes what it contains.</p>
+<h1 id="strategic-thesis-and-category-positioning">2. Strategic Thesis
+and Category Positioning</h1>
+<p>Umay’s strategy starts with a simple institutional posture: build the
+category from the most credible edge. For Umay, that edge is optometric
+clinical authority—paired with a product innovation capability that has
+already delivered a differentiated device into market. Umay is not
+trying to “sell wellness into clinics.” It is exporting clinical
+credibility into wellness—using clinics as the trust engine, then
+expanding access as logistics and capacity mature. (See Appendix O for
+the final category definition, strategic hierarchy, and the hybrid
+framing: ocular recovery platform first, closed-loop measurement
+second.)</p>
+<p>A foundational strategic insight underpinning Umay’s positioning is
+the concept of invisible ocular fatigue — a condition that patients
+often cannot accurately perceive yet materially impacts sleep,
+productivity, and long-term ocular health. Clinics are not simply
+adopting a device; they are adopting a structured response to a problem
+that has historically lacked measurable feedback. This insight informs
+product design, clinical adoption behaviour, and long-term platform
+expansion.</p>
+<h2 id="category-framing-primary-architectural-layer">2.1 Category
+framing (primary + architectural layer)</h2>
+<p>Category clarity matters because it shapes how the opportunity is
+evaluated. Umay should be understood first as an <strong>ocular recovery
+platform</strong>—built with optometric clinical insight and engineered
+therapeutic design—and second as a <strong>closed-loop measurement
+architecture</strong> (RestScan) that will strengthen adherence, proof,
+and personalization as it matures.</p>
+<ul>
+<li><strong>Ocular Recovery Platform (primary):</strong> Umay Rest is an
+at-home recovery system for ocular comfort and relaxation, aligned to
+optometry’s daily reality: high prevalence of dry eye symptoms, fatigue
+complaints, and digital strain. The product integrates into an existing
+habit window (10 minutes before bed), producing high adherence and low
+returns. (See Appendix K for channel economics, reorder mechanics, and
+why clinics function as repeatable distribution nodes.)</li>
+<li><strong>Closed-loop therapeutic system (architectural
+layer):</strong> RestScan adds an objective measure at the start of the
+care journey, turning a subjective recommendation into a data-driven
+prescription moment—without claiming diagnosis. This strengthens
+conversion, reinforces adherence, and creates a compounding data asset
+over time. (See Appendix O for the platform architecture and roadmap
+framing, including RestScan as a future measurement lever.)</li>
+</ul>
+<h2
+id="tone-quietly-confident-clinically-grounded-strategically-ambitious">2.2
+Tone: quietly confident, clinically grounded, strategically
+ambitious</h2>
+<p>Umay is positioned as clinically adjacent wellness: OD-led,
+science-backed, and compliance-aware—with ambition expressed through
+defensible execution (patents, clinic adoption, reorder behavior) rather
+than hype. Rest is the proven core; RestScan is the measurement layer in
+development that will tighten the loop over time, without being required
+for near-term success. (See Appendix A for the claims governance ladder
+and gate system that keeps this posture clean as we scale.)</p>
+<h2 id="the-thesis-in-one-sentence">2.3 The thesis in one sentence</h2>
+<p>Umay has built a clinically-adjacent ocular recovery platform that
+clinics already reorder, and is layering in closed-loop measurement to
+deepen conversion, adherence, and defensibility—while maintaining strict
+claims discipline to preserve regulatory optionality.</p>
+<h1 id="organizational-overview-and-governance-posture">3.
+Organizational Overview and Governance Posture</h1>
+<p>Umay is founder-led at an inflection point. The company’s current
+traction (~3,000 units shipped, 107 clinic partners, $1.5M+ lifetime
+revenue, government-backed pilot data) was achieved with 3 FTEs plus a
+hardware engineering contractor. This capital efficiency is an asset,
+but it also creates a single-point-of-failure risk: Ali currently spans
+sales, manufacturing/ops, product execution, and fundraising. The
+post-raise plan is the founder-to-scale transition: “Ali does the things
+only Ali can do” (investors, partnerships, top accounts), while
+repeatable functions become owned by dedicated leaders. (See Appendix B
+for the current → post-raise org chart and reporting lines, and Appendix
+N for the founder-to-scale operating model and why these hires de-risk
+execution.)</p>
+<h2
+id="founder-dynamic-engineer-led-innovation-with-clinical-authority-embedded">3.1
+Founder dynamic: engineer-led innovation with clinical authority
+embedded</h2>
+<ul>
+<li><strong>Ali Habib (CEO):</strong> leads product architecture and
+commercial execution, and evolves into a strategic
+operator—investor/partner-facing, category vision and key accounts—so
+the company is not constrained by founder bandwidth.</li>
+<li><strong>Dr. Sharmin Habib, OD (CMO):</strong> governs clinical
+direction and claims integrity, anchors optometric credibility, and
+protects regulatory posture through evidence discipline.</li>
+</ul>
+<p>The origin story is clinically driven, not technology-first: the
+product was created to solve a real clinical gap in dry eye care, not to
+“find a market for a gadget.” That same pattern continues with RestScan:
+it exists because clinics lack an accessible, scalable way to objectify
+ocular fatigue at the point of care. (See Appendix O for the
+clinically-driven origin narrative and how it informs both Rest and
+RestScan development.)</p>
+<h2 id="governance-maturity-signal">3.2 Governance maturity signal</h2>
+<p>Umay’s governance posture is intentionally institutional. Risks are
+framed as systems and controls, not founder limitations. Claims
+governance, privacy architecture, and regulatory pathway planning are
+built into the operating model—not retrofits (see Appendix A for
+claims/regulatory governance and Appendix F for privacy architecture and
+roadmap). Post-raise, board-ready governance and D&amp;O insurance are
+expected additions to match investor requirements (see Appendix I for
+the insurance roadmap).</p>
+<h1 id="market-and-industry-context">4. Market and Industry Context</h1>
+<p>Umay’s core category sits inside ocular surface health and dry eye
+symptoms — a market where clinical demand is high, patient adherence is
+historically low, and the market lacks consumer-grade solutions that
+patients actually use. The U.S. DED therapeutics market is $5.06B (2025)
+growing at 8.39% CAGR; the Canadian DED market is $448M growing at 9.17%
+CAGR — the fastest in North America. The treatment devices segment alone
+is projected to grow from $124M (2024) to $261M (2034). The U.S.
+societal burden of dry eye exceeds $59B annually ($4B direct medical
+costs, $55B in productivity losses), with Canadian per-patient costs
+averaging C$24,330/year (79% driven by presenteeism).</p>
+<p>Clinics already invest in in-office procedures that can generate high
+per-session revenue but require chair time, capital equipment, and staff
+training. Umay complements these procedures as the at-home maintenance
+layer: zero chair time, zero capital, and a simple prescription motion.
+(See Appendix O for category framing and market context, and Appendix A
+for the claims boundaries that keep the posture compliant.)</p>
+<p>The go-to-market logic is straightforward: optometry clinics are
+distribution nodes with repeated patient traffic. A single activated
+clinic can repeatedly convert patients with minimal incremental cost,
+producing recurring reorder patterns that look more like installed-base
+retention than one-time hardware sales. (See Appendix K for how reorder
+behavior converts clinic activity into an installed-base revenue
+engine.)</p>
+<h2
+id="why-clinically-adjacent-wellness-is-the-correct-investor-category">4.1
+Why ‘clinically-adjacent wellness’ is the correct investor category</h2>
+<p>This positioning is not marketing — it is the operating posture that
+protects trust with ODs, keeps claims disciplined, and lets Umay expand
+distribution without inheriting regulatory debt.</p>
+<p>Umay is not positioned as a consumer wellness gadget, a sleep
+product, or a lifestyle performance brand. Instead, Umay leads with
+clinical credibility and disciplined claims; sleep, fatigue, and
+productivity remain downstream benefits. This prevents regulatory debt
+while still supporting a large consumer narrative. (See Appendix A for
+the claims ladder and prohibited-claim triggers that keep the posture
+clean.)</p>
+<h2 id="the-compliance-crisis-umay-addresses">4.2 The compliance crisis
+Umay addresses</h2>
+<p>The DED market’s structural weakness is adherence. Rx eye drop
+adherence at correct frequency is 10.2%. Cyclosporine adherence (PDC
+≥80%) is 5.9%. Lifitegrast adherence is 9.7%. Over 75% of patients
+discontinue treatment within 90 days. At-home warm compress compliance
+is below 50%. By contrast, Umay Rest daily usage in the
+government-backed pilot (N=500) was 84% — an order-of-magnitude
+improvement over existing standards. This adherence advantage is the
+economic engine behind clinic reorder behavior: patients who actually
+use a product generate the outcomes that give clinicians confidence to
+prescribe again.</p>
+<h1 id="customer-and-channel-insights">5. Customer and Channel
+Insights</h1>
+<h2 id="the-clinic-as-the-trust-engine">5.1 The clinic as the trust
+engine</h2>
+<p>The buyer in Umay’s primary channel is the clinic (OD + staff), but
+the end-user is the patient. The clinic must believe three things to
+prescribe repeatedly: (1) The motion is simple and does not consume
+chair time. (2) The economics make sense relative to other clinic
+revenue streams. (3) Patients actually use the product and report
+benefits—creating clinician confidence.</p>
+<p>Umay’s clinic motion is designed to meet these needs in under two
+minutes of staff time with a zero-inventory option. (See Appendix K for
+the clinic motion, scripts, and the operational design that keeps staff
+time low.) Reorder behavior is the most honest composite metric: it
+captures patient usage, clinic economics, and trust—all in one
+observable action.</p>
+<p><strong>Clinic economics context:</strong> Umay Rest wholesales at
+$285 with clinic retail at $500–600 (43–52% margin), fitting within the
+established contact-lens-to-eyewear markup range. DED-focused practices
+achieve 4× industry average growth rates, with annual DED patient values
+ranging from $1,700 to $5,300. Average practice revenue is ~$2.1M with
+54% derived from product sales. Umay requires no capital equipment, no
+consumables, and no chair time — adoption friction is dramatically lower
+than in-office systems like LipiFlow ($30–50K console), TearCare
+($15–25K console + $1,200/procedure consumable), or IPL ($80–150K+
+equipment).</p>
+<h2
+id="patient-behavior-adherence-and-the-felt-experience-advantage">5.2
+Patient behavior: adherence and the ‘felt experience’ advantage</h2>
+<p>The retention engine is ultimately patient behavior. Traditional dry
+eye modalities suffer from low adherence. Umay’s evidence to date
+indicates unusually strong stickiness: daily usage reported at 84% in
+the government-backed pilot (N=500), DAU/MAU ratio of 0.64 across 2,847
+active IoT devices, and a return rate below 1% across ~3,000 units
+shipped. The behavioral explanation matters: thermal therapy creates an
+immediate sensory experience, integrates into a bedtime ritual, and
+delivers dual motivation (eye comfort plus sleep-related benefits)
+without requiring complex behavior change. (See Appendix K for reorder,
+retention, and channel-health evidence.)</p>
+<h2 id="human-narrative-layer-the-invisible-fatigue-problem">5.3 Human
+Narrative Layer: The Invisible Fatigue Problem</h2>
+<p>Ocular fatigue is often invisible to the patient until it
+accumulates—people adapt, normalize discomfort, and keep performing.
+That is why a clinic-anchored prescription moment matters: it gives
+language to a silent problem, legitimizes the solution, and creates a
+simple ritual patients will actually repeat.</p>
+<h1 id="defensibility-and-competitive-moat">6. Defensibility and
+Competitive Moat</h1>
+<p>Umay’s moat is multi-layered. The strongest strategic moat is clinic
+distribution with demonstrated reorder behavior—because it is the
+compounding output of the other moat layers. (See Appendices C, D, and
+E.)</p>
+<h2 id="moat-layer-1-channel-trust-reorder-economics-primary-moat">6.1
+Moat layer 1: channel trust + reorder economics (primary moat)</h2>
+<p>A clinic that has prescribed Umay successfully to dozens of patients
+has embedded the product into its standard of care. Switching costs are
+practical and reputational: clinicians do not churn to unproven
+alternatives when a product is already delivering patient satisfaction
+and margin. Reorders also reduce dependency on proportional new-clinic
+acquisition; growth becomes installed-base expansion.</p>
+<p>Clinic reorder behaviour functions as more than a revenue signal; it
+represents behavioural validation. Reorders indicate that Umay has
+integrated into clinical workflow, demonstrated patient adherence, and
+generated economic confidence for practitioners. Of Umay’s 42 actively
+ordering clinics, ~8 Super-Clinics drive approximately 80% of volume,
+each selling through 5–10 units per month — demonstrating the power law
+distribution that characterizes successful clinic-dispensed product
+platforms.</p>
+<h2
+id="moat-layer-2-closed-loop-measurement-as-a-conversion-and-data-amplifier">6.2
+Moat layer 2: closed-loop measurement as a conversion and data
+amplifier</h2>
+<p>RestScan is the strategic amplifier once it is clinic-ready (~12
+months post-close): it can move the recommendation from a subjective
+complaint to an objective wellness signal at the start of the visit. The
+core business does not depend on RestScan; it is designed to accelerate
+conversion, adherence, and reorder once validated and deployed.</p>
+<p>Closed-loop precedents validate this architecture: Medtronic’s
+CGM+pump generates $2.76B in revenue with 80%+ recurring; Oura achieves
+88% retention (vs. 25% industry baseline); ForeseeHome improved AMD
+detection adherence from 62% to 94%. The universal pattern across
+closed-loop health systems is a 1.5–3.5× retention improvement when the
+measurement loop closes.</p>
+<h2 id="moat-layer-3-ip-portfolio-and-trade-secrets">6.3 Moat layer 3:
+IP portfolio and trade secrets</h2>
+<p>Umay holds 3 issued U.S. utility patents (including a November 2025
+grant for stress-sensing integration), 1 European patent, 4+ design
+registrations, 5 trademarks, and provisional applications covering
+RestScan and Thermal Rhythm technologies. All IP is assigned to the
+company. (See Appendices H and L.)</p>
+<h2 id="moat-layer-4-regulatory-cleanliness-as-strategic-leverage">6.4
+Moat layer 4: regulatory cleanliness as strategic leverage</h2>
+<p>Regulatory discipline is a moat because it preserves optionality.
+Companies that overclaim early accumulate regulatory debt that becomes
+expensive and irreversible. Umay’s tiered claims ladder, gate system,
+and partner compliance provisions are designed to scale beyond founder
+oversight without risking enforcement actions. (See Appendices A and
+K.)</p>
+<h1 id="revenue-engine-architecture">7. Revenue Engine Architecture</h1>
+<p>Umay’s revenue engine is intentionally staged: clinic channel first,
+then broader distribution as logistics and capacity mature.</p>
+<h2 id="stage-1-clinic-led-growth-and-installed-base-expansion">7.1
+Stage 1: clinic-led growth and installed-base expansion</h2>
+<p>In the near term, the majority of growth is clinic-driven because it
+matches Umay’s category positioning: clinical credibility first. Clinics
+are efficient distribution nodes: one relationship can generate many
+patient conversions.</p>
+<p><strong>Current traction anchors:</strong> ~60% clinic reorder rate
+within 3–6 months of first order, with active clinics selling through
+~5–10 units per month. The 93.9% revenue retention from existing clinics
+in 2025 demonstrates the durability of the installed base. Marginal
+LTV:CAC is approximately 46× — reflecting the efficiency of a channel
+where activation cost per clinic is ~$250 and total revenue LTV per
+clinic exceeds $41,000 over a 2-year horizon with 8 expected reorder
+cycles.</p>
+<h2 id="motion-and-monetization-models">7.2 Motion and monetization
+models</h2>
+<p>Umay supports multiple clinic monetization paths: wholesale
+stock-and-sell (43–52% clinic margin), zero-inventory QR prescription
+flow (drop-ship), and in-office session billing where applicable. (See
+Appendix K.)</p>
+<h2
+id="stage-2-parallel-dtc-once-logistics-meet-service-level-requirements">7.3
+Stage 2: parallel DTC once logistics meet service-level
+requirements</h2>
+<p>DTC scales in parallel only after US logistics meet a clinic-grade
+service level (delivery time, returns, and duty friction resolved). DTC
+economics are modeled separately: higher ASP ($705 MSRP), different
+return profile, direct-to-consumer marketing costs, and no clinic margin
+share. DTC is not activated in the base financial scenario; it enters
+the model as a gated toggle in the bull case. Clinics remain the primary
+growth engine regardless of DTC timing.</p>
+<h2 id="salesforce-architecture-head-of-growth-variable-cost-reps">7.4
+Salesforce architecture: Head of Growth + variable-cost reps</h2>
+<p>US expansion uses a managed 1099 rep network rather than prematurely
+building a fixed-cost W-2 sales org. The Head of Growth role is
+non-negotiable; reps do not replace it. (See Appendix K for the
+commission model and rep economics.)</p>
+<h1
+id="institutional-readiness-regulatory-privacy-insurance-and-material-agreements">8.
+Institutional Readiness: Regulatory, Privacy, Insurance, and Material
+Agreements</h1>
+<h2 id="regulatory-firewall-and-claims-governance">8.1 Regulatory
+firewall and claims governance</h2>
+<p>Umay’s claims governance is an operating system: four-tier claims
+ladder, five-gate evidence graduation, and partner compliance language
+that scales beyond founder oversight. (See Appendix A.)</p>
+<h2 id="data-privacy-posture">8.2 Data privacy posture</h2>
+<p>RestScan is architected privacy-first: processing is local in the
+browser; no video is stored; no facial identifiers or landmarks are
+transmitted. Before RestScan moves beyond pilots, Umay will update its
+privacy policy and implement explicit camera consent flows. See Appendix
+F.</p>
+<h2 id="insurance-posture">8.3 Insurance posture</h2>
+<p>Umay maintains a renewed $2M CGL policy with zero claims and zero
+safety incidents across ~3,000 units shipped. Post-raise: D&amp;O,
+E&amp;O, and cyber are recommended institutional layers. (See Appendix
+I.)</p>
+<h2 id="material-agreements-and-operational-dependencies">8.4 Material
+agreements and operational dependencies</h2>
+<p>Umay’s agreement footprint is lean, with IP assigned to the company
+and no exclusivity traps. Single-source manufacturing (Aztech) is the
+most material dependency; tooling is Umay-owned and transferable.
+Tangent provides design engineering for Gen 2 DFM work under IP
+assignment. (See Appendix E.)</p>
+<h1 id="operations-and-execution-plan">9. Operations and Execution
+Plan</h1>
+<h2 id="us-logistics-as-a-growth-unlock">9.1 US logistics as a growth
+unlock</h2>
+<p>US 3PL is prerequisite infrastructure for QR prescription drop-ship,
+1099 reps, and an HSA/FSA-enabled checkout motion. See Appendix D.</p>
+<h2 id="manufacturing-readiness">9.2 Manufacturing readiness</h2>
+<p>Aztech is the established manufacturing partner with capacity to
+scale; Gen 2 DFM work is structured as an EVT/DVT/PVT program managed
+through Tangent under IP assignment. Current COGS is $152 CAD all-in.
+Gen 2 DFM targets COGS compression to the $130–120 range at higher
+volumes. (See Appendix E.)</p>
+<h2 id="capital-efficiency-and-canadian-advantage">9.3 Capital
+efficiency and Canadian advantage</h2>
+<p>Canadian HQ provides execution leverage via FX arbitrage, SR&amp;ED
+credits (estimated ~$150K/year at 35% of qualifying R&amp;D spend), and
+NRC IRAP co-funding. A dual-entity structure (Canadian parent + Delaware
+C-Corp subsidiary) supports US investor expectations while preserving
+Canadian R&amp;D advantages. (See Appendix C.)</p>
+<h1 id="team-scale-plan-and-founder-to-scale-transition">10. Team Scale
+Plan and Founder-to-Scale Transition</h1>
+<p>Post-raise hiring is intentionally minimal and leverage-driven: three
+core hires remove founder bottlenecks while keeping burn controlled.
+(See Appendix N.)</p>
+<h2 id="first-three-hires-and-sequencing">10.1 First three hires and
+sequencing</h2>
+<ul>
+<li>Head of Growth (US) — unlocks US channel and rep network. Target:
+~$150K/year. Phased in Q2 2026.</li>
+<li>Product/Tech Lead — owns Gen 2 + RestScan + Tangent relationship.
+Target: ~$160K/year. Phased in Q3 2026.</li>
+<li>Operations Manager — owns supply, 3PL, inventory, and fulfillment.
+Target: ~$100K/year. Phased in Q2–Q3 2026.</li>
+</ul>
+<p>Total incremental OpEx at full run-rate: ~$410K/year (~$34K/month).
+Burn steps up from current ~$28K/month to ~$62K/month by Q3 2026.</p>
+<h1 id="capital-structure-and-raise-context">11. Capital Structure and
+Raise Context</h1>
+<p>Founder-controlled cap table with 18 shareholders; last priced round
+December 2022 at $7.5M CAD pre-money. Current raise is $2M CAD on a
+rolling close basis, with valuation/instrument TBD. 10% ESOP planned.
+(See Appendix G.)</p>
+<h2 id="use-of-funds">11.1 Use of funds</h2>
+<p>The $2M deployment is structured to unlock sequential growth
+gates:</p>
+<ul>
+<li><strong>Inventory and backlog fulfillment (~$500K):</strong> Clear
+the 1,600-unit backlog, fund PO2 and PO3 production runs. This is the
+single highest-ROI allocation — it converts $456K+ in pre-ordered
+revenue and eliminates the supply constraint.</li>
+<li><strong>BDC debt retirement (~$270K):</strong> Eliminates the $210K
+BDC loan plus accumulated interest. Removes $6,800/month payment,
+eliminates GSA seizure risk, extends runway by ~4 months. Net cost after
+saved payments is ~$138K.</li>
+<li><strong>RestScan R&amp;D (~$200K):</strong> Funds the 12-month
+validation program from POC to clinic-ready.</li>
+<li><strong>US sales activation (~$150K):</strong> Head of Growth hire,
+initial 1099 rep recruitment, 2 optometry conference appearances, and
+TrueMed HSA/FSA integration.</li>
+<li><strong>Working capital and runway (~$880K):</strong> Remaining
+hires, general operations, and cash buffer to maintain 12+ months of
+runway at post-hire burn rate.</li>
+</ul>
+<h2 id="unit-economics-summary">11.2 Unit economics summary</h2>
+<p>Wholesale price: $285 CAD. Landed COGS: $152 CAD. Gross margin:
+46.7%. Clinic LTV (revenue basis, 8 reorder cycles): ~$42,000. Marginal
+CAC per clinic: ~$250. LTV:CAC on marginal basis: ~46×.</p>
+<h2 id="debt-and-runway">11.3 Debt and runway</h2>
+<p>With BDC retirement (the locked strategy), monthly debt service drops
+from ~$19.8K to ~$12.4K (PrairiesCan + CEBA only). Post-BDC-retirement
+monthly burn at current headcount is ~$28K; at full post-hire headcount,
+~$62K. The financial model shows cash position, runway, and scenario
+analysis across bear/base/bull assumptions. (See Appendix G.)</p>
+<h1 id="strategic-risk-framework">12. Strategic Risk Framework</h1>
+<p>Risks are framed as managed systems with mitigations embedded in the
+operating plan.</p>
+<ul>
+<li>Supply/stockout risk → safety stock, PO cadence, 3PL transition.
+(See Appendices E and D.)</li>
+<li>Clinic concentration risk → activation of dormant clinics (65 in
+network but not actively ordering) + US expansion. (See Appendix
+K.)</li>
+<li>Founder-dependency risk → three-hire plan + reporting lines. (See
+Appendix N.)</li>
+<li>Regulatory/claims risk → claims ladder, gates, partner training.
+(See Appendices A and K.)</li>
+<li>Privacy/cyber risk → local-only architecture + policy/processors.
+(See Appendix F.)</li>
+<li>Working capital timing → PO deposit cadence and backlog AR
+management. (See Appendix G.)</li>
+</ul>
+<h1 id="strategic-outcomes-and-horizon-planning">13. Strategic Outcomes
+and Horizon Planning</h1>
+<h2 id="primary-outcome-category-leading-ocular-recovery-platform">13.1
+Primary outcome: category-leading ocular recovery platform</h2>
+<p>Primary outcome is a defensible, category-leading ocular recovery
+company with durable reorder economics, independent of RestScan
+upside.</p>
+<h2
+id="secondary-outcome-closed-loop-measurement-expands-conversion-and-defensibility">13.2
+Secondary outcome: closed-loop measurement expands conversion and
+defensibility</h2>
+<p>RestScan strengthens clinician confidence, patient conversion, and
+adherence while building a paired dataset.</p>
+<h2
+id="horizon-outcome-autonomic-recovery-neuro-ocular-health-system">13.3
+Horizon outcome: autonomic recovery / neuro-ocular health system</h2>
+<p>Broader autonomic recovery positioning is pursued only when evidence
+and adoption justify it.</p>
+<h2 id="strategic-acquirer-landscape-and-exit-framing">13.4 Strategic
+acquirer landscape and exit framing</h2>
+<p>Umay’s closed-loop architecture (Rest therapeutic + RestScan
+measurement) creates strategic acquisition value that exceeds standalone
+revenue multiples. The DED device market is dominated by companies that
+have either treatment or measurement — none have both in a single
+platform, and none have a take-home device with proven clinic reorder
+economics.</p>
+<p><strong>Primary strategic acquirer universe:</strong></p>
+<ul>
+<li><strong>J&amp;J Vision:</strong> Acquired TearScience (LipiFlow) for
+the in-office DED treatment market. Umay fills J&amp;J’s gap: a
+take-home maintenance layer. Early relationship exists.</li>
+<li><strong>Alcon:</strong> iLux in-office device with strong optometry
+distribution. Umay would add a prescribed at-home complement and
+RestScan measurement capability.</li>
+<li><strong>EssilorLuxottica:</strong> The world’s largest optical
+company with wholesale ophthalmic distribution infrastructure. Umay’s
+clinic channel model maps directly to their existing relationships.
+Early relationship exists.</li>
+<li><strong>CooperVision:</strong> Growing DED interest through
+specialty contact lens positioning. Umay adds a therapeutic recovery
+layer and measurement capability.</li>
+<li><strong>Bausch + Lomb:</strong> Broad eye care portfolio with DED
+products but no prescribed at-home device or closed-loop
+measurement.</li>
+<li><strong>Digital health platforms:</strong> Companies building ocular
+health or sleep health platforms may value the RestScan IP and clinical
+data asset.</li>
+</ul>
+<p><strong>Acquisition thesis:</strong> The acquirer buys three things —
+a proven clinic distribution channel with reorder economics, a
+closed-loop IP portfolio that protects the detect → treat → measure
+loop, and the only N=500 government-backed clinical dataset for at-home
+thermal therapy.</p>
+<p>The financial model includes an exit scenario table showing MOIC at
+3×, 5×, 8×, and 12× revenue multiples and a channel value analysis
+estimating implied acquisition price through acquirer distribution
+modeling.</p>
+<h1 id="month-roadmap-raise-aligned">14. 12–18 Month Roadmap
+(Raise-Aligned)</h1>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>2026 Window</th>
+<th>Primary Objective</th>
+<th>Key Deliverables</th>
+<th>Financial Milestones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Feb–Mar 2026</td>
+<td>Stabilize &amp; Optimize</td>
+<td>Rolling close begins; BDC retired; backlog PO funded; sales
+infrastructure established</td>
+<td>Bridge T1 closes (~$250K). BDC eliminated. 1,600-unit backlog begins
+shipping.</td>
+</tr>
+<tr class="even">
+<td>Apr–Jun 2026</td>
+<td>Channel Activation</td>
+<td>2 optometry conferences; Head of Growth hired; US rep recruitment;
+Ops Manager hired; dormant clinic reactivation</td>
+<td>Revenue resumes ($456K+ wholesale). 8–13 activations/month. Burn
+steps to ~$40K/month.</td>
+</tr>
+<tr class="odd">
+<td>Jul–Sep 2026</td>
+<td>Scale Production &amp; US Distribution</td>
+<td>Sea freight + US 3PL go-live; 2-day CONUS delivery; reorder
+automation; Product/Tech Lead hired; Gen 2 EVT begins</td>
+<td>Continuous supply (PO2/PO3). Revenue trajectory →$100K+/month. Burn
+at ~$62K/month.</td>
+</tr>
+<tr class="even">
+<td>Oct 2026–Jan 2027</td>
+<td>DTC Ramp + Measurement Build</td>
+<td>DTC growth tests; RestScan validation + limited clinic beta; claims
+governance review; Series A preparation</td>
+<td>DTC revenue enters model (bull case). ARR trajectory visible for
+Series A. 12+ months runway.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="appendices">Appendices</h1>
+<h2 id="appendix-a-regulatory-firewall-matrix">Appendix A — Regulatory
+Firewall Matrix</h2>
+<p>Umay’s claims governance operates through a four-tier claims ladder
+with a five-gate evidence graduation system. Tier 1 claims (market size,
+public data, general comfort language) can be used freely. Tier 2 claims
+(pilot data outcomes: 87% eye comfort, 70% sleep improvement) require
+the “government-backed pilot, manuscript in draft” caveat. Tier 3 and 4
+claims are gated behind peer-reviewed publication and regulatory
+clearance respectively. <strong>Data room reference:</strong> Asset
+L3-11.</p>
+<h2 id="appendix-b-organizational-chart">Appendix B — Organizational
+Chart</h2>
+<p>Current state: 3 FTEs (Ali as CEO, Dr. Sharmin Habib as CMO, plus one
+additional team member) and a hardware engineering contractor (Tangent).
+Post-raise: three hires create dedicated ownership of the three
+functions that currently bottleneck at Ali. <strong>Data room
+reference:</strong> Asset L3-20.</p>
+<h2 id="appendix-c-canadian-advantage-memo">Appendix C — Canadian
+Advantage Memo</h2>
+<p>Canadian headquarters provides FX arbitrage, SR&amp;ED tax credits
+(~$150K/year), and NRC IRAP co-funding. Dual-entity structure planned.
+<strong>Data room reference:</strong> Asset L3-12.</p>
+<h2 id="appendix-d-us-logistics-strategy">Appendix D — US Logistics
+Strategy</h2>
+<p>US 3PL transition enables 2-day CONUS delivery, eliminates duty
+pass-through, and unlocks QR prescription drop-ship, rep scalability,
+and HSA/FSA checkout. Timeline: vendor selection Q2 2026, go-live Q3
+2026. <strong>Data room reference:</strong> Asset L3-13.</p>
+<h2 id="appendix-e-material-agreements-summary">Appendix E — Material
+Agreements Summary</h2>
+<p>Key relationships: Aztech (manufacturer — no exclusivity, Umay-owned
+tooling), Tangent (design engineering — IP assignment), Shopify
+(e-commerce), clinic distribution agreements (non-exclusive). No
+change-of-control clauses. <strong>Data room reference:</strong> Asset
+L3-14.</p>
+<h2 id="appendix-f-data-privacy-map">Appendix F — Data Privacy Map</h2>
+<p>RestScan processes locally via MediaPipe. No video stored, no facial
+identifiers transmitted. Privacy policy update is a pre-RestScan-pilot
+deliverable. <strong>Data room reference:</strong> Asset L3-15.</p>
+<h2 id="appendix-g-cap-table-funding-history">Appendix G — Cap Table
+&amp; Funding History</h2>
+<p>18-shareholder cap table, founder-controlled (~69.8% pre-bridge).
+Last priced round: Dec 2022 at $7.5M pre-money. Debt: BDC ($210K, being
+retired), PrairiesCan ($344K, amortizing), CEBA ($56.7K, balloon Dec
+2026). <strong>Data room reference:</strong> Asset L3-17.</p>
+<h2 id="appendix-h-ip-register">Appendix H — IP Register</h2>
+<p>3 US utility patents, 1 EP, 4+ designs, 5 trademarks, provisionals on
+RestScan and Thermal Rhythm. All assigned to company. Estimated
+replacement cost: $1.5M–$3.5M CAD. <strong>Data room reference:</strong>
+Asset L3-18.</p>
+<h2 id="appendix-i-insurance-summary">Appendix I — Insurance
+Summary</h2>
+<p>Current: $2M CGL policy, zero claims. Post-raise additions: D&amp;O,
+E&amp;O, cyber. <strong>Data room reference:</strong> Asset L3-23.</p>
+<h2 id="appendix-j-strategic-risk-framework">Appendix J — Strategic Risk
+Framework</h2>
+<p>Risk framework maps to staged execution roadmap. Each risk managed as
+a system with embedded mitigations. Consolidates risk content from
+multiple data room assets.</p>
+<h2 id="appendix-k-revenue-engine-architecture">Appendix K — Revenue
+Engine Architecture</h2>
+<p>Key metrics: ~60% reorder rate, ~5–10 units/month active clinic
+sell-through, 93.9% revenue retention (2025), ~46× marginal LTV:CAC.
+<strong>Data room references:</strong> Assets L3-03, L3-05, L3-08,
+L3-09, L3-10.</p>
+<h2 id="appendix-l-defensibility-competitive-moat">Appendix L —
+Defensibility &amp; Competitive Moat</h2>
+<p>Competitive landscape spans four categories: in-office DED devices,
+consumer eye masks, digital eye health apps, and emerging closed-loop
+platforms. No single competitor holds all three of Umay’s moat layers.
+<strong>Data room references:</strong> Assets L3-06, L3-01.</p>
+<h2 id="appendix-m-strategic-outcomes">Appendix M — Strategic
+Outcomes</h2>
+<p>Maps three strategic horizons to measurable outcomes and evidence
+gates. Prevents premature diversification while preserving long-term
+optionality.</p>
+<h2 id="appendix-n-org-narrative-integration">Appendix N — Org Narrative
+Integration</h2>
+<p>Details the founder-to-scale operating model. Phased headcount plan
+with timing, compensation, and the specific founder bottlenecks each
+hire removes. <strong>Data room references:</strong> Assets L3-20,
+L3-07.</p>
+<h2 id="appendix-o-category-positioning-framework">Appendix O — Category
+Positioning Framework</h2>
+<p>Defines strategic hierarchy: ocular recovery platform → closed-loop
+measurement → autonomic recovery. Includes clinically-driven origin
+narrative and RestScan platform architecture. <strong>Data room
+references:</strong> Assets L3-01, L2-01.</p>
+
+<div class="doc-footer">
+  Confidential &middot; Umay Care Holdings Inc. &middot; Master Strategy v2 &middot; February 2026
+</div>
+
+</body>
+</html>

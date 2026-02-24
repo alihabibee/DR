@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinic Motion Pack — How a Patient Gets Rest</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 44px 52px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 18px;
+  }
+  .badge.a { background: #dbeafe; color: #1e40af; }
+  .badge.b { background: #d1fae5; color: #065f46; }
+  .badge.c { background: #fef3c7; color: #92400e; }
+  .badge.d { background: #ede9fe; color: #5b21b6; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.accent { border-left: 4px solid #1e40af; background: #eff6ff; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 18px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px;
+  }
+  .stat-mini {
+    text-align: center; padding: 12px 8px;
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .stat-mini .num { font-family: 'DM Serif Display', serif; font-size: 24px; color: #1a1a2e; }
+  .stat-mini .lbl { font-size: 9.5px; color: #5a5a7a; margin-top: 2px; line-height: 1.3; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  /* Workflow steps */
+  .workflow {
+    display: flex; align-items: stretch; gap: 0; margin-bottom: 18px;
+  }
+  .wf-step {
+    flex: 1; padding: 14px 12px; border: 1px solid #e0e0e8; background: #fff; position: relative;
+  }
+  .wf-step:first-child { border-radius: 8px 0 0 8px; }
+  .wf-step:last-child { border-radius: 0 8px 8px 0; }
+  .wf-step.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .wf-num {
+    font-family: 'DM Serif Display', serif; font-size: 22px; line-height: 1;
+  }
+  .wf-step.active .wf-num { color: #fff; }
+  .wf-title { font-weight: 700; font-size: 12px; margin-top: 4px; }
+  .wf-detail { font-size: 10px; color: #8a8aaa; margin-top: 2px; }
+  .wf-step.active .wf-detail { color: #b0b0cc; }
+  .wf-time {
+    position: absolute; top: 8px; right: 8px; font-size: 9px; font-weight: 700;
+    background: #e8e8f0; border-radius: 3px; padding: 2px 6px; color: #5a5a7a;
+  }
+  .wf-step.active .wf-time { background: #2a2a4e; color: #b0b0cc; }
+
+  /* Script bubble */
+  .script {
+    background: #f0f7ff; border: 1px solid #bfdbfe; border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 10px; position: relative; font-size: 12px;
+  }
+  .script::before {
+    content: ''; position: absolute; top: -8px; left: 20px;
+    width: 0; height: 0; border-left: 8px solid transparent;
+    border-right: 8px solid transparent; border-bottom: 8px solid #bfdbfe;
+  }
+  .script .speaker {
+    font-weight: 700; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #1e40af; margin-bottom: 4px;
+  }
+  .script.patient { background: #f0fdf4; border-color: #a7f3d0; }
+  .script.patient::before { border-bottom-color: #a7f3d0; }
+  .script.patient .speaker { color: #065f46; }
+
+  /* QR flow */
+  .qr-flow {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; margin-bottom: 18px;
+    border-radius: 8px; overflow: hidden;
+  }
+  .qr-node {
+    padding: 12px 10px; background: #f8f8fc; text-align: center; font-size: 11px;
+  }
+  .qr-node.highlight { background: #1a1a2e; color: #fff; }
+  .qr-node .icon { font-size: 20px; margin-bottom: 4px; }
+  .qr-node .title { font-weight: 700; font-size: 11px; }
+  .qr-node .sub { font-size: 9px; color: #8a8aaa; margin-top: 2px; }
+  .qr-node.highlight .sub { color: #9090bb; }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: WORKFLOW + SCRIPTS -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Clinic Motion Pack</h1>
+      <div class="subtitle">How a Patient Gets Rest — From Exam Room to Doorstep</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">What This Document Proves</div>
+    The clinic channel isn't theory — it's an operating playbook. This pack shows exactly how a patient moves from symptom identification to device in hand, what the staff says, how money flows, and why clinics reorder. <strong>Total staff time per patient: under 2 minutes. Zero inventory required.</strong>
+  </div>
+
+  <!-- SECTION A: TECHNICIAN SOP -->
+  <span class="badge a">Section A · Technician Standard Operating Procedure</span>
+
+  <h2>Today's Workflow: 5 Steps, <2 Minutes of Staff Time</h2>
+
+  <div class="workflow">
+    <div class="wf-step">
+      <div class="wf-time">0:00</div>
+      <div class="wf-num">1</div>
+      <div class="wf-title">Identify Symptoms</div>
+      <div class="wf-detail">During intake, flag dry eye, digital strain, sleep/wellbeing concerns</div>
+    </div>
+    <div class="wf-step active">
+      <div class="wf-time">Exam</div>
+      <div class="wf-num">2</div>
+      <div class="wf-title">OD Recommends</div>
+      <div class="wf-detail">Doctor explains findings; recommends Rest as at-home routine</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-time">0:30</div>
+      <div class="wf-num">3</div>
+      <div class="wf-title">Staff Handoff</div>
+      <div class="wf-detail">Product card + QR code for purchase with discount/trial</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-time">1:00</div>
+      <div class="wf-num">4</div>
+      <div class="wf-title">Patient Purchases</div>
+      <div class="wf-detail">Scans QR → pays on phone → or buys direct from clinic</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-time">Done</div>
+      <div class="wf-num">5</div>
+      <div class="wf-title">Receives Device</div>
+      <div class="wf-detail">Clinic pickup or shipped to home. App onboarding begins.</div>
+    </div>
+  </div>
+
+  <h2>Tomorrow's Workflow: RestScan-Enabled (Post-Gen 2)</h2>
+
+  <div class="workflow">
+    <div class="wf-step">
+      <div class="wf-time">0:00</div>
+      <div class="wf-num">1</div>
+      <div class="wf-title">RestScan Pre-Test</div>
+      <div class="wf-detail">Tech runs 2-min webcam scan during pre-test</div>
+    </div>
+    <div class="wf-step active">
+      <div class="wf-time">Exam</div>
+      <div class="wf-num">2</div>
+      <div class="wf-title">OD Reviews Data</div>
+      <div class="wf-detail">"Your Ocular Fatigue score is elevated."</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-time">0:15</div>
+      <div class="wf-num">3</div>
+      <div class="wf-title">QR Prescription</div>
+      <div class="wf-detail">OD hands patient a QR code prescription card</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-time">0:30</div>
+      <div class="wf-num">4</div>
+      <div class="wf-title">Patient Scans & Pays</div>
+      <div class="wf-detail">Patient completes purchase on phone in waiting room</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-time">2 days</div>
+      <div class="wf-num">5</div>
+      <div class="wf-title">Ships from US 3PL</div>
+      <div class="wf-detail">2-day delivery. OD receives revenue credit monthly.</div>
+    </div>
+  </div>
+
+  <div class="panel accent" style="font-size:12px; margin-bottom:18px;">
+    <strong>Why RestScan changes the motion:</strong> Today, the OD relies on subjective patient complaints to trigger a recommendation. Tomorrow, RestScan provides an <em>objective data point</em> at the start of the exam — turning the recommendation from "I think you should try this" into "Your scan shows ocular fatigue is high — I'm prescribing thermal recovery." Data-driven prescription converts at higher rates.
+  </div>
+
+  <!-- SECTION B: PATIENT HANDOFF SCRIPTS -->
+  <span class="badge b">Section B · Patient Handoff Scripts</span>
+
+  <h2>What Staff Actually Says</h2>
+
+  <div class="two-col">
+    <div>
+      <h3>Staff Recommendation Script</h3>
+      <div class="script">
+        <div class="speaker">Staff Member (at checkout)</div>
+        "Umay can help reduce eye fatigue — it's a 10-minute daily routine. This QR code lets you purchase with your discount and a 100-night risk-free trial."
+      </div>
+
+      <h3>Doctor Prescription Script</h3>
+      <div class="script">
+        <div class="speaker">OD (during exam or handoff)</div>
+        "Dr. [Name] is prescribing Thermal Recovery to help reset your tear film and improve your sleep quality. Use this for 10 minutes before bed."
+      </div>
+    </div>
+    <div>
+      <h3>#1 Patient Question</h3>
+      <div class="script patient">
+        <div class="speaker">Patient</div>
+        "Will this actually help me sleep?"
+      </div>
+      <div class="script">
+        <div class="speaker">Staff Response</div>
+        "In our government-backed study with 500 people, 87% reported improved eye comfort and 67% reported better sleep quality. It comes with a 100-night risk-free trial — so you can try it with confidence."
+      </div>
+
+      <div class="panel" style="font-size:11px; margin-top:12px;">
+        <h3>Claims Training (What NOT to Say)</h3>
+        <p style="margin-bottom:4px;"><span style="color:#dc2626;">✗</span> "This treats dry eye disease"</p>
+        <p style="margin-bottom:4px;"><span style="color:#dc2626;">✗</span> "Clinically proven to cure insomnia"</p>
+        <p style="margin-bottom:4px;"><span style="color:#dc2626;">✗</span> "Better than your prescription drops"</p>
+        <p style="margin-bottom:4px;"><span style="color:#059669;">✓</span> "Supports eye comfort and relaxation"</p>
+        <p style="margin-bottom:4px;"><span style="color:#059669;">✓</span> "Validated in a 500-person government-backed study"</p>
+        <p><span style="color:#059669;">✓</span> "100-night risk-free trial"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: QR FLOW + CLINIC ECONOMICS -->
+<div class="page">
+
+  <!-- SECTION C: ZERO-INVENTORY QR FLOW -->
+  <span class="badge c">Section C · Zero-Inventory Prescription Flow</span>
+
+  <h2>How Money Flows: No Inventory, No Risk, Negative Working Capital</h2>
+
+  <div class="qr-flow">
+    <div class="qr-node">
+      <div class="icon">👨‍⚕️</div>
+      <div class="title">OD Prescribes</div>
+      <div class="sub">Hands QR card</div>
+    </div>
+    <div class="qr-node">
+      <div class="icon">📱</div>
+      <div class="title">Patient Scans</div>
+      <div class="sub">Opens unique clinic link</div>
+    </div>
+    <div class="qr-node highlight">
+      <div class="icon">💳</div>
+      <div class="title">Patient Pays</div>
+      <div class="sub">Shopify checkout · HSA/FSA eligible</div>
+    </div>
+    <div class="qr-node">
+      <div class="icon">📦</div>
+      <div class="title">Umay Ships</div>
+      <div class="sub">US 3PL · 2-day delivery</div>
+    </div>
+    <div class="qr-node">
+      <div class="icon">💰</div>
+      <div class="title">Clinic Gets Paid</div>
+      <div class="sub">Monthly revenue credit</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Why Zero-Inventory Matters</h3>
+      <table>
+        <tr><td style="font-weight:600; width:140px;">Inventory risk</td><td>Zero — Umay holds all stock</td></tr>
+        <tr><td style="font-weight:600;">Capital required</td><td>$0 from clinic</td></tr>
+        <tr><td style="font-weight:600;">Working capital</td><td>Negative — patient pays before clinic earns</td></tr>
+        <tr><td style="font-weight:600;">Staff training</td><td>"Hand them the card" (30 seconds)</td></tr>
+        <tr><td style="font-weight:600;">Attribution</td><td>Per-clinic UTM links track every Rx</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Current vs. Target State</h3>
+      <table>
+        <tr><th></th><th>Today</th><th>Target</th></tr>
+        <tr><td style="font-weight:600;">Fulfillment</td><td>Mixed (clinic stock + cross-border)</td><td>US 3PL drop-ship</td></tr>
+        <tr><td style="font-weight:600;">Delivery</td><td>5-7 days</td><td>2 days</td></tr>
+        <tr><td style="font-weight:600;">E-commerce</td><td>Shopify storefront</td><td>Shopify Plus headless</td></tr>
+        <tr><td style="font-weight:600;">Attribution</td><td>Manual tracking</td><td>Per-clinic UTM links</td></tr>
+      </table>
+      <div class="caveat">Shopify Plus headless setup with per-clinic UTM tracking is in development. Current fulfillment is mixed model transitioning to full drop-ship post-raise.</div>
+    </div>
+  </div>
+
+  <!-- SECTION D: CLINIC ECONOMICS -->
+  <span class="badge d">Section D · Clinic Economics</span>
+
+  <h2>The Clinic P&L: Why They Prescribe, Why They Reorder</h2>
+
+  <div class="stat-strip">
+    <div class="stat-mini">
+      <div class="num">$285</div>
+      <div class="lbl">Wholesale price to clinic</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">$500–600</div>
+      <div class="lbl">Patient retail price</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">43–52%</div>
+      <div class="lbl">Clinic gross margin</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">0 min</div>
+      <div class="lbl">Chair time required</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3>Per-Patient Revenue to Clinic</h3>
+      <table>
+        <thead><tr><th>Model</th><th>Clinic Revenue</th><th>Margin</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Wholesale (stock & sell)</strong></td><td>$215–315 per unit</td><td>43–52%</td></tr>
+          <tr><td><strong>Drop-ship (QR prescription)</strong></td><td>Revenue credit (TBD)</td><td>Lower but zero-risk</td></tr>
+          <tr><td><strong>In-office session billing</strong></td><td>$150–250 per session</td><td>~80% (no COGS)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px; color:#5a5a7a; margin-top:8px;"><strong>Benchmark context:</strong> Clinic margins on eyewear average 37%. Contact lenses 17%. DED services range 60-80%. Umay at 43-52% sits between eyewear and DED services — a natural fit.</p>
+    </div>
+    <div>
+      <h3>Why Clinics Are Reordering</h3>
+      <table>
+        <tr><td style="font-weight:600; width:130px;">Reorder rate</td><td>66.7% (retail clinics with 6+ units)</td></tr>
+        <tr><td style="font-weight:600;">Median reorder</td><td>~3 months after first order</td></tr>
+        <tr><td style="font-weight:600;">Avg order size</td><td>8.6 units/order (retail clinics)</td></tr>
+        <tr><td style="font-weight:600;">Patient return rate</td><td>0.67% — virtually no returns</td></tr>
+        <tr><td style="font-weight:600;">Compliance</td><td>84% daily usage (vs. 5.9-9.7% for Rx drops)</td></tr>
+      </table>
+      <p style="font-size:11px; color:#5a5a7a; margin-top:8px;"><strong>The math:</strong> A retail clinic ordering 8.6 units at $215-315 margin = $1,850-2,710 gross profit per order, every ~3 months. Annual margin per active retail clinic: $7,400-10,840.</p>
+    </div>
+  </div>
+
+  <h2>Sales Cycle by Clinic Type</h2>
+  <div class="three-col">
+    <div class="panel">
+      <h3>Super-Clinic (DED-Focused)</h3>
+      <p style="font-size:12px; margin-bottom:6px;"><strong>8–12 weeks</strong></p>
+      <p style="font-size:11px; color:#5a5a7a;">Lunch & Learn → ~2 week OD trial → agreement review. Already investing in IPL/TearCare. DED revenue $1,562/patient (Holland 2024). Growing 4× industry average.</p>
+    </div>
+    <div class="panel">
+      <h3>Boutique / Owner-Led</h3>
+      <p style="font-size:12px; margin-bottom:6px;"><strong>~4 weeks</strong></p>
+      <p style="font-size:11px; color:#5a5a7a;">Shorter decision chain. Owner decides. Often starts with demo unit, converts to retail after seeing patient response.</p>
+    </div>
+    <div class="panel">
+      <h3>Existing Account Reorder</h3>
+      <p style="font-size:12px; margin-bottom:6px;"><strong>Days to weeks</strong></p>
+      <p style="font-size:11px; color:#5a5a7a;">Replenishment based on sell-through. 93.9% of 2025 unit volume came from existing clinics. The installed base drives itself.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">What Competitors Cannot Replicate</div>
+    In-office DED procedures (IPL, LipiFlow, TearCare) earn $750–1,500/session but require capital equipment, chair time, and trained technicians. Umay earns the clinic $215–315/patient with <strong>zero chair time, zero capital equipment, zero training beyond "hand them the card."</strong> This is complementary, not competitive — Rest is the at-home maintenance layer between $1,000+ in-office procedures.
+  </div>
+
+  <div class="panel dark" style="font-size:12px;">
+    <h3>Clinic Activation Metrics</h3>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; text-align:center;">
+      <div><strong style="font-size:18px;">134</strong><br><span style="color:#9090bb; font-size:10px;">Total clinic partners</span></div>
+      <div><strong style="font-size:18px;">123</strong><br><span style="color:#9090bb; font-size:10px;">With ≥1 order</span></div>
+      <div><strong style="font-size:18px;">51</strong><br><span style="color:#9090bb; font-size:10px;">Retail-level (6+ units)</span></div>
+      <div><strong style="font-size:18px;">1,972</strong><br><span style="color:#9090bb; font-size:10px;">Total clinic units shipped</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Clinic Motion Pack</div>
+  </div>
+</div>
+
+</body>
+</html>

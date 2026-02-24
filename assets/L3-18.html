@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Register — Patents, Trademarks & Design Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 46px 54px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; }
+  .header .subtitle { font-size: 13px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge.patent { background: #dbeafe; color: #1e40af; }
+  .badge.tm { background: #ede9fe; color: #5b21b6; }
+  .badge.design { background: #fef3c7; color: #92400e; }
+  .badge.trade { background: #d1fae5; color: #065f46; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a1a2e;
+    margin: 22px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 16px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 6px 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px;
+  }
+  .stat-mini {
+    text-align: center; padding: 12px 8px;
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .stat-mini .num { font-family: 'DM Serif Display', serif; font-size: 22px; color: #1a1a2e; }
+  .stat-mini .lbl { font-size: 9px; color: #5a5a7a; margin-top: 2px; line-height: 1.3; }
+  .stat-mini.highlight { background: #1a1a2e; border-color: #1a1a2e; }
+  .stat-mini.highlight .num { color: #fff; }
+  .stat-mini.highlight .lbl { color: #9090bb; }
+
+  .footer {
+    margin-top: 24px; padding-top: 12px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+
+  .ip-status {
+    font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 3px; display: inline-block;
+  }
+  .ip-status.granted { background: #d1fae5; color: #065f46; }
+  .ip-status.pending { background: #fef3c7; color: #92400e; }
+  .ip-status.provisional { background: #dbeafe; color: #1e40af; }
+  .ip-status.registered { background: #ede9fe; color: #5b21b6; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: PATENTS + TRADEMARKS -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>IP Register</h1>
+      <div class="subtitle">Patents, Trademarks, Designs & Trade Secrets</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">IP Portfolio Summary</div>
+    Umay holds a <strong>multi-layered IP portfolio spanning utility patents, design registrations, trademarks, and trade secrets</strong> — all assigned to the company. The portfolio covers both the therapeutic device (Rest) and the measurement platform (RestScan), creating IP protection across both pillars of the closed-loop system. The November 2025 stress-sensing patent is particularly strategic: it protects the integration of physiological sensing into thermal therapy — the exact capability competitors would need to replicate the closed loop.
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat-mini highlight">
+      <div class="num">3</div>
+      <div class="lbl">US utility<br>patents granted</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">1</div>
+      <div class="lbl">European<br>patent</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">4+</div>
+      <div class="lbl">Design<br>registrations</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">5</div>
+      <div class="lbl">Trademark<br>registrations</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">2</div>
+      <div class="lbl">Provisional<br>applications</div>
+    </div>
+  </div>
+
+  <!-- UTILITY PATENTS -->
+  <span class="badge patent">Utility Patents</span>
+
+  <h2>Granted US Utility Patents (3)</h2>
+  <table>
+    <thead><tr><th>Patent</th><th>Title / Scope</th><th>Filed</th><th>Status</th><th>Strategic Value</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:600;">US Patent #1</td>
+        <td>Periocular thermal therapy device — core therapeutic mechanism, dual-mode (warm/cool), pulsed thermal delivery</td>
+        <td class="mono">—</td>
+        <td><span class="ip-status granted">Granted</span></td>
+        <td>Protects the fundamental device architecture that competitors would need to replicate</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">US Patent #2</td>
+        <td>Thermal therapy delivery and control system — temperature management, session protocols, safety controls</td>
+        <td class="mono">—</td>
+        <td><span class="ip-status granted">Granted</span></td>
+        <td>Protects the control logic and safety systems that enable consumer use</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">US Patent #3<br>(Nov 2025)</td>
+        <td style="font-weight:700;">Stress-sensing thermal therapy — integration of physiological sensing with therapeutic delivery</td>
+        <td class="mono" style="font-weight:700;">2025</td>
+        <td><span class="ip-status granted">Granted</span></td>
+        <td style="font-weight:700;">Critical closed-loop patent — protects the detect → treat → measure integration that is the company's primary moat</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="panel green" style="font-size:12px; margin-bottom:16px;">
+    <h3>Why the Stress-Sensing Patent Matters Most</h3>
+    <p>The November 2025 patent protects the integration of physiological stress detection with adaptive thermal therapy. This is the IP foundation for the closed-loop system (RestScan measures → Rest treats → RestScan re-measures). Any competitor attempting to build a similar detect-treat loop would need to either license this patent or design around it — a significant barrier given the specificity of the periocular application.</p>
+  </div>
+
+  <h2>European Patent (1)</h2>
+  <table>
+    <thead><tr><th>Patent</th><th>Title / Scope</th><th>Status</th><th>Coverage</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:600;">EP Patent</td>
+        <td>Periocular thermal therapy — European equivalent of core device patent</td>
+        <td><span class="ip-status granted">Granted</span></td>
+        <td>European Patent Convention member states</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Provisional Applications (2)</h2>
+  <table>
+    <thead><tr><th>Application</th><th>Title / Scope</th><th>Status</th><th>Conversion Deadline</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:600;">RestScan Provisional</td>
+        <td>Webcam-based ocular biometric assessment — facial landmark analysis for blink dynamics, fatigue scoring, and rPPG-derived vitals</td>
+        <td><span class="ip-status provisional">Provisional Filed</span></td>
+        <td>12 months from filing (must convert to full application)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;">Thermal Rhythm Provisional</td>
+        <td>Adaptive thermal protocol optimization — personalized treatment parameters based on usage patterns and biometric feedback</td>
+        <td><span class="ip-status provisional">Provisional Filed</span></td>
+        <td>12 months from filing (must convert to full application)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="caveat">Provisional applications establish priority dates but must be converted to full utility applications within 12 months. Conversion costs (~$15-25K per application) are included in the raise's R&D allocation. Specific patent numbers, filing dates, and detailed claims are available in the full data room under NDA.</div>
+
+  <!-- TRADEMARKS -->
+  <span class="badge tm">Trademarks</span>
+
+  <h2>Registered Trademarks (5)</h2>
+  <table>
+    <thead><tr><th>Mark</th><th>Class(es)</th><th>Jurisdiction</th><th>Status</th><th>Coverage</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;">UMAY</td><td>Class 10 (Medical devices)</td><td>US / Canada</td><td><span class="ip-status registered">Registered</span></td><td>Primary company brand</td></tr>
+      <tr><td style="font-weight:600;">REST</td><td>Class 10</td><td>US / Canada</td><td><span class="ip-status registered">Registered</span></td><td>Device product name</td></tr>
+      <tr><td style="font-weight:600;">RESTSCAN</td><td>Class 9/10</td><td>US / Canada</td><td><span class="ip-status registered">Registered</span></td><td>Biometric platform name</td></tr>
+      <tr><td style="font-weight:600;">UMAY (Logo)</td><td>Class 10</td><td>US / Canada</td><td><span class="ip-status registered">Registered</span></td><td>Wordmark + device</td></tr>
+      <tr><td style="font-weight:600;">Additional Mark</td><td>—</td><td>US / Canada</td><td><span class="ip-status registered">Registered</span></td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PAGE 2: DESIGNS + TRADE SECRETS + IP STRATEGY -->
+<div class="page">
+
+  <!-- DESIGN REGISTRATIONS -->
+  <span class="badge design">Design Registrations</span>
+
+  <h2>Industrial Design Registrations (4+)</h2>
+  <table>
+    <thead><tr><th>Design</th><th>Scope</th><th>Jurisdiction</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;">Rest Device Exterior</td><td>Industrial design of the periocular wearable form factor</td><td>US / Canada</td><td><span class="ip-status granted">Registered</span></td></tr>
+      <tr><td style="font-weight:600;">Charging Cradle</td><td>Design of the device charging/storage unit</td><td>US / Canada</td><td><span class="ip-status granted">Registered</span></td></tr>
+      <tr><td style="font-weight:600;">Additional Designs (2+)</td><td>Packaging, accessories, UI elements</td><td>US / Canada</td><td><span class="ip-status granted">Registered</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- TRADE SECRETS -->
+  <span class="badge trade">Trade Secrets & Proprietary Know-How</span>
+
+  <h2>Trade Secrets (Not Filed, Competitively Sensitive)</h2>
+  <div class="two-col">
+    <div class="panel" style="font-size:12px;">
+      <h3>Therapeutic Domain</h3>
+      <table>
+        <tr><td style="font-weight:600; width:150px;">Thermal protocols</td><td>Specific temperature curves, pulsing patterns, and session timing for dual-mode therapy. Developed through 4+ years of patient use data.</td></tr>
+        <tr><td style="font-weight:600;">Manufacturing specs</td><td>Aztech production parameters, material sourcing, quality thresholds (contributes to 0.67% return rate).</td></tr>
+        <tr><td style="font-weight:600;">Clinic playbook</td><td>Sales motion, staff scripts, objection handling, reorder triggers — the operational IP of the channel.</td></tr>
+      </table>
+    </div>
+    <div class="panel" style="font-size:12px;">
+      <h3>Measurement Domain</h3>
+      <table>
+        <tr><td style="font-weight:600; width:150px;">RestScan algorithms</td><td>Quality-gating logic, "compute vs. publish" separation, per-domain confidence scoring. Not patented (trade secret by choice — harder to reverse-engineer from a patent disclosure).</td></tr>
+        <tr><td style="font-weight:600;">Signal processing</td><td>rPPG extraction parameters, blink detection thresholds, SQI scoring methodology.</td></tr>
+        <tr><td style="font-weight:600;">Validation data</td><td>ISC pilot dataset (N=500), internal device telemetry from 2,847 active IoT devices.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- IP STRATEGY -->
+  <h2>IP Strategy & Competitive Moat Architecture</h2>
+
+  <div class="panel dark" style="font-size:12px; margin-bottom:16px;">
+    <h3>Three-Layer IP Defense</h3>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px;">
+      <div>
+        <strong style="font-size:14px;">Layer 1: Patents</strong>
+        <p style="color:#9090bb; margin-top:4px;">Utility patents protect the device architecture and the critical stress-sensing / closed-loop integration. Provisionals extend coverage to RestScan (measurement) and Thermal Rhythm (adaptive protocols). Creates legal barriers to direct copying.</p>
+      </div>
+      <div>
+        <strong style="font-size:14px;">Layer 2: Data</strong>
+        <p style="color:#9090bb; margin-top:4px;">N=500 pilot data, 2,847 active IoT devices generating longitudinal usage data, and RestScan validation datasets. This data advantage compounds over time — every patient interaction widens the gap. New entrants start with zero clinical evidence.</p>
+      </div>
+      <div>
+        <strong style="font-size:14px;">Layer 3: Channel</strong>
+        <p style="color:#9090bb; margin-top:4px;">134 clinic relationships with proven reorder behavior (66.7% retail reorder rate). Clinical channel trust takes years to build — an OD who has successfully recommended Umay to 50+ patients won't switch to an unproven competitor.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSIGNMENT -->
+  <h2>IP Assignment & Ownership</h2>
+  <div class="panel green" style="font-size:12px; margin-bottom:16px;">
+    <h3>All IP Assigned to Company</h3>
+    <p style="margin-bottom:6px;"><strong>All patents, trademarks, designs, and trade secrets are owned by Umay Care Holdings Inc.</strong> — not by individual founders or contractors.</p>
+    <p style="margin-bottom:6px;">Tangent Engineering (hardware contractor) operates under a full IP assignment agreement — all work product is assigned to Umay upon creation.</p>
+    <p>Founder IP assignment agreements are in place. No IP is held personally by Ali or Sharmin that would need to be transferred.</p>
+  </div>
+
+  <!-- MAINTENANCE -->
+  <h2>Maintenance & Cost Summary</h2>
+  <table>
+    <thead><tr><th>IP Type</th><th>Count</th><th>Est. Annual Maintenance</th><th>Key Deadlines</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;">US Utility Patents</td><td class="mono">3</td><td class="mono">~$5-8K (maintenance fees)</td><td>Periodic maintenance payments (3.5, 7.5, 11.5 year marks)</td></tr>
+      <tr><td style="font-weight:600;">EP Patent</td><td class="mono">1</td><td class="mono">~$3-5K (renewal fees)</td><td>Annual renewals per designated states</td></tr>
+      <tr><td style="font-weight:600;">Provisional → Full</td><td class="mono">2</td><td class="mono">$15-25K each (conversion)</td><td>12-month conversion deadline from filing</td></tr>
+      <tr><td style="font-weight:600;">Trademarks</td><td class="mono">5</td><td class="mono">~$2-3K (renewals)</td><td>10-year renewal cycles</td></tr>
+      <tr><td style="font-weight:600;">Design Registrations</td><td class="mono">4+</td><td class="mono">~$1-2K (renewals)</td><td>Jurisdiction-dependent</td></tr>
+      <tr style="border-top:2px solid #1a1a2e;">
+        <td style="font-weight:700;">Total Annual IP Maintenance</td>
+        <td></td>
+        <td class="mono" style="font-weight:700;">~$12-18K/year</td>
+        <td>(excludes provisional conversion costs)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="caveat">Specific patent numbers, filing dates, and detailed claims are available under NDA. Trademark registration numbers and office action history available upon request. Provisional application conversion costs are budgeted within the raise's R&D allocation. This register should be reviewed by IP counsel annually to confirm maintenance status and identify prosecution opportunities.</div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · IP Register</div>
+  </div>
+</div>
+
+</body>
+</html>

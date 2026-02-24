@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cohort Retention Dashboard — Clinic Reorder Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif; color: #1a1a2e;
+    background: #fff; line-height: 1.55; font-size: 12.5px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .page { padding: 48px 56px; }
+  .page + .page { border-top: 2px solid #eee; }
+
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 28px; padding-bottom: 16px; border-bottom: 3px solid #1a1a2e;
+  }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1.2; }
+  .header .subtitle { font-size: 14px; color: #5a5a7a; }
+  .header-right { text-align: right; font-size: 11px; color: #5a5a7a; line-height: 1.6; }
+  .header-right .company { font-weight: 700; color: #1a1a2e; font-size: 13px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 18px;
+  }
+  .badge.cohort { background: #dbeafe; color: #1e40af; }
+  .badge.power { background: #ede9fe; color: #5b21b6; }
+  .badge.signal { background: #d1fae5; color: #065f46; }
+
+  h2 {
+    font-family: 'DM Serif Display', serif; font-size: 18px; color: #1a1a2e;
+    margin: 24px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e8;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #5a5a7a; margin-bottom: 6px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+
+  .panel {
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px; padding: 18px;
+  }
+  .panel.dark { background: #1a1a2e; color: #e0e0f0; border-color: #1a1a2e; }
+  .panel.dark h3 { color: #9090bb; }
+  .panel.dark strong { color: #fff; }
+  .panel.green { border-left: 4px solid #059669; background: #ecfdf5; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
+  table th {
+    text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a5a7a; padding: 7px 10px; border-bottom: 2px solid #1a1a2e;
+  }
+  table td { padding: 6px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .callout {
+    background: #1a1a2e; color: #e0e0f0; border-radius: 8px; padding: 16px 20px; margin-bottom: 18px;
+  }
+  .callout .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9090bb; margin-bottom: 5px;
+  }
+  .callout strong { color: #fff; }
+
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 18px;
+  }
+  .stat-mini {
+    text-align: center; padding: 14px 8px;
+    background: #f8f8fc; border: 1px solid #e8e8f0; border-radius: 8px;
+  }
+  .stat-mini .num { font-family: 'DM Serif Display', serif; font-size: 24px; color: #1a1a2e; }
+  .stat-mini .lbl { font-size: 9.5px; color: #5a5a7a; margin-top: 2px; line-height: 1.3; }
+  .stat-mini.highlight { background: #1a1a2e; border-color: #1a1a2e; }
+  .stat-mini.highlight .num { color: #fff; }
+  .stat-mini.highlight .lbl { color: #9090bb; }
+
+  .footer {
+    margin-top: 28px; padding-top: 14px; border-top: 1px solid #e0e0e8;
+    display: flex; justify-content: space-between; font-size: 10px; color: #8a8aaa;
+  }
+
+  /* Stacked bar chart */
+  .stacked-bar { margin-bottom: 8px; }
+  .stacked-label {
+    display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; margin-bottom: 3px;
+  }
+  .stacked-track {
+    height: 28px; border-radius: 4px; overflow: hidden; display: flex;
+  }
+  .stacked-seg {
+    height: 100%; display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: #fff;
+  }
+  .seg-reorder { background: #1a1a2e; }
+  .seg-new { background: #94a3b8; }
+
+  /* Power law bars */
+  .power-bar { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .power-label { width: 90px; font-size: 11px; font-weight: 600; text-align: right; }
+  .power-track { flex: 1; height: 20px; background: #eee; border-radius: 3px; overflow: hidden; }
+  .power-fill { height: 100%; border-radius: 3px; display: flex; align-items: center; padding-left: 6px; font-size: 10px; font-weight: 700; color: #fff; }
+  .power-pct { width: 40px; font-size: 11px; font-weight: 700; color: #1a1a2e; }
+
+  .caveat {
+    font-size: 10px; color: #8a8aaa; font-style: italic; padding: 6px 10px;
+    background: #fafafa; border-left: 2px solid #ddd; margin-top: 10px;
+  }
+
+  /* Segment card */
+  .seg-card {
+    border: 1px solid #e0e0e8; border-radius: 8px; padding: 16px; text-align: center;
+  }
+  .seg-card .seg-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+  .seg-card .seg-count { font-size: 11px; color: #5a5a7a; margin-bottom: 8px; }
+  .seg-card .seg-stat { font-family: 'DM Serif Display', serif; font-size: 28px; color: #1a1a2e; }
+  .seg-card .seg-label { font-size: 10px; color: #5a5a7a; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: REORDER ENGINE + COHORT ANALYSIS -->
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>Cohort Retention Dashboard</h1>
+      <div class="subtitle">Clinic Reorder Analysis & Installed-Base Expansion Proof</div>
+    </div>
+    <div class="header-right">
+      <div class="company">Umay Care Holdings Inc.</div>
+      Data Room — Stage 1B<br>Confidential
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">The Question This Answers</div>
+    "Is this a one-time hardware sale, or do clinics come back?" <strong>93.9% of 2025 unit volume came from existing clinics.</strong> The business has transitioned from new-logo acquisition to installed-base expansion — the pattern investors want to see before committing to a channel scale play.
+  </div>
+
+  <!-- HEADLINE STATS -->
+  <div class="stat-strip">
+    <div class="stat-mini highlight">
+      <div class="num">93.9%</div>
+      <div class="lbl">2025 units from<br>existing clinics</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">40.7%</div>
+      <div class="lbl">Overall clinic<br>reorder rate (≥2 orders)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">66.7%</div>
+      <div class="lbl">Retail clinic<br>reorder rate (6+ units)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">2.50</div>
+      <div class="lbl">Avg orders per<br>active clinic</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">~3 mo</div>
+      <div class="lbl">Median time<br>to reorder</div>
+    </div>
+  </div>
+
+  <!-- COHORT: REORDER SHARE BY YEAR -->
+  <span class="badge cohort">Section 1 · Year-Over-Year Reorder Trajectory</span>
+
+  <h2>Reorder Share of Volume (Units from Existing Clinics)</h2>
+  <p style="margin-bottom:14px;">Each bar shows the mix of units shipped to new clinics (first order ever) vs. existing clinics (second order or later). The reorder share has grown every year.</p>
+
+  <div style="margin-bottom:18px;">
+    <div class="stacked-bar">
+      <div class="stacked-label"><span>2022</span><span>50.6% reorders</span></div>
+      <div class="stacked-track">
+        <div class="stacked-seg seg-reorder" style="width:50.6%;">50.6%</div>
+        <div class="stacked-seg seg-new" style="width:49.4%;">49.4% new</div>
+      </div>
+    </div>
+    <div class="stacked-bar">
+      <div class="stacked-label"><span>2023</span><span>78.2% reorders</span></div>
+      <div class="stacked-track">
+        <div class="stacked-seg seg-reorder" style="width:78.2%;">78.2%</div>
+        <div class="stacked-seg seg-new" style="width:21.8%;">21.8%</div>
+      </div>
+    </div>
+    <div class="stacked-bar">
+      <div class="stacked-label"><span>2024</span><span>83.4% reorders</span></div>
+      <div class="stacked-track">
+        <div class="stacked-seg seg-reorder" style="width:83.4%;">83.4%</div>
+        <div class="stacked-seg seg-new" style="width:16.6%;">16.6%</div>
+      </div>
+    </div>
+    <div class="stacked-bar">
+      <div class="stacked-label"><span>2025 (YTD)</span><span style="font-weight:700;">93.9% reorders</span></div>
+      <div class="stacked-track">
+        <div class="stacked-seg seg-reorder" style="width:93.9%;">93.9%</div>
+        <div class="stacked-seg seg-new" style="width:6.1%;">6.1%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Reorder Share Detail</h3>
+      <table>
+        <thead><tr><th>Year</th><th>Total Orders</th><th>% Orders = Reorders</th><th>% Units = Reorders</th></tr></thead>
+        <tbody>
+          <tr><td>2022</td><td class="mono">54</td><td class="mono">31.5%</td><td class="mono">50.6%</td></tr>
+          <tr><td>2023</td><td class="mono">89</td><td class="mono">69.7%</td><td class="mono">78.2%</td></tr>
+          <tr><td>2024</td><td class="mono">107</td><td class="mono">72.0%</td><td class="mono">83.4%</td></tr>
+          <tr><td style="font-weight:700;">2025 (YTD)</td><td class="mono" style="font-weight:700;">58</td><td class="mono" style="font-weight:700;">75.9%</td><td class="mono" style="font-weight:700;">93.9%</td></tr>
+          <tr style="border-top:2px solid #1a1a2e;"><td style="font-weight:700;">Lifetime</td><td class="mono" style="font-weight:700;">308</td><td class="mono" style="font-weight:700;">58.1%</td><td class="mono" style="font-weight:700;">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel green" style="font-size:12px;">
+      <h3>What This Pattern Means</h3>
+      <p style="margin-bottom:8px;"><strong>The installed base is the growth engine.</strong> In 2022, half of all units went to clinics placing their first order. By 2025, first-time clinics account for only 6.1% of volume.</p>
+      <p style="margin-bottom:8px;">This is the classic SaaS retention curve applied to a hardware channel: acquire once, retain and expand. Each active clinic is an ongoing revenue stream, not a one-time transaction.</p>
+      <p><strong>Implication for investors:</strong> Growth doesn't require proportional new-logo acquisition. Activating the dormant 53% of existing clinics is a faster path to volume than acquiring net-new partners.</p>
+    </div>
+  </div>
+
+  <div class="caveat">2024-2025 data includes backlog fulfillment during extended stockout period. Reorder cadence should be validated post-restock when supply is normalized. The directional pattern (increasing reorder dominance) is robust across all years.</div>
+
+  <!-- CLINIC SEGMENTATION -->
+  <h2>Clinic Segmentation: Who Reorders and Who Doesn't</h2>
+
+  <div class="three-col">
+    <div class="seg-card">
+      <div class="seg-name">Retail Clinics</div>
+      <div class="seg-count">51 clinics · 6+ units ordered</div>
+      <div class="seg-stat">66.7%</div>
+      <div class="seg-label">reorder rate</div>
+      <p style="font-size:10px; color:#5a5a7a; margin-top:6px;">Avg 8.6 units/order · These are the engine</p>
+    </div>
+    <div class="seg-card">
+      <div class="seg-name">In-Office Clinics</div>
+      <div class="seg-count">32 clinics · 2-5 units ordered</div>
+      <div class="seg-stat">50.0%</div>
+      <div class="seg-label">reorder rate</div>
+      <p style="font-size:10px; color:#5a5a7a; margin-top:6px;">Avg 1.8 units/order · Trial to retail conversion opportunity</p>
+    </div>
+    <div class="seg-card">
+      <div class="seg-name">Demo Clinics</div>
+      <div class="seg-count">40 clinics · 1 unit only</div>
+      <div class="seg-stat">0%</div>
+      <div class="seg-label">reorder rate</div>
+      <p style="font-size:10px; color:#5a5a7a; margin-top:6px;">Single-unit trial. Activation gap — not product failure</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: POWER LAW + BEHAVIORAL SIGNALS -->
+<div class="page">
+
+  <!-- POWER LAW -->
+  <span class="badge power">Section 2 · Power Law Distribution</span>
+
+  <h2>Top Clinics Drive Disproportionate Volume</h2>
+  <p style="margin-bottom:14px;">Clinic unit distribution follows a classic power law: a small number of high-commitment partners generate the majority of volume.</p>
+
+  <div style="margin-bottom:18px; padding:16px; background:#f8f8fc; border:1px solid #e8e8f0; border-radius:8px;">
+    <div class="power-bar">
+      <div class="power-label">Top 5</div>
+      <div class="power-track"><div class="power-fill" style="width:42%; background:#1a1a2e;">42%</div></div>
+      <div class="power-pct">42%</div>
+    </div>
+    <div class="power-bar">
+      <div class="power-label">Top 10</div>
+      <div class="power-track"><div class="power-fill" style="width:58%; background:#2a2a4e;">58%</div></div>
+      <div class="power-pct">58%</div>
+    </div>
+    <div class="power-bar">
+      <div class="power-label">Top 20</div>
+      <div class="power-track"><div class="power-fill" style="width:80%; background:#3a3a6e;">80%</div></div>
+      <div class="power-pct">80%</div>
+    </div>
+    <div class="power-bar">
+      <div class="power-label">Top 50</div>
+      <div class="power-track"><div class="power-fill" style="width:95%; background:#4a4a8e;">~95%</div></div>
+      <div class="power-pct">~95%</div>
+    </div>
+    <div class="power-bar">
+      <div class="power-label">Remaining 73</div>
+      <div class="power-track"><div class="power-fill" style="width:5%; background:#94a3b8;">5%</div></div>
+      <div class="power-pct">~5%</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Power Law: Risk or Opportunity?</h3>
+      <p style="font-size:12px; margin-bottom:8px;"><strong>Concentration risk is real:</strong> Top 10 clinics = 58% of units. Loss of any one top partner would be felt.</p>
+      <p style="font-size:12px;"><strong>But the opportunity is larger:</strong> The bottom 73 clinics (59% of partners) generate only ~5% of volume. These aren't churned — they're underactivated. Moving even 20 demo/in-office clinics to retail-level purchasing is equivalent to adding 5-10 top accounts without any new-logo acquisition cost.</p>
+    </div>
+    <div class="panel dark" style="font-size:12px;">
+      <h3>Activation Levers (Post-Raise)</h3>
+      <p style="color:#ccc; margin-bottom:6px;"><strong>For demo clinics (40 at 0% reorder):</strong></p>
+      <p style="color:#b0b0cc; margin-bottom:10px;">Dedicated onboarding follow-up · Staff training visit · First-reorder incentive · RestScan demo installation</p>
+      <p style="color:#ccc; margin-bottom:6px;"><strong>For in-office clinics (32 at 50% reorder):</strong></p>
+      <p style="color:#b0b0cc;">Retail conversion playbook · Economic case per-clinic · Patient sell-through tracking · Reorder auto-notification</p>
+    </div>
+  </div>
+
+  <!-- BEHAVIORAL SIGNALS -->
+  <span class="badge signal">Section 3 · Behavioral Retention Signals</span>
+
+  <h2>Patient-Level Usage (From ISC Pilot + Telemetry)</h2>
+  <p style="margin-bottom:14px;">Clinic retention is ultimately driven by patient satisfaction and usage. The device-level data confirms the product sticks.</p>
+
+  <div class="stat-strip" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="stat-mini">
+      <div class="num">84%</div>
+      <div class="lbl">Daily usage rate<br>(user-reported, ISC pilot)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">0.64</div>
+      <div class="lbl">DAU/MAU ratio<br>(vs. 0.2-0.3 app benchmark)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">2,847</div>
+      <div class="lbl">Active IoT devices<br>(as of Jan 31, 2026)</div>
+    </div>
+    <div class="stat-mini">
+      <div class="num">0.67%</div>
+      <div class="lbl">Device return rate<br>(20 of 2,996)</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Why Patients Don't Churn</h3>
+      <table>
+        <tr><td style="font-weight:600; width:170px;">Sensory immediacy</td><td>Thermal therapy creates instant felt experience (unlike drops with delayed effect)</td></tr>
+        <tr><td style="font-weight:600;">Habit architecture</td><td>10-minute bedtime ritual integrates into existing sleep routine</td></tr>
+        <tr><td style="font-weight:600;">Dual benefit</td><td>Eye comfort + sleep quality — two incentives to maintain habit</td></tr>
+        <tr><td style="font-weight:600;">No substitutes</td><td>No comparable product exists; can't switch to a cheaper alternative</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>DED Treatment Adherence Context</h3>
+      <table>
+        <tr><td style="font-weight:600; width:170px;">Rx eye drops (PDC ≥80%)</td><td class="mono" style="color:#dc2626;">5.9–9.7%</td></tr>
+        <tr><td style="font-weight:600;">Warm compresses</td><td class="mono" style="color:#dc2626;"><50% after 30 days</td></tr>
+        <tr><td style="font-weight:600;">In-office procedures</td><td class="mono" style="color:#d97706;">75%+ discontinue within 90 days</td></tr>
+        <tr><td style="font-weight:600; color:#059669;">Umay Rest (daily use)</td><td class="mono" style="color:#059669; font-weight:700;">84%</td></tr>
+      </table>
+      <p style="font-size:11px; color:#5a5a7a; margin-top:6px;">Umay's adherence rate is 9-14× higher than any existing DED treatment modality. This is the root cause of the reorder engine: patients actually use the product, clinics see results, clinics order more.</p>
+    </div>
+  </div>
+
+  <!-- THE FLYWHEEL -->
+  <h2>The Retention Flywheel</h2>
+  <div class="callout">
+    <div class="label">How Clinic Retention Compounds</div>
+    <p style="font-size:13px;"><strong>Patient uses device daily (84%) → Reports improvement to OD at next visit → OD gains confidence → Recommends to more patients → Clinic orders more → Umay ships from inventory → Clinic reorders in ~3 months.</strong></p>
+    <p style="font-size:12px; margin-top:8px; color:#b0b0cc;">This flywheel is currently running on founder-led relationships and word-of-mouth between ODs. Post-raise, adding dedicated growth staff and RestScan (which makes the improvement measurable) accelerates every stage of the loop.</p>
+  </div>
+
+  <h2>Key Risks to Retention</h2>
+  <div class="two-col">
+    <div class="panel" style="border-left:4px solid #dc2626; background:#fef2f2; font-size:12px;">
+      <h3>Identified Risks</h3>
+      <p style="margin-bottom:6px;"><strong>Stockout-induced dormancy:</strong> Extended inventory gaps (2024) may have permanently disengaged some clinics.</p>
+      <p style="margin-bottom:6px;"><strong>Concentration dependency:</strong> Top 10 clinics = 58% of volume. Relationship risk.</p>
+      <p><strong>Activation gap:</strong> 40 demo clinics (33% of base) have never reordered. May indicate poor first-visit experience or lack of follow-up.</p>
+    </div>
+    <div class="panel" style="border-left:4px solid #059669; background:#ecfdf5; font-size:12px;">
+      <h3>Mitigations</h3>
+      <p style="margin-bottom:6px;"><strong>Inventory confidence:</strong> $500K from raise allocated to fulfill 1,600-unit backlog. 12 weeks to restock. Eliminates supply uncertainty.</p>
+      <p style="margin-bottom:6px;"><strong>Diversification:</strong> Head of Growth hire (US-based) activates new US clinics, reducing Canadian concentration.</p>
+      <p><strong>Demo conversion:</strong> Dedicated onboarding playbook + RestScan installation converts demo clinics to retail. Even 25% conversion = 10 new retail clinics = ~$74K-108K annual margin.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>Umay Care Holdings Inc. · Edmonton, AB · umay.rest</div>
+    <div>Confidential — Data Room Stage 1B · Cohort Retention Dashboard</div>
+  </div>
+</div>
+
+</body>
+</html>
